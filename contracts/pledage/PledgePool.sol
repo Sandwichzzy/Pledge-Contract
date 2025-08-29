@@ -1,7 +1,12 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/utils/math/Math.sol";
+
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "../multiSignature/multiSignatureClient.sol";
 
 contract PledgePool is ReentrancyGuard {
 
@@ -44,5 +49,13 @@ contract PledgePool is ReentrancyGuard {
         uint256 totalSupply; //池子总供应量
         uint256 totalBorrow; //池子总借出量
         uint256 totalInterest; //池子总利息
+    }
+
+    constructor(address _oracle,address _swapRouter,address payable _feeAddress, address _multiSignature)
+    multiSignatureClient(_multiSignature) {
+        require(_oracle != address(0),"PledgePool : oracle is zero address");
+        require(_swapRouter != address(0),"PledgePool : swapRouter is zero address");
+        require(_feeAddress != address(0),"PledgePool : feeAddress is zero address");
+        oracle=IBscPledgeOracle(_oracle);
     }
 }
