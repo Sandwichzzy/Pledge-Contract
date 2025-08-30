@@ -109,7 +109,17 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
     event WithdrawLend(address indexed from,address indexed token,uint256 amount,uint256 burnAmount);
     // 出借人紧急提取存款事件，from是提取者地址，token是提取的代币地址，amount是提取的数量
     event EmergencyLendWithdrawal(address indexed from,address indexed token,uint256 amount);
-     // 设置费用事件，newLendFee是新的借出费用，newBorrowFee是新的借入费用
+
+    //---------------------------------------------
+    // 借款方存款事件
+    event DepositBorrow(address indexed from,address indexed token,uint256 amount,uint256 mintAmount);
+    event RefundBorrow(address indexed from,address indexed token,uint256 refund);
+    event ClaimBorrow(address indexed from, address indexed token, uint256 amount); 
+    // 提取借入事件，from是提取者地址，token是提取的代币地址，amount是提取的数量，burnAmount是销毁的数量
+    event WithdrawBorrow(address indexed from,address indexed token,uint256 amount,uint256 burnAmount); 
+    event EmergencyBorrowWithdrawal(address indexed from, address indexed token, uint256 amount); 
+
+    // 设置费用事件，newLendFee是新的借出费用，newBorrowFee是新的借入费用
     event SetFee(uint256 indexed newLendFee, uint256 indexed newBorrowFee);
     event SetSwapRouterAddress(address indexed oldSwapAddress, address indexed newSwapAddress); 
 
@@ -347,10 +357,148 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
         //验证用户是否已经进行过退款
         require(lendInfo.hasNoRefund==false,"emergencyLendWithdrawal : already refunded");
         //执行赎回操作，提取全部存款
-        _redeem(msg.sender,pool.lendToken,lendInfo.stakeAmount);
+        _redeem(msg.sender,pool.lendToken,lendInfo.stakeAmount); 
         //设置已经退款标志为真
         lendInfo.hasNoRefund=true;
         emit EmergencyLendWithdrawal(msg.sender,pool.lendToken,lendInfo.stakeAmount);
+    }
+
+    /**
+     * @dev 借款人质押操作
+     * @param _pid 是池子索引
+     * @param _stakeAmount 是用户质押的数量
+     */
+    function depositBorrow(uint256 _pid,uint256 _stakeAmount) external payable nonReentrant notPause timeBeforeSettle(_pid) stateMatch(_pid){
+        PoolBaseInfo storage pool = poolBaseInfos[_pid];
+        BorrowInfo storage borrowInfo = userBorrowInfo[msg.sender][_pid];
+
+        uint256 amount = getPayableAmount(pool.borrowToken,_stakeAmount);// 获取应付金额
+        require(amount > 0, 'depositBorrow: deposit amount is zero'); // 要求质押金额大于0
+        borrowInfo.hasNoClaim = false; // 设置用户未提取质押物
+        borrowInfo.hasNoRefund = false; // 设置用户未退款
+         // 更新信息
+        if (pool.borrowToken == address(0)){ // 如果借款代币是0地址（即ETH）
+            borrowInfo.stakeAmount = borrowInfo.stakeAmount.tryAdd(msg.value); // 更新用户质押金额
+            pool.borrowSupply = pool.borrowSupply.tryAdd(msg.value); // 更新池子借款供应量
+        } else{ // 如果借款代币不是0地址（即其他ERC20代币）
+            borrowInfo.stakeAmount = borrowInfo.stakeAmount.tryAdd(_stakeAmount); // 更新用户质押金额
+            pool.borrowSupply = pool.borrowSupply.tryAdd(_stakeAmount); // 更新池子借款供应量
+        }
+        emit DepositBorrow(msg.sender, pool.borrowToken, _stakeAmount, amount); // 触发质押借款事件
+    }
+
+    /**
+     * @dev 退还给借款人的过量存款，当借款人的质押量大于0，且借款供应量减去结算借款量大于0，且借款人没有退款时，计算退款金额并进行退款。
+     * @notice 池状态不等于匹配和未完成
+     * @param _pid 是池状态
+     */
+    function refundBorrow(uint256 _pid) external nonReentrant notPause timeAfter(_pid) stateNotMatchUndone(_pid){
+        PoolBaseInfo storage pool = poolBaseInfos[_pid];
+        PoolDataInfo storage data = poolDataInfos[_pid];
+        BorrowInfo storage borrowInfo = userBorrowInfo[msg.sender][_pid];
+        require(pool.borrowSupply.trySub(data.settleAmountBorrow)>0,"refundBorrow : not refund");// 需要借款供应量减去结算借款量大于0
+        require(borrowInfo.stakeAmount>0,"refundBorrow : not pledged");// 需要借款人的质押量大于0
+        require(borrowInfo.hasNoRefund==false,"refundBorrow : already refunded");// 需要借款人没有退款
+        //用户份额=当前质押金额/总金额
+        uint256 userShare=borrowInfo.stakeAmount.tryMul(calDecimals).tryDiv(pool.borrowSupply);
+        // refundAmount = 总退款金额 * 用户份额
+        uint256 refundAmount=(pool.borrowSupply.trySub(data.settleAmountBorrow)).tryMul(userShare).tryDiv(calDecimals);
+        borrowInfo.refundAmount=refundAmount; // 更新借款人的退款金额
+        borrowInfo.hasNoRefund=true;// 设置借款人已经退款
+        // 退还资金
+        _redeem(msg.sender,pool.borrowToken,refundAmount);
+        emit RefundBorrow(msg.sender,pool.borrowToken,refundAmount);
+    }
+    /**
+     * @dev 借款人接收 sp_token 和贷款资金
+     * @notice 池状态不等于匹配和未完成
+     * @param _pid 是池状态
+     * 1. JP代币代表抵押品权益，不是借款资金
+     * 2. 借款人同时获得JP代币和实际借款资金
+     * 3. 到期后需要销毁JP代币才能赎回抵押品
+     * 4. 抵押率决定了JP代币的发行总量
+     */
+    function claimBorrow(uint256 _pid) external nonReentrant notPause timeAfter(_pid) stateNotMatchUndone(_pid){
+        PoolBaseInfo storage pool = poolBaseInfos[_pid];
+        PoolDataInfo storage data = poolDataInfos[_pid];
+        BorrowInfo storage borrowInfo = userBorrowInfo[msg.sender][_pid];
+        require(borrowInfo.stakeAmount>0,"claimBorrow : cannot get jp_token");// 需要借款人的质押量大于0
+        require(borrowInfo.hasNoClaim==false,"claimBorrow : already claimed");// 需要借款人没有领取过jp_token
+    
+        // 总JP数量 = 实际结算的借款金额 × 抵押率 (抵押率 = 借款金额 / 抵押品价值, 150%抵押率：需要质押1.5倍价值的抵押品)
+        uint256 totalJpAmount = data.settleAmountLend.tryMul(pool.martgageRate).tryDiv(baseDecimal);
+        // 用户份额 = 质押金额 / 总质押金额
+        uint256 userShare=borrowInfo.stakeAmount.tryMul(calDecimals).tryDiv(pool.borrowSupply);
+        unit256 jpAmount=totalJpAmount.tryMul(userShare).tryDiv(calDecimals);
+
+        // 铸造 jp token 给借款人 
+        pool.jpCoin.mint(msg.sender,jpAmount);
+        //索取贷款资金
+        uint256 borrowAmount=data.settleAmountLend.tryMul(userShare).tryDiv(calDecimals);// 计算用户实际可借金额
+        _redeem(msg.sender,pool.lendToken,borrowAmount);// 转出借款资金给借款人
+        borrowInfo.hasNoClaim = true;// 更新状态，防止重复领取
+        emit ClaimBorrow(msg.sender,pool.borrowToken,borrowAmount);
+    }
+    /**
+     * @dev 借款人赎回质押，这个函数首先检查提取的金额是否大于0，
+     * 然后销毁相应数量的JPtoken。
+     * 接着，它计算JPtoken的份额，并根据池的状态（完成或清算）进行相应的操作。
+     * 如果池的状态是完成，它会检查当前时间是否大于结束时间，
+     * 然后计算赎回金额并进行赎回。如果池的状态是清算，
+     * 它会检查当前时间是否大于匹配时间，然后计算赎回金额并进行赎回。
+     * @param _pid 是池状态
+     * @param _jpAmount 是用户销毁JPtoken的数量
+     */
+    function withdrawBorrow(uint256 _pid,uint256 _jpAmount) external nonReentrant notPause stateFinishLiquidation(_pid){
+        PoolBaseInfo storage pool = poolBaseInfo[_pid];
+        PoolDataInfo storage data = poolDataInfo[_pid];
+        // 要求提取的金额大于0
+        require(_jpAmount > 0, 'withdrawBorrow: withdraw amount is zero');
+        pool.jpCoin.burn(msg.sender,_jpAmount);
+        uint256 totaljpAmount=data.settleAmountLend.tryMul(pool.martgageRate).tryDiv(baseDecimal);
+        uint256 jpShare=_jpAmount.tryMul(calDecimals).tryDiv(totaljpAmount);
+        if(pool.state==PoolState.FINISH){
+            // 要求当前时间大于结束时间
+            require(block.timestamp>=pool.endTime,"withdrawBorrow : less than end time");
+            uint256 redeemAmount=data.finishAmountBorrow.tryMul(jpShare).tryDiv(calDecimals);
+            _redeem(msg.sender,pool.borrowToken,redeemAmount);
+            emit WithdrawBorrow(msg.sender,pool.borrowToken,redeemAmount,_jpAmount);
+        }
+        if(pool.state==PoolState.LIQUIDATION){
+             // 要求当前时间大于匹配时间
+            require(block.timestamp>=pool.settleTime,"withdrawBorrow : less than match time");
+            uint256 redeemAmount=data.liquidationAmounBorrow.tryMul(jpShare).tryDiv(calDecimals);
+            _redeem(msg.sender,pool.borrowToken,redeemAmount);
+            emit WithdrawBorrow(msg.sender,pool.borrowToken,redeemAmount,_jpAmount);
+        }
+    }
+    
+    /**
+     * @dev 紧急借款提取
+     * @notice 在极端情况下，总存款为0，或者总保证金为0，
+     * 在某些极端情况下，如总存款为0或总保证金为0时，借款者可以进行紧急提取。
+     * 首先，代码会获取池子的基本信息和借款者的借款信息，然后检查借款供应和借款者的质押金额是否大于0，
+     * 以及借款者是否已经进行过退款。如果这些条件都满足，
+     * 那么就会执行赎回操作，并标记借款者已经退款。
+     * 最后，触发一个紧急借款提取的事件。
+     * @param _pid 是池子的索引
+     */
+    function emergencyBorrowWithdrawal(uint256 _pid) external nonReentrant notPause stateUndone(_pid){
+        PoolBaseInfo storage pool = poolBaseInfo[_pid];
+        // 确保借款供应大于0
+        require(pool.borrowSupply>0,"emergencyBorrowWithdrawal : not withdrawal");
+        // 获取借款者的借款信息
+        BorrowInfo storage borrowInfo = userBorrowInfo[msg.sender][_pid];
+        // 确保借款者的质押金额大于0
+        require(borrowInfo.stakeAmount > 0, "refundBorrow: not pledged");
+        // 确保借款者没有进行过退款
+        require(!borrowInfo.hasNoRefund, "refundBorrow: again refund");
+         // 执行赎回操作
+        _redeem(msg.sender,pool.borrowToken,borrowInfo.stakeAmount);
+        // 标记借款者已经退款
+        borrowInfo.hasNoRefund = true;
+        // 触发紧急借款提取事件
+        emit EmergencyBorrowWithdrawal(msg.sender, pool.borrowToken, borrowInfo.stakeAmount);
     }
 
     function setPause() public validCall{
