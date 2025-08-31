@@ -10,6 +10,7 @@ import "../library/SafeTransfer.sol";
 
 import "../interface/IBscPledgeOracle.sol";
 import "../interface/IDebtToken.sol";
+import "../interface/IUniswapV2Router02.sol";
 import "../multiSignature/multiSignatureClient.sol";
 
 contract PledgePool is ReentrancyGuard,multiSignatureClient {
@@ -20,10 +21,10 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
     //default decimals
     uint256 constant internal calDecimals=1e18;
     //based on the decimals of the commission and interest
-    uint256 constant internal baseDecimals=1e8;
+    uint256 constant internal baseDecimal=1e8;
     uint256 public minAmount = 100e18;
     //365days
-    uint256 constant internal baseYear=365;
+    uint256 constant internal baseYear=365 days;
 
     enum PoolState {
         MATCH, //匹配中 - 用户可以存款
@@ -70,8 +71,8 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
         uint256 settleAmountBorrow;     // 结算时的实际借款金额
         uint256 finishAmountLend;       // 完成时的实际出借金额
         uint256 finishAmountBorrow;     // 完成时的实际借款金额
-        uint256 liquidationAmounLend;   // 清算时的实际出借金额
-        uint256 liquidationAmounBorrow; // 清算时的实际借款金额
+        uint256 liquidationAmountLend;   // 清算时的实际出借金额
+        uint256 liquidationAmountBorrow; // 清算时的实际借款金额
     }
 
     //total pool data info
@@ -119,9 +120,15 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
     event WithdrawBorrow(address indexed from,address indexed token,uint256 amount,uint256 burnAmount); 
     event EmergencyBorrowWithdrawal(address indexed from, address indexed token, uint256 amount); 
 
+    // 状态改变事件，_pid是池索引，oldState是旧状态，newState是新状态
+    event StateChange(uint256 indexed _pid, uint256 indexed oldState, uint256 indexed newState);
     // 设置费用事件，newLendFee是新的借出费用，newBorrowFee是新的借入费用
     event SetFee(uint256 indexed newLendFee, uint256 indexed newBorrowFee);
+    // 交换事件，fromCoin是交换前的币种地址，toCoin是交换后的币种地址，fromValue是交换前的数量，toValue是交换后的数量
+    event Swap(address indexed fromCoin,address indexed toCoin,uint256 fromValue,uint256 toValue);
     event SetSwapRouterAddress(address indexed oldSwapAddress, address indexed newSwapAddress); 
+    event SetFeeAddress(address indexed oldFeeAddress, address indexed newFeeAddress);
+    event SetMinAmount(uint256 indexed oldMinAmount, uint256 indexed newMinAmount);
 
     constructor(
         address _oracle,
@@ -147,14 +154,26 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
 
     function setSwapRouter(address _swapRouter) validCall external {
         require(_swapRouter != address(0),"PledgePool : swapRouter is zero address");
-        emit SetSwapRouterAddress(_swapRouter);
+        emit SetSwapRouterAddress(swapRouter,_swapRouter);
         swapRouter=_swapRouter;
+    }
+
+    /**
+     * @dev Set up the address to receive the handling fee
+     * @notice Only allow administrators to operate
+     */
+    function setFeeAddress(address _feeAddress) validCall external {
+        require(_feeAddress != address(0),"PledgePool : feeAddress is zero address");
+        emit SetFeeAddress(feeAddress,_feeAddress);
+        feeAddress=_feeAddress;
     }
 
     function setMinAmount(uint256 _minAmount) validCall external {
         require(_minAmount > 0,"PledgePool : minAmount is zero");
+        emit SetMinAmount(minAmount,_minAmount);
         minAmount=_minAmount;
     }
+
     
     function PoolLength() external view returns (uint256) {
         return poolBaseInfos.length;
@@ -194,8 +213,8 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
             settleAmountBorrow: 0,
             finishAmountLend: 0,
             finishAmountBorrow: 0,
-            liquidationAmounLend: 0,
-            liquidationAmounBorrow: 0
+            liquidationAmountLend: 0,
+            liquidationAmountBorrow: 0
         }));
     }
 
@@ -328,8 +347,8 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
         //清算
         if (pool.state==PoolState.LIQUIDATIOM){
             require(block.timestamp>=pool.settleTime,"withdrawLend : less than settle time");
-            //赎回金额 = liquidationAmounLend * sp份额
-            uint256 redeemAmount=data.liquidationAmounLend.tryMul(spShare).tryDiv(calDecimals);
+            //赎回金额 = liquidationAmountLend * sp份额
+            uint256 redeemAmount=data.liquidationAmountLend.tryMul(spShare).tryDiv(calDecimals);
             //退款
             _redeem(msg.sender,pool.lendToken,redeemAmount);
             emit WithdrawLend(msg.sender,pool.lendToken,redeemAmount,_spAmount);
@@ -388,8 +407,10 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
     }
 
     /**
-     * @dev 退还给借款人的过量存款，当借款人的质押量大于0，且借款供应量减去结算借款量大于0，且借款人没有退款时，计算退款金额并进行退款。
+     * @dev 退还给借款人的超额抵押品
      * @notice 池状态不等于匹配和未完成
+     * | 函数           | 状态要求     | 时间要求 | 操作类型   | 代币处理 | 使用场景   
+     * | `refundBorrow` | EXECUTION/FINISH/LIQUIDATION | 结算后   | 退还超额  | 转出超额抵押品| 退还超额质押   
      * @param _pid 是池状态
      */
     function refundBorrow(uint256 _pid) external nonReentrant notPause timeAfter(_pid) stateNotMatchUndone(_pid){
@@ -413,10 +434,8 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
      * @dev 借款人接收 sp_token 和贷款资金
      * @notice 池状态不等于匹配和未完成
      * @param _pid 是池状态
-     * 1. JP代币代表抵押品权益，不是借款资金
-     * 2. 借款人同时获得JP代币和实际借款资金
-     * 3. 到期后需要销毁JP代币才能赎回抵押品
-     * 4. 抵押率决定了JP代币的发行总量
+     * | 函数           | 状态要求     | 时间要求 | 操作类型   | 代币处理 | 使用场景   
+     * | `claimBorrow` | EXECUTION/FINISH/LIQUIDATION | 结算后   | 领取贷款  | 铸造 JP 代币+转出借款| 获得借款资金  
      */
     function claimBorrow(uint256 _pid) external nonReentrant notPause timeAfter(_pid) stateNotMatchUndone(_pid){
         PoolBaseInfo storage pool = poolBaseInfos[_pid];
@@ -425,7 +444,7 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
         require(borrowInfo.stakeAmount>0,"claimBorrow : cannot get jp_token");// 需要借款人的质押量大于0
         require(borrowInfo.hasNoClaim==false,"claimBorrow : already claimed");// 需要借款人没有领取过jp_token
     
-        // 总JP数量 = 实际结算的借款金额 × 抵押率 (抵押率 = 借款金额 / 抵押品价值, 150%抵押率：需要质押1.5倍价值的抵押品)
+        // 总JP数量 = 实际结算的借款金额(1e18) × 抵押率(1e8) (抵押率 = 借款金额 / 抵押品价值, 150%抵押率：需要质押1.5倍价值的抵押品)
         uint256 totalJpAmount = data.settleAmountLend.tryMul(pool.martgageRate).tryDiv(baseDecimal);
         // 用户份额 = 质押金额 / 总质押金额
         uint256 userShare=borrowInfo.stakeAmount.tryMul(calDecimals).tryDiv(pool.borrowSupply);
@@ -440,12 +459,10 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
         emit ClaimBorrow(msg.sender,pool.borrowToken,borrowAmount);
     }
     /**
-     * @dev 借款人赎回质押，这个函数首先检查提取的金额是否大于0，
-     * 然后销毁相应数量的JPtoken。
-     * 接着，它计算JPtoken的份额，并根据池的状态（完成或清算）进行相应的操作。
-     * 如果池的状态是完成，它会检查当前时间是否大于结束时间，
-     * 然后计算赎回金额并进行赎回。如果池的状态是清算，
-     * 它会检查当前时间是否大于匹配时间，然后计算赎回金额并进行赎回。
+     * @dev 借款人赎回质押
+     * @notice 
+     * | 函数           | 状态要求     | 时间要求 | 操作类型   | 代币处理 | 使用场景   
+     * | `withdrawBorrow` | FINISH/LIQUIDATION | 到期后   | 赎回抵押品  | 销毁 JP 代币+转出抵押品| 取回质押的抵押品  
      * @param _pid 是池状态
      * @param _jpAmount 是用户销毁JPtoken的数量
      */
@@ -467,7 +484,7 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
         if(pool.state==PoolState.LIQUIDATION){
              // 要求当前时间大于匹配时间
             require(block.timestamp>=pool.settleTime,"withdrawBorrow : less than match time");
-            uint256 redeemAmount=data.liquidationAmounBorrow.tryMul(jpShare).tryDiv(calDecimals);
+            uint256 redeemAmount=data.liquidationAmountBorrow.tryMul(jpShare).tryDiv(calDecimals);
             _redeem(msg.sender,pool.borrowToken,redeemAmount);
             emit WithdrawBorrow(msg.sender,pool.borrowToken,redeemAmount,_jpAmount);
         }
@@ -501,6 +518,301 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
         emit EmergencyBorrowWithdrawal(msg.sender, pool.borrowToken, borrowInfo.stakeAmount);
     }
 
+    function checkoutSettle(uint256 _pid) public view returns(bool){
+        return block.timestamp>=poolBaseInfos[_pid].settleTime;
+    }
+
+    function settle(uint256 _pid) public validCall{
+        PoolBaseInfo storage pool = poolBaseInfos[_pid];
+        PoolDataInfo storage data= poolDataInfos[_pid];
+        require(checkoutSettle(_pid),"settle: 小于结算时间");
+        require(pool.state==PoolState.MATCH,"settle: 池子状态必须是匹配");
+        if(pool.lendSupply>0 && pool.borrowSupply>0){
+            //获取资产对价格
+            uint256[2] memory prices=getUnderlyingPriceView(_pid);
+            //计算质押保证金总价值 =价格比率（抵押品价格/出借代币价格）* 抵押品数量
+            uint256 totalValue=pool.borrowSupply.tryMul(prices[1].tryMul(calDecimals).tryDiv(prices[0])).tryDiv(calDecimals);
+            //计算实际价值 = 总价值 ÷抵押率
+            // totalValue = 50,000 USDC
+            // 抵押率 = 150%（1.5倍）
+            // actualValue = 50,000 × 1e8 ÷ 150,000,000 = 33,333.33 USDC
+            uint256 actualValue=totalValue.tryMul(baseDecimal).tryDiv(pool.martgageRate);
+            if(pool.lendSupply>actualValue){
+                // 总借款大于总借出
+                data.settleAmountLend=actualValue;
+                data.settleAmountBorrow=pool.borrowSupply;
+            }else{
+                // 总借款小于总借出
+                data.settleAmountLend=pool.lendSupply;
+                //结算时的实际借款金额 settleAmountBorrow = (lendSupply × martgageRate) ÷ (borrowTokenPrice × baseDecimal ÷ lendTokenPrice)
+                data.settleAmountBorrow=pool.lendSupply.tryMul(pool.martgageRate).tryDiv(prices[1].tryMul(baseDecimal).tryDiv(prices[0]));
+            }
+            // 更新池子状态为执行
+            pool.state=PoolState.EXECUTION;
+             // 触发事件
+            emit StateChange(_pid,uint256(PoolState.MATCH), uint256(PoolState.EXECUTION));
+
+        } else {
+            // 极端情况，借款或借出任一为0
+            pool.state=PoolState.UNDONE;
+            data.settleAmountLend=pool.lendSupply;
+            data.settleAmountBorrow=pool.borrowSupply;
+            // 触发事件
+            emit StateChange(_pid,uint256(PoolState.MATCH), uint256(PoolState.UNDONE));
+        }
+    }
+
+    function checkoutFinish(uint256 _pid) public view returns(bool){
+        return block.timestamp>=poolBaseInfos[_pid].endTime;
+    }
+
+    /**
+     * @dev 完成一个借贷池的操作，包括计算利息、执行交换操作、赎回费用和更新池子状态等步骤。
+     * @param _pid 是池子的索引
+     */
+    function finish(uint256 _pid) public validCall{
+        // 获取基础池子信息和数据信息
+        PoolBaseInfo storage pool = poolBaseInfo[_pid];
+        PoolDataInfo storage data = poolDataInfo[_pid];
+        require(checkoutFinish(_pid),"finish: less than end time");
+        require(pool.state==PoolState.EXECUTION,"finish: pool state must be execution");
+
+        (address token0,address token1)=(pool.borrowToken,pool.lendToken);
+        // 计算时间比率(1e8) = ((结束时间 - 结算时间) * 基础小数)/365天
+        uint256 timeRatio=((pool.endTime-data.settleTime).tryMul(baseDecimal)).tryDiv(baseYear);
+        // 计算利息(1e18) = 基础利息（结算贷款金额(1e18)× 利率(1e8) ）× 时间比率(1e8)
+        uint256 interest=timeRatio.tryMul(pool.interestRate.tryMul(data.settleAmountLend)).tryDiv(1e16);
+        uint256 lendAmount=data.settleAmountLend.tryAdd(interest); // 计算贷款金额 = 结算贷款金额 + 利息
+        // 计算需要变现的抵押品价值 = 贷款金额 * (1 + lendFee费用)
+        uint256 sellAmount=lendAmount.tryMul(lendFee.add(baseDecimal)).tryDiv(baseDecimal);
+         // 执行代币交换操作 amountSell：实际卖出的抵押品数量 amountIn：实际获得的出借代币数量
+        (uint256 amountSell,uint256 amountIn) = _sellExactAmount(swapRouter,token0,token1,sellAmount);
+        require(amountIn >= lendAmount,"finish: Slippage is too high")
+        if(amountIn>lendAmount){
+            uint256 feeAmount=amountIn.trySub(lendAmount);
+            //如果变现收益超过还款需求：超额部分作为协议费用
+            _redeem(feeAddress,pool.lendToken, feeAmount);
+            data.finishAmountLend = amountIn.sub(feeAmount); //更新完成时的出借金额
+        }else{
+             data.finishAmountLend = amountIn;
+        }
+
+          // 计算剩余的抵押品数量
+          uint256 remainNowAmount=data.settleAmountBorrow.trySub(amountSell);
+          uint256 remainBorrowAmount=redeemFees(borrowFee,pool.borrowToken,remianNowAmount);//返回扣除费用后的剩余金额
+          data.finishAmountBorrow=remainBorrowAmount;
+
+          pool.state=PoolState.FINISH;
+          emit StateChange(_pid,uint256(PoolState.EXECUTION), uint256(PoolState.FINISH));
+    }
+
+    /**
+     * @dev 检查清算条件,
+     * @param _pid 是池子的索引
+     */
+    function checkoutLiquidation(uint256 _pid) external view returns(bool){
+        PoolBaseInfo storage pool = poolBaseInfos[_pid];
+        PoolDataInfo storage data = poolDataInfos[_pid];
+        uint256[2] memory prices=getUnderlyingPriceView(_pid);
+        // 保证金当前价值 =  价格比率（抵押品价格/出借代币价格）* 抵押品数量
+        uint256 borrowValueNow=data.settleAmountBorrow.tryMul(prices[1].tryMul(calDecimals).tryDiv(prices[0])).tryDiv(calDecimals);
+        // 清算阈值 = settleAmountLend * (1 + autoLiquidateThreshold)
+        uint256 valueThreshold=data.settleAmountLend.tryMul(baseDecimal.tryAdd(pool.autoLiquidateThreshold)).tryDiv(baseDecimal);
+        return borrowValueNow<liquidationThreshold;
+    }
+
+
+    /**
+     * @dev 清算
+     * @param _pid 是池子的索引
+     */
+    function liquidate(uint256 _pid) public validCall{
+        PoolDataInfo storage data = poolDataInfo[_pid]; 
+        PoolBaseInfo storage pool = poolBaseInfo[_pid]; 
+        require(block.timestamp > pool.settleTime, "liquidate: time is less than settle time"); // 需要当前时间大于结算时间
+        require(pool.state == PoolState.EXECUTION,"liquidate: pool state must be execution"); // 需要池子的状态是执行状态
+
+        (address token0,address token1)=(pool.borrowToken,pool.lendToken);
+         // 时间比率(1e8) = ((结束时间 - 结算时间) * 基础小数)/365天
+        uint256 timeRatio=(pool.endTime.trySub(data.settleTime)).tryMul(baseDecimal).tryDiv(baseYear);
+        // 计算利息(1e18) = 基础利息（结算贷款金额(1e18)× 利率(1e8) ）× 时间比率(1e8)
+        uint256 interest=timeRatio.tryMul(pool.interestRate.tryMul(data.settleAmountLend)).tryDiv(1e16);
+        // 计算贷款金额 = 结算贷款金额 + 利息
+        uint256 lendAmount=data.settleAmountLend.tryAdd(interest);
+        // 添加贷款费用
+        uint256 sellAmount=lendAmount.tryMul(lendFee.add(baseDecimal)).tryDiv(baseDecimal);
+        (uint256 amountSell,uint256 amountIn) = _sellExactAmount(swapRouter,token0,token1,sellAmount); // 卖出准确的金额
+        // 可能会有滑点，amountIn - lendAmount < 0;
+        if (amountIn > lendAmount) {
+            uint256 feeAmount = amountIn.sub(lendAmount) ; // 费用金额
+            // 贷款费用
+            _redeem(feeAddress,pool.lendToken, feeAmount);
+            data.liquidationAmountLend = amountIn.sub(feeAmount);
+        }else {
+            data.liquidationAmountLend = amountIn;
+        }
+        // liquidationAmountBorrow  借款费用
+        uint256 remainNowAmount = data.settleAmountBorrow.sub(amountSell); // 剩余的现在的金额
+        uint256 remainBorrowAmount = redeemFees(borrowFee,pool.borrowToken,remainNowAmount); // 剩余的借款金额
+        data.liquidationAmountBorrow = remainBorrowAmount;
+        // 更新池子状态
+        pool.state = PoolState.LIQUIDATION;
+         // 事件
+        emit StateChange(_pid,uint256(PoolState.EXECUTION), uint256(PoolState.LIQUIDATION));
+    }
+
+    /**
+     * @dev 费用计算,计算并赎回费用。
+     * @notice 如果计算出的费用大于0，它将从费用地址赎回相应的费用。
+     * @param feeRatio 是费率
+     * @param token 是代币地址
+     * @param amount 是金额
+     * @return 返回扣除费用后的剩余金额
+     */
+    function redeemFees(uint256 feeRatio, address token, uint256 amount) internal returns (uint256){
+        // 计算费用 = 金额 * 费率 / 基数
+        uint256 fee=amount.tryMul(feeRatio).tryDiv(baseDecimal);
+        if(fee>0){
+            _redeem(feeAddress,token,fee);
+        }
+        return amount.trySub(fee);
+    }
+
+    function getUnderlyingPriceView(uint256 _pid) public view returns(uint256[2] memory){
+        PoolBaseInfo storage pool = poolBaseInfos[_pid];
+        uint256[] memory assets=new uint256[](2);        // 创建一个新的数组来存储资产
+        // 将资产转换为uint256类型
+        assets[0]=uint256(pool.lendToken);
+        assets[1]=uint256(pool.borrowToken);
+        uint256[] memory prices=oracle.getPrices(assets);        // 从预言机获取资产的价格
+        return [prices[0],prices[1]];
+    }
+
+    //============UniSwapV2 =================
+
+    /**
+     * @dev 获取代币交换路径
+     * @notice 构建从 token0 到 token1 的交换路径，支持 ETH 包装
+     * @param _swapRouter DEX路由器地址（如PancakeSwap）
+     * @param token0 源代币地址（要卖出的代币）
+     * @param token1 目标代币地址（要获得的代币）
+     * @return path 交换路径数组
+     */
+    function _getSwapPath(address _swapRouter,address token0, address token1) internal pure returns(address[] memory path){
+        IUniswapV2Router02 IUniswap=IUniswapV2Router02(_swapRouter);
+        path = new address[](2);
+        path[0] = token0 == address(0) ? IUniswap.WETH() : token0;
+        path[1] = token1 == address(0) ? IUniswap.WETH() : token1;
+    }
+
+    /**
+     * @dev 根据期望获得的代币数量，计算需要投入的代币数量
+     * @notice 这是 DEX 的"反向计算"功能，用于精确控制交换
+     * 
+     * @param _swapRouter DEX路由器地址
+     * @param token0 源代币地址（要卖出的代币）
+     * @param token1 目标代币地址（要获得的代币）
+     * @param amountOut 期望获得的代币数量
+     * @return 需要投入的源代币数量
+     */
+    function _getAmountIn(address _swapRouter, address token0, address token1, uint256 amountOut) internal view returns(uint256){
+        IUniswapV2Router02 IUniswap = IUniswapV2Router02(_swapRouter);
+        address[] memory path = _getSwapPath(_swapRouter,token0,token1);
+        uint256[] memory amounts = IUniswap.getAmountsIn(amountOut,path);
+        return amounts[0];
+    }
+
+    /**
+     * @dev 精确卖出代币：根据期望获得的输出数量，计算并执行交换
+     * 
+     * @param _swapRouter DEX路由器地址
+     * @param token0 要卖出的代币地址
+     * @param token1 要获得的代币地址
+     * @param amountout 期望获得的代币数量
+     * @return (amountSell, amountIn) 实际卖出的代币数量（可能因滑点而变化）和实际获得的代币数量（应该 >= amountout）
+     * 
+     * === 执行流程 ===
+     * 1. 计算阶段：调用 _getAmountIn 计算需要卖出的数量
+     * 2. 执行阶段：调用 _swap 执行实际交换
+     * 3. 返回结果：提供卖出和获得的数量
+     * 
+     * === 使用场景 ===
+     * - finish 函数：变现抵押品获得还款资金
+     * - liquidate 函数：清算时变现抵押品
+     */
+    function _sellExactAmount(address _swapRouter,address token0,address token1,uint256 amountOut) internal returns(uint256,uint256){
+        uint256 amountSell=amountOut>0?_getAmountIn(_swapRouter,token0,token1,amountOut):0;
+        return(amountSell,_swap(_swapRouter,token0,token1,amountSell));
+    }
+
+    /**
+     * @dev 执行实际的代币交换操作
+     * @param _swapRouter DEX路由器地址
+     * @param token0 源代币地址
+     * @param token1 目标代币地址
+     * @param amount0 要交换的源代币数量
+     * @return 实际获得的代币数量
+     * 
+     * === 交换类型支持 ===
+     * 1. ETH → 代币：使用 swapExactETHForTokens
+     * 2. 代币 → ETH：使用 swapExactTokensForETH  
+     * 3. 代币 → 代币：使用 swapExactTokensForTokens
+     * 
+     * === 注意事项 ===
+     * - 使用无限授权（uint256(-1)）提高效率
+     * - 超时设置为 now+30，防止交易卡死 
+     * - 返回的是实际获得的代币数量（可能有滑点）
+     */
+    function _swap(address _swapRouter, address token0, address token1, uint256 amount0) internal returns(uint256){
+        // 如果源代币不是 ETH，设置授权
+        if(token0!=address(0)){
+            _safeApprove(token0,address(_swapRouter),uint256(-1));
+        }
+         // 如果目标代币不是 ETH，设置授权
+         if(token1!=address(0)){
+            _safeApprove(token1,address(_swapRouter),uint256(-1));
+         }
+         IUniswapV2Router02 IUniswap=IUniswapV2Router02(_swapRouter);
+         address[] memory path=_getSwapPath(_swapRouter,token0,token1);
+         uint256[] memory amounts;
+         if(token0==address(0)){
+            //swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)
+            amounts=IUniswap.swapExactETHForTokens{value:amount0}(0,path,address(this),block.timestamp+30);
+         }else if(token1==address(0)){
+            //swapTokensForExactETH(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)
+            amounts=IUniswap.swapTokensForExactETH(amount0,0,path,address(this),block.timestamp+30);
+         }else{
+            amounts = IUniswap.swapExactTokensForTokens(amount0,0, path, address(this), block.timestamp+30);
+        }
+        emit Swap(token0,token1,amounts[0],amounts[amounts.length-1]);
+        return amounts[amounts.length-1];
+    }
+
+    /**
+     * @dev 安全地为代币设置授权
+     * @notice 使用底层调用实现授权，避免 ERC20 标准不一致的问题
+     * @param token 要授权的代币地址
+     * @param to 被授权的地址（通常是 DEX 路由器）
+     * @param value 授权数量（这里使用 uint256(-1) 表示无限授权）
+     * 
+     * === 授权机制 ===
+     * 1. 调用代币合约的 approve 函数
+     * 2. 检查调用是否成功
+     * 3. 验证返回值（如果代币支持）
+     * 
+     * === 为什么使用无限授权 ===
+     * 1. 提高效率：避免每次交换都重新授权
+     * 2. 减少 gas 消耗：一次授权，多次使用
+     * 3. 简化逻辑：不需要跟踪剩余授权数量
+     * 
+     * === 函数选择器 ===
+     * 0x095ea7b3 = approve(address,uint256) 的函数选择器
+     */
+    function _safeApprove(address token, address to, uint256 value) internal {
+        (bool success, bytes memory data) = token.call(abi.encodeWithSelector(0x095ea7b3, to, value));
+        require(success && (data.length == 0 || abi.decode(data, (bool))), "!safeApprove");
+    }
+
     function setPause() public validCall{
         globalPaused=!globalPaused;
     }
@@ -519,6 +831,7 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
         require(block.timestamp>=poolBaseInfos[_pid].settleTime,"PledgePool : After settle time");
         _;
     }
+
 
     modifier stateMatch(uint256 _pid) {
         require(poolBaseInfo[_pid].state == PoolState.MATCH, "state: Pool status is not equal to match");

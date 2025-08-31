@@ -52,7 +52,6 @@ contract BscPledgeOracle is MultiSignatureClient {
     /**
      * @dev 全局精度除数，用于Chainlink价格调整
      * 默认为1，可通过setDecimals调整
-     * 例如：如果Chainlink返回8位小数，设置为1e8可以进行标准化
      */
     uint256 internal decimals = 1;
 
