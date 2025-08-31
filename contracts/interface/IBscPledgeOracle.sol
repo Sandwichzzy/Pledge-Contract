@@ -7,5 +7,5 @@ interface IBscPledgeOracle {
 
     function getPrices(uint256[] calldata assets) external view returns (uint256[] memory);
     
-    function getUnderlyingPrice(uint256 cToken) external view returns (uint256)
+    function getUnderlyingPrice(uint256 cToken) external view returns (uint256);
 }

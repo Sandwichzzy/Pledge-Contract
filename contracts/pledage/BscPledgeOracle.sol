@@ -2,8 +2,8 @@
 
 pragma solidity ^0.8.0;
 
-import "../multiSignature/MultiSignatureClient.sol";
-import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
+import "../multiSignature/multiSignatureClient.sol";
+import "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 
 /**
  * @title BscPledgeOracle - BSC质押协议价格预言机
@@ -26,7 +26,7 @@ import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
  * - 本系统统一使用18位小数（以太坊标准）
  * - 自动进行精度转换以确保计算准确性
  */
-contract BscPledgeOracle is MultiSignatureClient {
+contract BscPledgeOracle is multiSignatureClient {
 
     /**
      * @dev 资产到Chainlink聚合器的映射
@@ -55,7 +55,7 @@ contract BscPledgeOracle is MultiSignatureClient {
      */
     uint256 internal decimals = 1;
 
-    constructor(address _multiSignature) MultiSignatureClient(_multiSignature) {
+    constructor(address _multiSignature) multiSignatureClient(_multiSignature) {
          // === BSC测试网聚合器地址示例 ===
         // 这些地址在实际部署时可以启用，配置常用资产的Chainlink聚合器
         
@@ -194,7 +194,7 @@ contract BscPledgeOracle is MultiSignatureClient {
         decimalsMap[uint256(asset)]=_decimals;
     }
 
-        /**
+    /**
      * @notice 设置资产的Chainlink聚合器（通过ID）
      * @dev 为资产配置Chainlink价格源
      * @param underlying 资产标识符

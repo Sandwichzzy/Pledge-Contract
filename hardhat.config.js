@@ -16,6 +16,16 @@ module.exports = {
   },
   networks: {
     hardhat: {},
+    bscTestnet: {
+      url: process.env.BSC_TESTNET_URL,
+      accounts: [
+        process.env.PRIVATE_KEY,
+        process.env.PRIVATE_KEY_2,
+        process.env.PRIVATE_KEY_3,
+      ],
+      chainId: 97,
+      timeout: 120000, // 增加超时时间到 2 分钟
+    },
     sepolia: {
       url: process.env.SEPOLIA_URL,
       accounts: [
@@ -37,6 +47,9 @@ module.exports = {
     },
     user1: {
       default: 1,
+    },
+    user2: {
+      default: 2,
     },
   },
 };

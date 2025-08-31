@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/utils/math/Math.sol";
@@ -13,7 +13,7 @@ import "../interface/IDebtToken.sol";
 import "../interface/IUniswapV2Router02.sol";
 import "../multiSignature/multiSignatureClient.sol";
 
-contract PledgePool is ReentrancyGuard,multiSignatureClient {
+contract PledgePool is ReentrancyGuard,multiSignatureClient,SafeTransfer {
 
     using Math for uint256;
     using SafeERC20 for IERC20;
@@ -105,7 +105,7 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
     // 出借退还超额存款事件，from是存款出借者地址，token是存入的代币地址，refund是退款的数量
     event RefundLend(address indexed from,address indexed token,uint256 refund);
     // 出借领取SP代币事件，from是领取者地址，token是存入的代币地址，amount领取的SP代币数量
-    event ClaimLend(address indexed from,address indexed token,uint256 amount)
+    event ClaimLend(address indexed from,address indexed token,uint256 amount);
     // 出借方提取存款事件，from是提取者地址，token是提取的代币地址，amount是提取的数量，burnAmount是销毁SP_coin的数量
     event WithdrawLend(address indexed from,address indexed token,uint256 amount,uint256 burnAmount);
     // 出借人紧急提取存款事件，from是提取者地址，token是提取的代币地址，amount是提取的数量
@@ -206,7 +206,7 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
             spCoin: IDebtToken(_spToken),
             jpCoin: IDebtToken(_jpToken),
             autoLiquidateThreshold: _autoLiquidateThreshold
-        }))
+        }));
         //推入池数据信息
         poolDataInfos.push(PoolDataInfo({
             settleAmountLend: 0,
@@ -239,7 +239,7 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
         // 检查存款金额是否超过池的剩余容量
         require(_stakeAmount<=(pool.maxSupply).trySub(pool.lendSupply),"depositLend : stakeAmount is greater than maxSupply");
         uint256 amount = getPayableAmount(pool.lendToken,_stakeAmount);
-        require(amount>minAmount, "depositLend: 少于最小存款金额");
+        require(amount>minAmount, "depositLend: amount less than minimum deposit");
 
         lendInfo.hasNoClaim=false;  // 重置领取标志，允许用户领取SP代币
         lendInfo.hasNoRefund=false; // 重置退款标志，允许用户申请退款
@@ -413,7 +413,7 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
      * | `refundBorrow` | EXECUTION/FINISH/LIQUIDATION | 结算后   | 退还超额  | 转出超额抵押品| 退还超额质押   
      * @param _pid 是池状态
      */
-    function refundBorrow(uint256 _pid) external nonReentrant notPause timeAfter(_pid) stateNotMatchUndone(_pid){
+    function refundBorrow(uint256 _pid) external nonReentrant notPause timeAfterSettle(_pid) stateNotMatchUndone(_pid){
         PoolBaseInfo storage pool = poolBaseInfos[_pid];
         PoolDataInfo storage data = poolDataInfos[_pid];
         BorrowInfo storage borrowInfo = userBorrowInfo[msg.sender][_pid];
@@ -437,7 +437,7 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
      * | 函数           | 状态要求     | 时间要求 | 操作类型   | 代币处理 | 使用场景   
      * | `claimBorrow` | EXECUTION/FINISH/LIQUIDATION | 结算后   | 领取贷款  | 铸造 JP 代币+转出借款| 获得借款资金  
      */
-    function claimBorrow(uint256 _pid) external nonReentrant notPause timeAfter(_pid) stateNotMatchUndone(_pid){
+    function claimBorrow(uint256 _pid) external nonReentrant notPause timeAfterSettle(_pid) stateNotMatchUndone(_pid){
         PoolBaseInfo storage pool = poolBaseInfos[_pid];
         PoolDataInfo storage data = poolDataInfos[_pid];
         BorrowInfo storage borrowInfo = userBorrowInfo[msg.sender][_pid];
@@ -448,7 +448,7 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
         uint256 totalJpAmount = data.settleAmountLend.tryMul(pool.martgageRate).tryDiv(baseDecimal);
         // 用户份额 = 质押金额 / 总质押金额
         uint256 userShare=borrowInfo.stakeAmount.tryMul(calDecimals).tryDiv(pool.borrowSupply);
-        unit256 jpAmount=totalJpAmount.tryMul(userShare).tryDiv(calDecimals);
+        uint256 jpAmount=totalJpAmount.tryMul(userShare).tryDiv(calDecimals);
 
         // 铸造 jp token 给借款人 
         pool.jpCoin.mint(msg.sender,jpAmount);
@@ -467,8 +467,8 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
      * @param _jpAmount 是用户销毁JPtoken的数量
      */
     function withdrawBorrow(uint256 _pid,uint256 _jpAmount) external nonReentrant notPause stateFinishLiquidation(_pid){
-        PoolBaseInfo storage pool = poolBaseInfo[_pid];
-        PoolDataInfo storage data = poolDataInfo[_pid];
+        PoolBaseInfo storage pool = poolBaseInfos[_pid];
+        PoolDataInfo storage data = poolDataInfos[_pid];
         // 要求提取的金额大于0
         require(_jpAmount > 0, 'withdrawBorrow: withdraw amount is zero');
         pool.jpCoin.burn(msg.sender,_jpAmount);
@@ -501,7 +501,7 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
      * @param _pid 是池子的索引
      */
     function emergencyBorrowWithdrawal(uint256 _pid) external nonReentrant notPause stateUndone(_pid){
-        PoolBaseInfo storage pool = poolBaseInfo[_pid];
+        PoolBaseInfo storage pool = poolBaseInfos[_pid];
         // 确保借款供应大于0
         require(pool.borrowSupply>0,"emergencyBorrowWithdrawal : not withdrawal");
         // 获取借款者的借款信息
@@ -525,8 +525,8 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
     function settle(uint256 _pid) public validCall{
         PoolBaseInfo storage pool = poolBaseInfos[_pid];
         PoolDataInfo storage data= poolDataInfos[_pid];
-        require(checkoutSettle(_pid),"settle: 小于结算时间");
-        require(pool.state==PoolState.MATCH,"settle: 池子状态必须是匹配");
+        require(checkoutSettle(_pid),"settle: time is less than settle time");
+        require(pool.state==PoolState.MATCH,"settle: pool state must be MATCH");
         if(pool.lendSupply>0 && pool.borrowSupply>0){
             //获取资产对价格
             uint256[2] memory prices=getUnderlyingPriceView(_pid);
@@ -572,8 +572,8 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
      */
     function finish(uint256 _pid) public validCall{
         // 获取基础池子信息和数据信息
-        PoolBaseInfo storage pool = poolBaseInfo[_pid];
-        PoolDataInfo storage data = poolDataInfo[_pid];
+        PoolBaseInfo storage pool = poolBaseInfos[_pid];
+        PoolDataInfo storage data = poolDataInfos[_pid];
         require(checkoutFinish(_pid),"finish: less than end time");
         require(pool.state==PoolState.EXECUTION,"finish: pool state must be execution");
 
@@ -587,7 +587,7 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
         uint256 sellAmount=lendAmount.tryMul(lendFee.add(baseDecimal)).tryDiv(baseDecimal);
          // 执行代币交换操作 amountSell：实际卖出的抵押品数量 amountIn：实际获得的出借代币数量
         (uint256 amountSell,uint256 amountIn) = _sellExactAmount(swapRouter,token0,token1,sellAmount);
-        require(amountIn >= lendAmount,"finish: Slippage is too high")
+        require(amountIn >= lendAmount,"finish: Slippage is too high");
         if(amountIn>lendAmount){
             uint256 feeAmount=amountIn.trySub(lendAmount);
             //如果变现收益超过还款需求：超额部分作为协议费用
@@ -599,7 +599,7 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
 
           // 计算剩余的抵押品数量
           uint256 remainNowAmount=data.settleAmountBorrow.trySub(amountSell);
-          uint256 remainBorrowAmount=redeemFees(borrowFee,pool.borrowToken,remianNowAmount);//返回扣除费用后的剩余金额
+          uint256 remainBorrowAmount=redeemFees(borrowFee,pool.borrowToken,remainNowAmount);//返回扣除费用后的剩余金额
           data.finishAmountBorrow=remainBorrowAmount;
 
           pool.state=PoolState.FINISH;
@@ -618,7 +618,7 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
         uint256 borrowValueNow=data.settleAmountBorrow.tryMul(prices[1].tryMul(calDecimals).tryDiv(prices[0])).tryDiv(calDecimals);
         // 清算阈值 = settleAmountLend * (1 + autoLiquidateThreshold)
         uint256 valueThreshold=data.settleAmountLend.tryMul(baseDecimal.tryAdd(pool.autoLiquidateThreshold)).tryDiv(baseDecimal);
-        return borrowValueNow<liquidationThreshold;
+        return borrowValueNow<valueThreshold;
     }
 
 
@@ -627,8 +627,8 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
      * @param _pid 是池子的索引
      */
     function liquidate(uint256 _pid) public validCall{
-        PoolDataInfo storage data = poolDataInfo[_pid]; 
-        PoolBaseInfo storage pool = poolBaseInfo[_pid]; 
+        PoolDataInfo storage data = poolDataInfos[_pid]; 
+        PoolBaseInfo storage pool = poolBaseInfos[_pid]; 
         require(block.timestamp > pool.settleTime, "liquidate: time is less than settle time"); // 需要当前时间大于结算时间
         require(pool.state == PoolState.EXECUTION,"liquidate: pool state must be execution"); // 需要池子的状态是执行状态
 
@@ -724,7 +724,6 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
 
     /**
      * @dev 精确卖出代币：根据期望获得的输出数量，计算并执行交换
-     * 
      * @param _swapRouter DEX路由器地址
      * @param token0 要卖出的代币地址
      * @param token1 要获得的代币地址
@@ -834,25 +833,25 @@ contract PledgePool is ReentrancyGuard,multiSignatureClient {
 
 
     modifier stateMatch(uint256 _pid) {
-        require(poolBaseInfo[_pid].state == PoolState.MATCH, "state: Pool status is not equal to match");
+        require(poolBaseInfos[_pid].state == PoolState.MATCH, "state: Pool status is not equal to match");
         _;
     }
 
     modifier stateNotMatchUndone(uint256 _pid) {
-        require(poolBaseInfo[_pid].state == PoolState.EXECUTION 
-        || poolBaseInfo[_pid].state == PoolState.FINISH || 
-        poolBaseInfo[_pid].state == PoolState.LIQUIDATION,
+        require(poolBaseInfos[_pid].state == PoolState.EXECUTION 
+        || poolBaseInfos[_pid].state == PoolState.FINISH || 
+        poolBaseInfos[_pid].state == PoolState.LIQUIDATION,
         "state: not match and undone");
         _;
     }
 
     modifier stateFinishLiquidation(uint256 _pid) {
-        require(poolBaseInfo[_pid].state == PoolState.FINISH || poolBaseInfo[_pid].state == PoolState.LIQUIDATION,"state: finish liquidation");
+        require(poolBaseInfos[_pid].state == PoolState.FINISH || poolBaseInfos[_pid].state == PoolState.LIQUIDATION,"state: finish liquidation");
         _;
     }
 
     modifier stateUndone(uint256 _pid) {
-        require(poolBaseInfo[_pid].state == PoolState.UNDONE,"state: state must be undone");
+        require(poolBaseInfos[_pid].state == PoolState.UNDONE,"state: state must be undone");
         _;
     }
 }

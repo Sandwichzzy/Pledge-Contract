@@ -3,7 +3,7 @@
 pragma solidity ^0.8.0;
 
 import "../multiSignature/multiSignatureClient.sol";
-import "@openzeppelin/contracts/utils/EnumerableSet.sol";
+import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 
 /**
  * @title AddressPrivileges - 地址权限管理合约
@@ -104,9 +104,9 @@ contract AddressPrivileges is multiSignatureClient{
       * @param _index 索引位置
       * @return address 对应索引的铸币者地址
       */
-    function getMinter(uint256 _index) public view returns (address){
+    function getMinter(uint256 _index) public view returns (address) {
         require(_index<getMinterLength()-1,"Token : index out of bounds");
-        return EnumerableSet.at(_minters,_index)
+        return EnumerableSet.at(_minters,_index);
     }
 
     /**
