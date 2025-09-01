@@ -1,49 +1,49 @@
-let spTokenName = "spBTC_1";
-let spTokenSymbol = "spBTC_1";
+let jpTokenName = "jpBTC_1";
+let jpTokenSymbol = "jpBTC_1";
 
 module.exports = async ({ getNamedAccounts, deployments, network }) => {
   const { deployer } = await getNamedAccounts();
   const { deploy } = deployments;
 
-  console.log("Deploying SP DebtToken with deployer:", deployer);
+  console.log("Deploying JP DebtToken with deployer:", deployer);
 
   const multiSignatureDeployment = await deployments.get("multiSignature");
   const multiSignatureAddress = multiSignatureDeployment.address;
 
   console.log("Using multiSignature address:", multiSignatureAddress);
 
-  // 部署 SP DebtToken 合约 (供应方凭证)
-  const spDebtToken = await deploy("spDebtToken", {
+  // 部署 JP DebtToken 合约 (抵押凭证)
+  const jpDebtToken = await deploy("jpDebtToken", {
     from: deployer,
-    args: [spTokenName, spTokenSymbol, multiSignatureAddress],
+    args: [jpTokenName, jpTokenSymbol, multiSignatureAddress],
     log: true,
     contract: "DebtToken",
   });
 
-  console.log("SP DebtToken deployed to", spDebtToken.address);
+  console.log("JP DebtToken deployed to", jpDebtToken.address);
 
   // 验证合约（如果在Sepolia网络上）
   if (network.config.chainId === 11155111 && process.env.ETHERSCAN_API_KEY) {
-    console.log("Verifying SP DebtToken");
+    console.log("Verifying JP DebtToken");
     try {
       await run("verify:verify", {
-        address: spDebtToken.address,
+        address: jpDebtToken.address,
         constructorArguments: [
-          spTokenName,
-          spTokenSymbol,
+          jpTokenName,
+          jpTokenSymbol,
           multiSignatureAddress,
         ],
       });
-      console.log("SP DebtToken verified");
+      console.log("JP DebtToken verified");
     } catch (error) {
-      console.error("Error verifying SP DebtToken", error.message);
+      console.error("Error verifying JP DebtToken", error.message);
     }
   } else {
     console.log("Network is not sepolia, skipping verification");
   }
 
-  return spDebtToken;
+  return jpDebtToken;
 };
 
 module.exports.dependencies = ["multiSignature"];
-module.exports.tags = ["spDebtToken", "all"];
+module.exports.tags = ["jpDebtToken", "all"];
