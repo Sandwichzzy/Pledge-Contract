@@ -126,7 +126,7 @@ contract BscPledgeOracle is multiSignatureClient {
      * @return uint256 资产价格（18位小数精度）
      */
     function getPrice(address asset) public view returns (uint256){
-        return getUnderlyingPrice(uint256(asset));
+        return getUnderlyingPrice(uint256(uint160(asset)));
     }
 
     /**
@@ -168,7 +168,7 @@ contract BscPledgeOracle is multiSignatureClient {
      * @param price 价格值（18位小数精度）
      */
     function setPrice(address asset,uint256 price) public validCall {
-        pricesMap[uint256(asset)] = price;
+        pricesMap[uint256(uint160(asset))] = price;
     }
 
     /**
@@ -186,24 +186,24 @@ contract BscPledgeOracle is multiSignatureClient {
      * @notice 设置资产的Chainlink聚合器（通过地址）
      * @dev 为资产配置Chainlink价格源
      * @param asset 资产合约地址
-     * @param aggergator Chainlink聚合器地址
+     * @param aggregator Chainlink聚合器地址
      * @param _decimals 资产的小数位数
      */
     function setAssetAggregator(address asset,address aggregator,uint256 _decimals) public validCall{
-        assetsMap[uint256(asset)]=AggregatorV3Interface(aggregator);
-        decimalsMap[uint256(asset)]=_decimals;
+        assetsMap[uint256(uint160(asset))]=AggregatorV3Interface(aggregator);
+        decimalsMap[uint256(uint160(asset))]=_decimals;
     }
 
     /**
      * @notice 设置资产的Chainlink聚合器（通过ID）
      * @dev 为资产配置Chainlink价格源
      * @param underlying 资产标识符
-     * @param aggergator Chainlink聚合器地址
+     * @param aggregator Chainlink聚合器地址
      * @param _decimals 资产的小数位数
      */
-    function setUnderlyingAggregator(uint256 underlying,address aggergator,uint256 _decimals) public validCall {
+    function setUnderlyingAggregator(uint256 underlying,address aggregator,uint256 _decimals) public validCall {
         require(underlying>0 , "underlying cannot be zero");
-        assetsMap[underlying] = AggregatorV3Interface(aggergator);
+        assetsMap[underlying] = AggregatorV3Interface(aggregator);
         decimalsMap[underlying] = _decimals;
     }
     /**
@@ -214,7 +214,7 @@ contract BscPledgeOracle is multiSignatureClient {
      * @return uint256 资产精度
      */
     function getAssetsAggregator(address asset) public view returns (address,uint256) {
-        return (address(assetsMap[uint256(asset)]),decimalsMap[uint256(asset)]);
+        return (address(assetsMap[uint256(uint160(asset))]),decimalsMap[uint256(uint160(asset))]);
     }
 
      /**
