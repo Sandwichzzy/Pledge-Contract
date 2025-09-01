@@ -1,0 +1,575 @@
+{
+  "address": "0xc4F817a1541ae1c98c72e016c58c9121e8AB3A24",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "owners",
+          "type": "address[]"
+        },
+        {
+          "internalType": "uint256",
+          "name": "limitedSignNum",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "msgHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "CreateApplication",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "msgHash",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "RevokeApplication",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "msgHash",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "SignApplication",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "oldOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "TransferOwner",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        }
+      ],
+      "name": "createApplication",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "msghash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getApplicationCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        }
+      ],
+      "name": "getApplicationHash",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "msghash",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getApplicationInfo",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getMultiSignatureAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "msghash",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "lastIndex",
+          "type": "uint256"
+        }
+      ],
+      "name": "getValidSignature",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "multiSignaturePosition",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "msghash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "revokeApplication",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "msghash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "signApplication",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "signatureOwners",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "threshold",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwner",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x126d9a5f9be4591eb2f24c6d1be16e71e9997e0fd83b37402510ebceb9302917",
+  "receipt": {
+    "to": null,
+    "from": "0x523df39cAe18ea125930DA730628213e4b147CDc",
+    "contractAddress": "0xc4F817a1541ae1c98c72e016c58c9121e8AB3A24",
+    "transactionIndex": 58,
+    "gasUsed": "892127",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x837601447b6e743eb4bbfaed91dc6d2c6a6a0ebf234c9f271f36a7a2308372c4",
+    "transactionHash": "0x126d9a5f9be4591eb2f24c6d1be16e71e9997e0fd83b37402510ebceb9302917",
+    "logs": [],
+    "blockNumber": 9109614,
+    "cumulativeGasUsed": "12655073",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    [
+      "0x523df39cae18ea125930da730628213e4b147cdc",
+      "0xcafd18c0c33676a17fb3bf63bd46f8ffcbff9039",
+      "0x6002bad747afd5690f543a670f3e3bd30e033084"
+    ],
+    2
+  ],
+  "numDeployments": 1,
+  "solcInputHash": "3953f88cf47e017e2801ec25da3291c0",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"owners\",\"type\":\"address[]\"},{\"internalType\":\"uint256\",\"name\":\"limitedSignNum\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"msgHash\",\"type\":\"bytes32\"}],\"name\":\"CreateApplication\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"msgHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"index\",\"type\":\"uint256\"}],\"name\":\"RevokeApplication\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"msgHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"index\",\"type\":\"uint256\"}],\"name\":\"SignApplication\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"oldOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"TransferOwner\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"}],\"name\":\"createApplication\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"msghash\",\"type\":\"bytes32\"}],\"name\":\"getApplicationCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"}],\"name\":\"getApplicationHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"msghash\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"index\",\"type\":\"uint256\"}],\"name\":\"getApplicationInfo\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getMultiSignatureAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"msghash\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"lastIndex\",\"type\":\"uint256\"}],\"name\":\"getValidSignature\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"multiSignaturePosition\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"msghash\",\"type\":\"bytes32\"}],\"name\":\"revokeApplication\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"msghash\",\"type\":\"bytes32\"}],\"name\":\"signApplication\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"signatureOwners\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"threshold\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"index\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwner\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"\\u5b9e\\u73b0\\u591a\\u7b7e\\u540d\\u6cbb\\u7406\\u673a\\u5236\\uff0c\\u8981\\u6c42\\u591a\\u4e2a\\u7b7e\\u540d\\u8005\\u540c\\u610f\\u624d\\u80fd\\u6267\\u884c\\u91cd\\u8981\\u64cd\\u4f5c\",\"events\":{\"SignApplication(address,bytes32,uint256)\":{\"details\":\"\\u7b7e\\u540d\\u7533\\u8bf7\\u4e8b\\u4ef6\",\"params\":{\"from\":\"\\u7b7e\\u540d\\u8005\\u5730\\u5740\",\"index\":\"\\u7533\\u8bf7\\u7d22\\u5f15\",\"msgHash\":\"\\u6d88\\u606f\\u54c8\\u5e0c\"}}},\"kind\":\"dev\",\"methods\":{\"constructor\":{\"details\":\"\\u6784\\u9020\\u51fd\\u6570\",\"params\":{\"limitedSignNum\":\"\\u7b7e\\u540d\\u9608\\u503c\",\"owners\":\"\\u521d\\u59cb\\u7b7e\\u540d\\u8005\\u5730\\u5740\\u6570\\u7ec4\"}},\"createApplication(address)\":{\"details\":\"\\u521b\\u5efa\\u591a\\u7b7e\\u540d\\u7533\\u8bf7\",\"params\":{\"to\":\"\\u7533\\u8bf7\\u76ee\\u6807\\u5408\\u7ea6\\u5730\\u5740\"},\"returns\":{\"_0\":\"uint256 \\u8fd4\\u56de\\u7533\\u8bf7\\u7684\\u7d22\\u5f15\"}},\"getApplicationCount(bytes32)\":{\"details\":\"\\u83b7\\u53d6\\u67d0\\u4e2a\\u6d88\\u606f\\u54c8\\u5e0c\\u7684\\u7533\\u8bf7\\u6570\\u91cf\",\"params\":{\"msghash\":\"\\u6d88\\u606f\\u54c8\\u5e0c\"},\"returns\":{\"_0\":\"uint256 \\u7533\\u8bf7\\u6570\\u91cf\"}},\"getApplicationHash(address,address)\":{\"details\":\"\\u751f\\u6210\\u7533\\u8bf7\\u54c8\\u5e0c\",\"params\":{\"from\":\"\\u7533\\u8bf7\\u53d1\\u8d77\\u8005\\u5730\\u5740\",\"to\":\"\\u7533\\u8bf7\\u76ee\\u6807\\u5730\\u5740\"},\"returns\":{\"_0\":\"bytes32 \\u751f\\u6210\\u7684\\u6d88\\u606f\\u54c8\\u5e0c\"}},\"getApplicationInfo(bytes32,uint256)\":{\"details\":\"\\u83b7\\u53d6\\u7533\\u8bf7\\u4fe1\\u606f\",\"params\":{\"index\":\"\\u7533\\u8bf7\\u7d22\\u5f15\",\"msghash\":\"\\u6d88\\u606f\\u54c8\\u5e0c\"},\"returns\":{\"_0\":\"address \\u7533\\u8bf7\\u8005\\u5730\\u5740\",\"_1\":\"address[] \\u7b7e\\u540d\\u8005\\u5730\\u5740\\u6570\\u7ec4\"}},\"getValidSignature(bytes32,uint256)\":{\"details\":\"\\u83b7\\u53d6\\u6709\\u6548\\u7684\\u7b7e\\u540d\\u7d22\\u5f15\",\"params\":{\"lastIndex\":\"\\u4e0a\\u6b21\\u68c0\\u67e5\\u7684\\u7d22\\u5f15\",\"msghash\":\"\\u6d88\\u606f\\u54c8\\u5e0c\"},\"returns\":{\"_0\":\"uint256 \\u8fd4\\u56de\\u8fbe\\u5230\\u9608\\u503c\\u7684\\u7533\\u8bf7\\u7d22\\u5f15+1\\uff0c\\u5982\\u679c\\u6ca1\\u6709\\u5219\\u8fd4\\u56de0\"}},\"revokeApplication(bytes32)\":{\"details\":\"\\u64a4\\u9500\\u5bf9\\u7533\\u8bf7\\u7684\\u7b7e\\u540d\",\"params\":{\"msghash\":\"\\u7533\\u8bf7\\u7684\\u6d88\\u606f\\u54c8\\u5e0c\"}},\"signApplication(bytes32)\":{\"details\":\"\\u5bf9\\u7533\\u8bf7\\u8fdb\\u884c\\u7b7e\\u540d\",\"params\":{\"msghash\":\"\\u7533\\u8bf7\\u7684\\u6d88\\u606f\\u54c8\\u5e0c\"}},\"transferOwner(uint256,address)\":{\"details\":\"\\u8f6c\\u79fb\\u7b7e\\u540d\\u8005\\u6240\\u6709\\u6743\",\"params\":{\"index\":\"\\u8981\\u66ff\\u6362\\u7684\\u7b7e\\u540d\\u8005\\u5728\\u6570\\u7ec4\\u4e2d\\u7684\\u7d22\\u5f15\",\"newOwner\":\"\\u65b0\\u7684\\u7b7e\\u540d\\u8005\\u5730\\u5740\"}}},\"title\":\"multiSignature - \\u591a\\u7b7e\\u540d\\u5408\\u7ea6\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"constructor\":{\"notice\":\"\\u7b7e\\u540d\\u8005\\u6570\\u91cf\\u5fc5\\u987b\\u5927\\u4e8e\\u7b49\\u4e8e\\u7b7e\\u540d\\u9608\\u503c\"},\"createApplication(address)\":{\"notice\":\"\\u4efb\\u4f55\\u4eba\\u90fd\\u53ef\\u4ee5\\u521b\\u5efa\\u7533\\u8bf7\\uff0c\\u4f46\\u9700\\u8981\\u8db3\\u591f\\u7684\\u7b7e\\u540d\\u624d\\u80fd\\u751f\\u6548\"},\"getApplicationHash(address,address)\":{\"notice\":\"\\u54c8\\u5e0c\\u7531\\u53d1\\u8d77\\u8005\\u548c\\u76ee\\u6807\\u5730\\u5740\\u7ec4\\u6210\\uff0c\\u786e\\u4fdd\\u552f\\u4e00\\u6027\"},\"getValidSignature(bytes32,uint256)\":{\"notice\":\"\\u8fd9\\u662f\\u591a\\u7b7e\\u540d\\u9a8c\\u8bc1\\u7684\\u6838\\u5fc3\\u51fd\\u6570\\uff0c\\u7531\\u5ba2\\u6237\\u7aef\\u5408\\u7ea6\\u8c03\\u7528\"},\"revokeApplication(bytes32)\":{\"notice\":\"\\u53ea\\u6709\\u5df2\\u7b7e\\u540d\\u7684\\u7b7e\\u540d\\u8005\\u53ef\\u4ee5\\u64a4\\u9500\\u81ea\\u5df1\\u7684\\u7b7e\\u540d \\u540csignApplication\\uff0c\\u5f53\\u524d\\u53ea\\u652f\\u6301\\u5bf9\\u7d22\\u5f150\\u7684\\u7533\\u8bf7\\u64a4\\u9500\\u7b7e\\u540d \\u8fd9\\u4e0esignApplication\\u4fdd\\u6301\\u4e00\\u81f4\\uff0c\\u786e\\u4fdd\\u64cd\\u4f5c\\u7684\\u5bf9\\u79f0\\u6027\"},\"signApplication(bytes32)\":{\"notice\":\"\\u53ea\\u6709\\u7b7e\\u540d\\u8005\\u53ef\\u4ee5\\u8c03\\u7528\\uff0c\\u4e14\\u4f1a\\u81ea\\u52a8\\u6dfb\\u52a0\\u5230\\u7b7e\\u540d\\u5217\\u8868\\u4e2d  === defaultIndex\\u4f7f\\u7528\\u8bf4\\u660e === \\u5f53\\u524d\\u5b9e\\u73b0\\u4e2d\\u603b\\u662f\\u4f7f\\u7528defaultIndex(0)\\uff0c\\u8868\\u793a\\uff1a 1. \\u53ea\\u5bf9\\u7b2c\\u4e00\\u4e2a\\u7533\\u8bf7\\u8fdb\\u884c\\u7b7e\\u540d\\uff08\\u7b80\\u5316\\u5b9e\\u73b0\\uff09 2. \\u4e00\\u4e2amsgHash\\u5728\\u5f53\\u524d\\u7248\\u672c\\u4e2d\\u53ea\\u6709\\u4e00\\u4e2a\\u6709\\u6548\\u7533\\u8bf7 3. \\u672a\\u6765\\u53ef\\u6269\\u5c55\\u4e3a\\u652f\\u6301\\u591a\\u4e2a\\u7533\\u8bf7\\uff0c\\u7528\\u6237\\u53ef\\u9009\\u62e9\\u5bf9\\u54ea\\u4e2a\\u7533\\u8bf7\\u7b7e\\u540d\"},\"transferOwner(uint256,address)\":{\"notice\":\"\\u53ea\\u6709\\u73b0\\u6709\\u7b7e\\u540d\\u8005\\u4e14\\u901a\\u8fc7\\u591a\\u7b7e\\u540d\\u9a8c\\u8bc1\\u624d\\u80fd\\u8c03\\u7528\"}},\"notice\":\"\\u8fd9\\u662f\\u6574\\u4e2a\\u7cfb\\u7edf\\u7684\\u6838\\u5fc3\\u6cbb\\u7406\\u5408\\u7ea6\\uff0c\\u6240\\u6709\\u91cd\\u8981\\u64cd\\u4f5c\\u90fd\\u9700\\u8981\\u901a\\u8fc7\\u591a\\u7b7e\\u540d\\u9a8c\\u8bc1\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/multiSignature/multiSignature.sol\":\"multiSignature\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[],\"viaIR\":true},\"sources\":{\"contracts/multiSignature/multiSignature.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.0;\\r\\nimport \\\"./multiSignatureClient.sol\\\";\\r\\n\\r\\n/**\\r\\n * @title whiteListAddress - \\u767d\\u540d\\u5355\\u5730\\u5740\\u7ba1\\u7406\\u5e93\\r\\n * @dev \\u63d0\\u4f9b\\u5730\\u5740\\u6570\\u7ec4\\u7684\\u589e\\u5220\\u67e5\\u529f\\u80fd\\uff0c\\u7528\\u4e8e\\u7ba1\\u7406\\u7b7e\\u540d\\u8005\\u767d\\u540d\\u5355\\r\\n */\\r\\nlibrary whiteListAddress {\\r\\n    //add whiteList\\r\\n    function addWhiteListAddress(address[] storage whiteList,address temp) internal {\\r\\n        if(!isEligibleAddress(whiteList,temp)){\\r\\n            whiteList.push(temp);\\r\\n        }\\r\\n    }\\r\\n    /**\\r\\n     * @dev \\u4ece\\u767d\\u540d\\u5355\\u4e2d\\u79fb\\u9664\\u5730\\u5740\\r\\n     * @param whiteList \\u767d\\u540d\\u5355\\u5730\\u5740\\u6570\\u7ec4\\uff08\\u5b58\\u50a8\\u5f15\\u7528\\uff09\\r\\n     * @param temp \\u8981\\u79fb\\u9664\\u7684\\u5730\\u5740\\r\\n     * @return bool \\u8fd4\\u56de\\u662f\\u5426\\u6210\\u529f\\u79fb\\u9664\\r\\n     * @notice \\u4f7f\\u7528\\u4ea4\\u6362\\u5220\\u9664\\u6cd5\\uff0c\\u5c06\\u6700\\u540e\\u4e00\\u4e2a\\u5143\\u7d20\\u79fb\\u5230\\u88ab\\u5220\\u9664\\u4f4d\\u7f6e\\uff0c\\u7136\\u540e\\u5220\\u9664\\u6700\\u540e\\u4e00\\u4e2a\\u5143\\u7d20\\r\\n     */\\r\\n    function removeWhiteListAddress(address[] storage whiteList,address temp) internal returns (bool) {\\r\\n        uint256 len=whiteList.length;\\r\\n        uint256 i=0;\\r\\n        for (;i<len;i++){\\r\\n            if(whiteList[i]==temp){\\r\\n                break;\\r\\n            }\\r\\n        }\\r\\n        if(i<len){\\r\\n            // \\u5982\\u679c\\u5220\\u9664\\u7684\\u4e0d\\u662f\\u6700\\u540e\\u4e00\\u4e2a\\u5143\\u7d20\\uff0c\\u5c06\\u6700\\u540e\\u4e00\\u4e2a\\u5143\\u7d20\\u79fb\\u5230\\u88ab\\u5220\\u9664\\u4f4d\\u7f6e\\r\\n            if(i<len-1){\\r\\n                whiteList[i]=whiteList[len-1];\\r\\n            }\\r\\n            // \\u5220\\u9664\\u6700\\u540e\\u4e00\\u4e2a\\u5143\\u7d20\\r\\n            whiteList.pop();\\r\\n            return true;\\r\\n        }\\r\\n        return false;\\r\\n    }\\r\\n\\r\\n    //check if the address is in the whiteList\\r\\n    function isEligibleAddress(address[] storage whiteList,address temp) internal view returns (bool) {\\r\\n        uint256 len=whiteList.length;\\r\\n        for (uint256 i=0;i<len;i++){\\r\\n            if(whiteList[i]==temp){\\r\\n                return true;\\r\\n            }\\r\\n        }\\r\\n        return false;\\r\\n    }\\r\\n}\\r\\n\\r\\n/**\\r\\n * @title multiSignature - \\u591a\\u7b7e\\u540d\\u5408\\u7ea6\\r\\n * @dev \\u5b9e\\u73b0\\u591a\\u7b7e\\u540d\\u6cbb\\u7406\\u673a\\u5236\\uff0c\\u8981\\u6c42\\u591a\\u4e2a\\u7b7e\\u540d\\u8005\\u540c\\u610f\\u624d\\u80fd\\u6267\\u884c\\u91cd\\u8981\\u64cd\\u4f5c\\r\\n * @notice \\u8fd9\\u662f\\u6574\\u4e2a\\u7cfb\\u7edf\\u7684\\u6838\\u5fc3\\u6cbb\\u7406\\u5408\\u7ea6\\uff0c\\u6240\\u6709\\u91cd\\u8981\\u64cd\\u4f5c\\u90fd\\u9700\\u8981\\u901a\\u8fc7\\u591a\\u7b7e\\u540d\\u9a8c\\u8bc1\\r\\n */\\r\\ncontract multiSignature is multiSignatureClient {\\r\\n\\r\\n    uint256 private constant defaultIndex=0; // \\u9ed8\\u8ba4\\u7533\\u8bf7\\u7d22\\u5f15\\r\\n    using whiteListAddress for address[];  // \\u4f7f\\u7528\\u767d\\u540d\\u5355\\u5730\\u5740\\u5e93\\r\\n    address[] public signatureOwners; // \\u7b7e\\u540d\\u8005\\u5730\\u5740\\u6570\\u7ec4\\r\\n    uint256 public threshold; // \\u7b7e\\u540d\\u9608\\u503c\\uff08\\u9700\\u8981\\u591a\\u5c11\\u4e2a\\u7b7e\\u540d\\u624d\\u80fd\\u901a\\u8fc7\\uff09\\r\\n    \\r\\n    struct signatureInfo{\\r\\n        address applicant; // \\u7533\\u8bf7\\u4eba\\u5730\\u5740\\r\\n        address[] signatures; // \\u7b7e\\u540d\\u8005\\u5217\\u8868\\r\\n    }\\r\\n    // \\u6d88\\u606f\\u54c8\\u5e0c => \\u7b7e\\u540d\\u4fe1\\u606f\\u6570\\u7ec4\\u7684\\u6620\\u5c04\\r\\n    mapping(bytes32=>signatureInfo[]) signatureMap;\\r\\n\\r\\n    event TransferOwner(address indexed sender, address indexed oldOwner, address indexed newOwner);\\r\\n    event CreateApplication(address indexed from,address indexed to,bytes32 indexed msgHash);\\r\\n    /**\\r\\n     * @dev \\u7b7e\\u540d\\u7533\\u8bf7\\u4e8b\\u4ef6\\r\\n     * @param from \\u7b7e\\u540d\\u8005\\u5730\\u5740\\r\\n     * @param msgHash \\u6d88\\u606f\\u54c8\\u5e0c\\r\\n     * @param index \\u7533\\u8bf7\\u7d22\\u5f15\\r\\n     */\\r\\n    event SignApplication(address indexed from, bytes32 indexed msgHash,uint256 index); \\r\\n    event RevokeApplication(address indexed from,bytes32 indexed msgHash,uint256 index);\\r\\n\\r\\n    /**\\r\\n     * @dev \\u6784\\u9020\\u51fd\\u6570\\r\\n     * @param owners \\u521d\\u59cb\\u7b7e\\u540d\\u8005\\u5730\\u5740\\u6570\\u7ec4\\r\\n     * @param limitedSignNum \\u7b7e\\u540d\\u9608\\u503c\\r\\n     * @notice \\u7b7e\\u540d\\u8005\\u6570\\u91cf\\u5fc5\\u987b\\u5927\\u4e8e\\u7b49\\u4e8e\\u7b7e\\u540d\\u9608\\u503c\\r\\n     */\\r\\n    constructor(address[] memory owners, uint256 limitedSignNum) multiSignatureClient(address(this)) {\\r\\n        require(owners.length>=limitedSignNum,\\\"Multiple Signature : Signature threshold is greater than owners' length!\\\");\\r\\n        signatureOwners=owners;\\r\\n        threshold=limitedSignNum;\\r\\n    }\\r\\n    /**\\r\\n     * @dev \\u8f6c\\u79fb\\u7b7e\\u540d\\u8005\\u6240\\u6709\\u6743\\r\\n     * @param index \\u8981\\u66ff\\u6362\\u7684\\u7b7e\\u540d\\u8005\\u5728\\u6570\\u7ec4\\u4e2d\\u7684\\u7d22\\u5f15\\r\\n     * @param newOwner \\u65b0\\u7684\\u7b7e\\u540d\\u8005\\u5730\\u5740\\r\\n     * @notice \\u53ea\\u6709\\u73b0\\u6709\\u7b7e\\u540d\\u8005\\u4e14\\u901a\\u8fc7\\u591a\\u7b7e\\u540d\\u9a8c\\u8bc1\\u624d\\u80fd\\u8c03\\u7528\\r\\n     */\\r\\n    function transferOwner(uint256 index, address newOwner) public onlyOwner validCall{\\r\\n        require(index<signatureOwners.length,\\\"Multiple Signature : Owner index is overflow!\\\");\\r\\n        emit TransferOwner(msg.sender,signatureOwners[index],newOwner);\\r\\n        signatureOwners[index]=newOwner;\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev \\u521b\\u5efa\\u591a\\u7b7e\\u540d\\u7533\\u8bf7\\r\\n     * @param to \\u7533\\u8bf7\\u76ee\\u6807\\u5408\\u7ea6\\u5730\\u5740\\r\\n     * @return uint256 \\u8fd4\\u56de\\u7533\\u8bf7\\u7684\\u7d22\\u5f15\\r\\n     * @notice \\u4efb\\u4f55\\u4eba\\u90fd\\u53ef\\u4ee5\\u521b\\u5efa\\u7533\\u8bf7\\uff0c\\u4f46\\u9700\\u8981\\u8db3\\u591f\\u7684\\u7b7e\\u540d\\u624d\\u80fd\\u751f\\u6548\\r\\n     */\\r\\n    function createApplication(address to) external returns (uint256) {\\r\\n        // \\u751f\\u6210\\u552f\\u4e00\\u7684\\u6d88\\u606f\\u54c8\\u5e0c\\r\\n        bytes32 msgHash =getApplicationHash(msg.sender,to);\\r\\n        uint256 index=signatureMap[msgHash].length;\\r\\n        //\\u521b\\u5efa\\u65b0\\u7684\\u7b7e\\u540d\\u6d88\\u606f\\uff0c\\u521d\\u59cb\\u65f6\\u7b7e\\u540d\\u6570\\u7ec4\\u4e3a\\u7a7a\\r\\n        signatureMap[msgHash].push(signatureInfo(msg.sender,new address[](0)));\\r\\n        emit CreateApplication(msg.sender,to,msgHash);\\r\\n        return index;\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev \\u5bf9\\u7533\\u8bf7\\u8fdb\\u884c\\u7b7e\\u540d\\r\\n     * @param msghash \\u7533\\u8bf7\\u7684\\u6d88\\u606f\\u54c8\\u5e0c\\r\\n     * @notice \\u53ea\\u6709\\u7b7e\\u540d\\u8005\\u53ef\\u4ee5\\u8c03\\u7528\\uff0c\\u4e14\\u4f1a\\u81ea\\u52a8\\u6dfb\\u52a0\\u5230\\u7b7e\\u540d\\u5217\\u8868\\u4e2d\\r\\n     *  === defaultIndex\\u4f7f\\u7528\\u8bf4\\u660e ===\\r\\n     * \\u5f53\\u524d\\u5b9e\\u73b0\\u4e2d\\u603b\\u662f\\u4f7f\\u7528defaultIndex(0)\\uff0c\\u8868\\u793a\\uff1a\\r\\n     * 1. \\u53ea\\u5bf9\\u7b2c\\u4e00\\u4e2a\\u7533\\u8bf7\\u8fdb\\u884c\\u7b7e\\u540d\\uff08\\u7b80\\u5316\\u5b9e\\u73b0\\uff09\\r\\n     * 2. \\u4e00\\u4e2amsgHash\\u5728\\u5f53\\u524d\\u7248\\u672c\\u4e2d\\u53ea\\u6709\\u4e00\\u4e2a\\u6709\\u6548\\u7533\\u8bf7\\r\\n     * 3. \\u672a\\u6765\\u53ef\\u6269\\u5c55\\u4e3a\\u652f\\u6301\\u591a\\u4e2a\\u7533\\u8bf7\\uff0c\\u7528\\u6237\\u53ef\\u9009\\u62e9\\u5bf9\\u54ea\\u4e2a\\u7533\\u8bf7\\u7b7e\\u540d\\r\\n     */\\r\\n    function signApplication(bytes32 msghash) external onlyOwner validIndex(msghash,defaultIndex){\\r\\n        emit SignApplication(msg.sender,msghash,defaultIndex);\\r\\n        // \\u5c06\\u7b7e\\u540d\\u8005\\u5730\\u5740\\u6dfb\\u52a0\\u5230\\u8be5\\u7533\\u8bf7\\u7684\\u7b7e\\u540d\\u5217\\u8868\\u4e2d\\r\\n        signatureMap[msghash][defaultIndex].signatures.push(msg.sender);\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev \\u64a4\\u9500\\u5bf9\\u7533\\u8bf7\\u7684\\u7b7e\\u540d\\r\\n     * @param msghash \\u7533\\u8bf7\\u7684\\u6d88\\u606f\\u54c8\\u5e0c\\r\\n     * @notice \\u53ea\\u6709\\u5df2\\u7b7e\\u540d\\u7684\\u7b7e\\u540d\\u8005\\u53ef\\u4ee5\\u64a4\\u9500\\u81ea\\u5df1\\u7684\\u7b7e\\u540d\\r\\n     * \\u540csignApplication\\uff0c\\u5f53\\u524d\\u53ea\\u652f\\u6301\\u5bf9\\u7d22\\u5f150\\u7684\\u7533\\u8bf7\\u64a4\\u9500\\u7b7e\\u540d\\r\\n     * \\u8fd9\\u4e0esignApplication\\u4fdd\\u6301\\u4e00\\u81f4\\uff0c\\u786e\\u4fdd\\u64cd\\u4f5c\\u7684\\u5bf9\\u79f0\\u6027\\r\\n     */\\r\\n    function revokeApplication(bytes32 msghash)external onlyOwner validIndex(msghash,defaultIndex){\\r\\n        emit RevokeApplication(msg.sender,msghash,defaultIndex);\\r\\n        signatureMap[msghash][defaultIndex].signatures.removeWhiteListAddress(msg.sender);\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev \\u83b7\\u53d6\\u6709\\u6548\\u7684\\u7b7e\\u540d\\u7d22\\u5f15\\r\\n     * @param msghash \\u6d88\\u606f\\u54c8\\u5e0c\\r\\n     * @param lastIndex \\u4e0a\\u6b21\\u68c0\\u67e5\\u7684\\u7d22\\u5f15\\r\\n     * @return uint256 \\u8fd4\\u56de\\u8fbe\\u5230\\u9608\\u503c\\u7684\\u7533\\u8bf7\\u7d22\\u5f15+1\\uff0c\\u5982\\u679c\\u6ca1\\u6709\\u5219\\u8fd4\\u56de0\\r\\n     * @notice \\u8fd9\\u662f\\u591a\\u7b7e\\u540d\\u9a8c\\u8bc1\\u7684\\u6838\\u5fc3\\u51fd\\u6570\\uff0c\\u7531\\u5ba2\\u6237\\u7aef\\u5408\\u7ea6\\u8c03\\u7528\\r\\n     */\\r\\n   function getValidSignature(bytes32 msghash,uint256 lastIndex) external view returns (uint256){\\r\\n        signatureInfo[] storage signInfo=signatureMap[msghash];\\r\\n         // \\u4ecelastIndex\\u5f00\\u59cb\\u68c0\\u67e5\\u6bcf\\u4e2a\\u7533\\u8bf7\\r\\n        for (uint256 i=lastIndex;i<signInfo.length;i++){\\r\\n            // \\u5982\\u679c\\u7b7e\\u540d\\u6570\\u91cf\\u8fbe\\u5230\\u9608\\u503c\\uff0c\\u8fd4\\u56de\\u7d22\\u5f15+1\\r\\n            if(signInfo[i].signatures.length>=threshold){\\r\\n                return i+1;\\r\\n            }\\r\\n        }\\r\\n        return 0;// \\u6ca1\\u6709\\u8fbe\\u5230\\u9608\\u503c\\u7684\\u7533\\u8bf7\\r\\n   }\\r\\n\\r\\n    /**\\r\\n     * @dev \\u751f\\u6210\\u7533\\u8bf7\\u54c8\\u5e0c\\r\\n     * @param from \\u7533\\u8bf7\\u53d1\\u8d77\\u8005\\u5730\\u5740\\r\\n     * @param to \\u7533\\u8bf7\\u76ee\\u6807\\u5730\\u5740\\r\\n     * @return bytes32 \\u751f\\u6210\\u7684\\u6d88\\u606f\\u54c8\\u5e0c\\r\\n     * @notice \\u54c8\\u5e0c\\u7531\\u53d1\\u8d77\\u8005\\u548c\\u76ee\\u6807\\u5730\\u5740\\u7ec4\\u6210\\uff0c\\u786e\\u4fdd\\u552f\\u4e00\\u6027\\r\\n     */\\r\\n    function getApplicationHash(address from,address to) public pure returns (bytes32) {\\r\\n        return keccak256(abi.encodePacked(from,to));\\r\\n    }\\r\\n    /**\\r\\n     * @dev \\u83b7\\u53d6\\u7533\\u8bf7\\u4fe1\\u606f\\r\\n     * @param msghash \\u6d88\\u606f\\u54c8\\u5e0c\\r\\n     * @param index \\u7533\\u8bf7\\u7d22\\u5f15\\r\\n     * @return address \\u7533\\u8bf7\\u8005\\u5730\\u5740\\r\\n     * @return address[] \\u7b7e\\u540d\\u8005\\u5730\\u5740\\u6570\\u7ec4\\r\\n     */\\r\\n    function getApplicationInfo(bytes32 msghash,uint256 index) validIndex(msghash,index) public view returns (address,address[] memory){\\r\\n        signatureInfo memory info=signatureMap[msghash][index];\\r\\n        return (info.applicant,info.signatures);\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev \\u83b7\\u53d6\\u67d0\\u4e2a\\u6d88\\u606f\\u54c8\\u5e0c\\u7684\\u7533\\u8bf7\\u6570\\u91cf\\r\\n     * @param msghash \\u6d88\\u606f\\u54c8\\u5e0c\\r\\n     * @return uint256 \\u7533\\u8bf7\\u6570\\u91cf\\r\\n     */\\r\\n    function getApplicationCount(bytes32 msghash) public view returns (uint256){\\r\\n        return signatureMap[msghash].length;\\r\\n    }\\r\\n\\r\\n\\r\\n    // === \\u4fee\\u9970\\u7b26 ===\\r\\n    /**\\r\\n     * @dev \\u53ea\\u6709\\u7b7e\\u540d\\u8005\\u53ef\\u4ee5\\u8c03\\u7528\\u7684\\u4fee\\u9970\\u7b26\\r\\n     * @notice \\u68c0\\u67e5\\u8c03\\u7528\\u8005\\u662f\\u5426\\u5728\\u7b7e\\u540d\\u8005\\u767d\\u540d\\u5355\\u4e2d\\r\\n     */\\r\\n    modifier onlyOwner{\\r\\n        require(signatureOwners.isEligibleAddress(msg.sender),\\\"Multiple Signature : caller is not in the ownerList!\\\");\\r\\n        _;\\r\\n    }\\r\\n    /**\\r\\n     * @dev \\u9a8c\\u8bc1\\u7533\\u8bf7\\u7d22\\u5f15\\u662f\\u5426\\u6709\\u6548\\u7684\\u4fee\\u9970\\u7b26\\r\\n     * @param msghash \\u6d88\\u606f\\u54c8\\u5e0c\\r\\n     * @param index \\u7533\\u8bf7\\u7d22\\u5f15\\r\\n     * @notice \\u786e\\u4fdd\\u7d22\\u5f15\\u4e0d\\u4f1a\\u8d8a\\u754c\\r\\n     */\\r\\n    modifier validIndex(bytes32 msghash,uint256 index){\\r\\n        require(index<signatureMap[msghash].length,\\\"Multiple Signature : Message index is overflow!\\\");\\r\\n        _;\\r\\n    }\\r\\n}\",\"keccak256\":\"0xc9e6327cc1ce6961dd1d094dd47f4e5c101717127f4d0642b9ad069825c3dbd2\",\"license\":\"MIT\"},\"contracts/multiSignature/multiSignatureClient.sol\":{\"content\":\"//SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.0;\\r\\n\\r\\n/**\\r\\n * @title IMultiSignature - \\u591a\\u7b7e\\u540d\\u5408\\u7ea6\\u63a5\\u53e3\\r\\n * @dev \\u5b9a\\u4e49\\u4e86\\u591a\\u7b7e\\u540d\\u5408\\u7ea6\\u9700\\u8981\\u5b9e\\u73b0\\u7684\\u6838\\u5fc3\\u529f\\u80fd\\u63a5\\u53e3\\r\\n */\\r\\ninterface IMultiSignature {\\r\\n    /**\\r\\n     * @dev \\u83b7\\u53d6\\u6709\\u6548\\u7b7e\\u540d\\u7d22\\u5f15\\r\\n     * @param msghash \\u6d88\\u606f\\u54c8\\u5e0c\\r\\n     * @param lastIndex \\u4e0a\\u6b21\\u68c0\\u67e5\\u7684\\u7d22\\u5f15\\r\\n     * @return uint256 \\u8fd4\\u56de\\u6709\\u6548\\u7684\\u7b7e\\u540d\\u7d22\\u5f15\\uff0c\\u5982\\u679c\\u6ca1\\u6709\\u8fbe\\u5230\\u9608\\u503c\\u5219\\u8fd4\\u56de0\\r\\n     */\\r\\n    function getValidSignature(bytes32 msghash, uint256 lastIndex) external view returns (uint256);\\r\\n}\\r\\n\\r\\n/**\\r\\n * @title multiSignatureClient - \\u591a\\u7b7e\\u540d\\u5ba2\\u6237\\u7aef\\u5408\\u7ea6\\r\\n * @dev \\u4e3a\\u5176\\u4ed6\\u5408\\u7ea6\\u63d0\\u4f9b\\u591a\\u7b7e\\u540d\\u9a8c\\u8bc1\\u529f\\u80fd\\u7684\\u57fa\\u7840\\u5408\\u7ea6\\r\\n * @notice \\u4efb\\u4f55\\u9700\\u8981\\u591a\\u7b7e\\u540d\\u4fdd\\u62a4\\u7684\\u5408\\u7ea6\\u90fd\\u5e94\\u8be5\\u7ee7\\u627f\\u6b64\\u5408\\u7ea6\\uff0c\\u5e76\\u4f7f\\u7528validCall\\u4fee\\u9970\\u7b26\\r\\n * \\r\\n * === \\u5de5\\u4f5c\\u539f\\u7406 ===\\r\\n * 1. \\u5ba2\\u6237\\u7aef\\u5408\\u7ea6\\u7ee7\\u627f\\u6b64\\u5408\\u7ea6\\uff0c\\u83b7\\u5f97\\u591a\\u7b7e\\u540d\\u9a8c\\u8bc1\\u80fd\\u529b\\r\\n * 2. \\u91cd\\u8981\\u51fd\\u6570\\u4f7f\\u7528validCall\\u4fee\\u9970\\u7b26\\u8fdb\\u884c\\u4fdd\\u62a4\\r\\n * 3. \\u8c03\\u7528\\u65f6\\u4f1a\\u81ea\\u52a8\\u68c0\\u67e5\\u5bf9\\u5e94\\u7684\\u591a\\u7b7e\\u540d\\u7533\\u8bf7\\u662f\\u5426\\u5df2\\u83b7\\u5f97\\u8db3\\u591f\\u7b7e\\u540d\\r\\n * 4. \\u53ea\\u6709\\u901a\\u8fc7\\u591a\\u7b7e\\u540d\\u9a8c\\u8bc1\\u7684\\u8c03\\u7528\\u624d\\u80fd\\u6267\\u884c\\r\\n */\\r\\ncontract multiSignatureClient {\\r\\n    uint256 public constant multiSignaturePosition = uint256(keccak256(\\\"org.multiSignature.storage\\\"));// \\u591a\\u7b7e\\u540d\\u5408\\u7ea6\\u5730\\u5740\\u7684\\u5b58\\u50a8\\u4f4d\\u7f6e\\r\\n    uint256 private constant defaultIndex = 0;// \\u9ed8\\u8ba4\\u7d22\\u5f15\\r\\n\\r\\n    /**\\r\\n     * @dev \\u6784\\u9020\\u51fd\\u6570\\r\\n     * @param multiSignature \\u591a\\u7b7e\\u540d\\u5408\\u7ea6\\u5730\\u5740\\r\\n     * @notice \\u5c06\\u591a\\u7b7e\\u540d\\u5408\\u7ea6\\u5730\\u5740\\u4fdd\\u5b58\\u5230\\u56fa\\u5b9a\\u7684\\u5b58\\u50a8\\u4f4d\\u7f6e\\r\\n     */\\r\\n    constructor(address multiSignature) {\\r\\n        require(multiSignature != address(0), \\\"multiSignatureClient : Multiple signature contract address is zero!\\\");\\r\\n        saveValue(multiSignaturePosition, uint256(uint160(multiSignature)));\\r\\n    }\\r\\n\\r\\n    //\\u4ece\\u5b58\\u50a8\\u4e2d\\u8bfb\\u53d6\\u591a\\u7b7e\\u540d\\u5408\\u7ea6\\u5730\\u5740\\r\\n    function getMultiSignatureAddress() public view returns (address){\\r\\n        return address(uint160(getValue(multiSignaturePosition)));\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev \\u591a\\u7b7e\\u540d\\u9a8c\\u8bc1\\u4fee\\u9970\\u7b26\\r\\n     * @notice \\u4f7f\\u7528\\u6b64\\u4fee\\u9970\\u7b26\\u7684\\u51fd\\u6570\\u53ea\\u6709\\u5728\\u591a\\u7b7e\\u540d\\u9a8c\\u8bc1\\u901a\\u8fc7\\u540e\\u624d\\u80fd\\u6267\\u884c\\r\\n     * @notice \\u8fd9\\u662f\\u6574\\u4e2a\\u591a\\u7b7e\\u540d\\u7cfb\\u7edf\\u7684\\u6838\\u5fc3\\u9a8c\\u8bc1\\u673a\\u5236\\r\\n     */\\r\\n    modifier validCall(){\\r\\n        checkMultiSignature();\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev \\u68c0\\u67e5\\u591a\\u7b7e\\u540d\\u9a8c\\u8bc1\\r\\n     * @notice \\u6838\\u5fc3\\u9a8c\\u8bc1\\u903b\\u8f91\\uff1a\\r\\n     * 1. \\u751f\\u6210\\u6d88\\u606f\\u54c8\\u5e0c\\uff08\\u8c03\\u7528\\u8005\\u5730\\u5740 + \\u5f53\\u524d\\u5408\\u7ea6\\u5730\\u5740\\uff09\\r\\n     * 2. \\u5411\\u591a\\u7b7e\\u540d\\u5408\\u7ea6\\u67e5\\u8be2\\u8be5\\u54c8\\u5e0c\\u662f\\u5426\\u6709\\u8db3\\u591f\\u7684\\u7b7e\\u540d\\r\\n     * 3. \\u5982\\u679c\\u6ca1\\u6709\\u8db3\\u591f\\u7b7e\\u540d\\uff0c\\u4ea4\\u6613\\u5c06\\u56de\\u6eda\\r\\n     */\\r\\n    function checkMultiSignature() internal view {\\r\\n        uint256 value;\\r\\n        // \\u83b7\\u53d6\\u8c03\\u7528\\u7684\\u4ee5\\u592a\\u5e01\\u503c\\uff08\\u5f53\\u524d\\u672a\\u4f7f\\u7528\\uff0c\\u4e3a\\u672a\\u6765\\u6269\\u5c55\\u9884\\u7559\\uff09\\r\\n        assembly {\\r\\n            value:=callvalue()\\r\\n        }\\r\\n        // \\u751f\\u6210\\u552f\\u4e00\\u7684\\u6d88\\u606f\\u54c8\\u5e0c\\uff1a\\u8c03\\u7528\\u8005\\u5730\\u5740 + \\u76ee\\u6807\\u5408\\u7ea6\\u5730\\u5740\\r\\n        // \\u8fd9\\u786e\\u4fdd\\u4e86\\u6bcf\\u4e2a(\\u8c03\\u7528\\u8005, \\u76ee\\u6807\\u5408\\u7ea6)\\u7ec4\\u5408\\u90fd\\u6709\\u552f\\u4e00\\u7684\\u54c8\\u5e0c\\r\\n        bytes32 msghash = keccak256(abi.encodePacked(msg.sender, address(this)));\\r\\n        // \\u83b7\\u53d6\\u591a\\u7b7e\\u540d\\u5408\\u7ea6\\u5730\\u5740\\r\\n        address multiSign=getMultiSignatureAddress();\\r\\n\\r\\n        // \\u67e5\\u8be2\\u591a\\u7b7e\\u540d\\u5408\\u7ea6\\uff0c\\u68c0\\u67e5\\u662f\\u5426\\u6709\\u8db3\\u591f\\u7684\\u7b7e\\u540d\\r\\n        // getValidSignature\\u7684\\u5b9e\\u73b0\\u903b\\u8f91\\uff08\\u5728multiSignature.sol\\u4e2d\\uff09\\uff1a\\r\\n        // 1. \\u904d\\u5386\\u8be5msgHash\\u5bf9\\u5e94\\u7684\\u6240\\u6709\\u7533\\u8bf7\\r\\n        // 2. \\u68c0\\u67e5\\u6bcf\\u4e2a\\u7533\\u8bf7\\u7684\\u7b7e\\u540d\\u6570\\u91cf\\u662f\\u5426 >= threshold\\r\\n        // 3. \\u5982\\u679c\\u627e\\u5230\\u8fbe\\u5230\\u9608\\u503c\\u7684\\u7533\\u8bf7\\uff0c\\u8fd4\\u56de\\u5176\\u7d22\\u5f15+1\\uff08\\u786e\\u4fdd\\u975e\\u96f6\\uff09\\r\\n        // 4. \\u5982\\u679c\\u6ca1\\u6709\\u627e\\u5230\\uff0c\\u8fd4\\u56de0\\r\\n        uint256 newIndex=IMultiSignature(multiSign).getValidSignature(msghash,defaultIndex);\\r\\n        require(newIndex>defaultIndex,\\\"multiSignatureClient : This tx is not aprroved\\\");\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev \\u4fdd\\u5b58\\u503c\\u5230\\u6307\\u5b9a\\u5b58\\u50a8\\u4f4d\\u7f6e\\r\\n     * @param position \\u5b58\\u50a8\\u4f4d\\u7f6e\\uff08\\u4f7f\\u7528keccak256\\u751f\\u6210\\u7684\\u552f\\u4e00\\u4f4d\\u7f6e\\uff09\\r\\n     * @param value \\u8981\\u4fdd\\u5b58\\u7684\\u503c\\r\\n     * @notice \\u4f7f\\u7528\\u5185\\u8054\\u6c47\\u7f16\\u76f4\\u63a5\\u64cd\\u4f5c\\u5b58\\u50a8\\uff0c\\u63d0\\u9ad8gas\\u6548\\u7387\\r\\n     */\\r\\n    function saveValue(uint256 position, uint256 value) internal {\\r\\n        assembly {\\r\\n            sstore(position, value)\\r\\n        }\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev \\u4ece\\u6307\\u5b9a\\u5b58\\u50a8\\u4f4d\\u7f6e\\u8bfb\\u53d6\\u503c\\r\\n     * @param position \\u5b58\\u50a8\\u4f4d\\u7f6e\\uff08\\u4f7f\\u7528keccak256\\u751f\\u6210\\u7684\\u552f\\u4e00\\u4f4d\\u7f6e\\uff09\\r\\n     * @return value \\u8bfb\\u53d6\\u7684\\u503c\\r\\n     * @notice \\u4f7f\\u7528\\u5185\\u8054\\u6c47\\u7f16\\u76f4\\u63a5\\u64cd\\u4f5c\\u5b58\\u50a8\\uff0c\\u63d0\\u9ad8gas\\u6548\\u7387\\r\\n     */\\r\\n    function getValue(uint256 position) internal view returns (uint256 value) {\\r\\n        assembly {\\r\\n            value := sload(position)\\r\\n        }\\r\\n    }\\r\\n\\r\\n\\r\\n}\",\"keccak256\":\"0x2c55c72f29f3106655ee9ad2b23f08365d6911361961c104d370bc6766b8ff76\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x608060405234620002995762000f4a803803806200001d816200029e565b9283398101604082820312620002995781516001600160401b039190828111620002995783019080601f83011215620002995781519383851162000164578460051b9160209384620000718186016200029e565b809881520190858295820101928311620002995790858094939201905b8282106200026d575050500151933015620001f657307f8dddb57468cf5338ee155397ad1400a7a564308824f517d20a8a7c516523bb4755848151106200017a57519283116200016457680100000000000000008311620001645760009081548483558085106200013c575b5091818052808220915b848110620001205785600155604051610c859081620002c58239f35b83516001600160a01b0316838201559281019260010162000104565b8280528484842091820191015b818110620001585750620000fa565b83815560010162000149565b634e487b7160e01b600052604160045260246000fd5b60405162461bcd60e51b815260048101849052604860248201527f4d756c7469706c65205369676e6174757265203a205369676e6174757265207460448201527f68726573686f6c642069732067726561746572207468616e206f776e65727327606482015267206c656e6774682160c01b608482015260a490fd5b60405162461bcd60e51b815260048101849052604360248201527f6d756c74695369676e6174757265436c69656e74203a204d756c7469706c652060448201527f7369676e617475726520636f6e74726163742061646472657373206973207a65606482015262726f2160e81b608482015260a490fd5b815193945091929091906001600160a01b0381168103620002995781528593929184019084016200008e565b600080fd5b6040519190601f01601f191682016001600160401b03811183821017620001645760405256fe6040608081526004908136101561001557600080fd5b600091823560e01c80631ebaa166146108005780631ebe85ba146105cf57806335157be11461042e57806339270196146103f957806342cde4e8146103da5780635e63ff3f14610398578063638c7e1714610350578063665bbfde146102805780637000823d146102595780639d71488e1461021e578063df18ec8f146101335763eb96cbed146100a557600080fd5b3461012f57602036600319011261012f5761012b9161012091356100d06100cb33610969565b6108db565b80855260026020526100e6828620541515610a3f565b8082518681527ffb7251ba5d43bdf2193d4616dad278fd04102e9fd2291bb9f95510a03f10f8ce60203392a3845260026020528320610a0e565b506001339101610aa3565b5080f35b8280fd5b50503461021a57610170916101473661081c565b81839592955260209460028652610162858520548310610a3f565b835260028552838320610a23565b5090825161017d816109ba565b60018060a01b0394858454168252600180940195855192838389549182815201908199875284872090875b81811061020557505050906101c085849303866109ec565b84848201525116928651968088019488528388015251809352606086019693905b8382106101ee5786880387f35b8451811688529682019693820193908501906101e1565b825486168452928601929189019189016101a8565b5080fd5b50503461021a578160031936011261021a57602090517f8dddb57468cf5338ee155397ad1400a7a564308824f517d20a8a7c516523bb478152f35b503461012f57602036600319011261012f5760209282913581526002845220549051908152f35b50903461012f57602036600319011261012f576102f760019183356102a76100cb33610969565b80865260026020526102bd828720541515610a3f565b8082518781527f2d579b8389bf07e7ce434f3bd88b036a33d28787d19af73a5aa2003a5dcb7d3660203392a3855260026020528420610a0e565b5001805491600160401b83101561033d57508161031c91600161033a940181556108ad565b81546001600160a01b0360039290921b91821b19163390911b179055565b80f35b634e487b7160e01b845260419052602483fd5b50503461021a578160031936011261021a577f8dddb57468cf5338ee155397ad1400a7a564308824f517d20a8a7c516523bb475490516001600160a01b039091168152602090f35b503461012f57602036600319011261012f57359180548310156103d757506103c1602092610863565b905491519160018060a01b039160031b1c168152f35b80fd5b50503461021a578160031936011261021a576020906001549051908152f35b50503461021a578060031936011261021a5760209061042761041961084d565b610421610837565b90610c11565b9051908152f35b5091903461021a576020928360031936011261012f5761044c61084d565b926104578433610c11565b91828252600286528382209384549481518881019067ffffffffffffffff91818110838211176105bc578452858152835194610492866109ba565b3386528a8601918252600160401b90818a1015610584576104ba8a6001968782018155610a23565b6105aa57859060018060a01b03809951166bffffffffffffffffffffffff60a01b82541617815501925191825194851161059757841161058457508a90825484845580851061055a575b5001908652898620865b838110610547575050505050519416907f313df56710bfec73d53fcb8e8d48ff821d5b2e9a113aad1e9bfc7997ef5a0d7f339180a48152f35b8251871682820155918b0191840161050e565b8389528585848b2092830192015b828110610576575050610504565b8a81558e9450879101610568565b634e487b7160e01b885260419052602487fd5b634e487b7160e01b895260418252602489fd5b634e487b7160e01b8952888252602489fd5b634e487b7160e01b875260418652602487fd5b50903461012f578060031936011261012f578135906105ec610837565b926105f96100cb33610969565b81516020908181019061064181610633303386906028926bffffffffffffffffffffffff19809260601b16835260601b1660148201520190565b03601f1981018352826109ec565b5190209260018060a01b039382857f8dddb57468cf5338ee155397ad1400a7a564308824f517d20a8a7c516523bb475416916044845180948193630f5d50b360e11b8352898301528c60248301525afa9081156107f65788916107c5575b501561076d578654851015610716578661033a876106f788886106c182610863565b9190548186169260031b1c16337ff48dd64d794d3623209edddaa975cfeae5b0ef403fbce64d7b377ceb50396c748880a4610863565b90919082549060031b9160018060a01b03809116831b921b1916179055565b5162461bcd60e51b815291820152602d60248201527f4d756c7469706c65205369676e6174757265203a204f776e657220696e64657860448201526c206973206f766572666c6f772160981b606482015260849150fd5b5162461bcd60e51b815291820152602e60248201527f6d756c74695369676e6174757265436c69656e74203a2054686973207478206960448201526d1cc81b9bdd08185c1c9c9bdd995960921b606482015260849150fd5b90508281813d83116107ef575b6107dc81836109ec565b810103126107eb57513861069f565b8780fd5b503d6107d2565b82513d8a823e3d90fd5b50503461021a576020906104276108163661081c565b90610ba1565b6040906003190112610832576004359060243590565b600080fd5b602435906001600160a01b038216820361083257565b600435906001600160a01b038216820361083257565b906000918254811015610899578280527f290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563019190565b634e487b7160e01b83526032600452602483fd5b80548210156108c55760005260206000200190600090565b634e487b7160e01b600052603260045260246000fd5b156108e257565b60405162461bcd60e51b815260206004820152603460248201527f4d756c7469706c65205369676e6174757265203a2063616c6c6572206973206e6044820152736f7420696e20746865206f776e65724c6973742160601b6064820152608490fd5b60001981146109535760010190565b634e487b7160e01b600052601160045260246000fd5b6000549060005b82811061097f57505050600090565b61098881610863565b905460039190911b1c6001600160a01b03908116908316146109b2576109ad90610944565b610970565b505050600190565b6040810190811067ffffffffffffffff8211176109d657604052565b634e487b7160e01b600052604160045260246000fd5b90601f8019910116810190811067ffffffffffffffff8211176109d657604052565b8054156108c557600052602060002090600090565b80548210156108c55760005260206000209060011b0190600090565b15610a4657565b60405162461bcd60e51b815260206004820152602f60248201527f4d756c7469706c65205369676e6174757265203a204d65737361676520696e6460448201526e6578206973206f766572666c6f772160881b6064820152608490fd5b9081546000915b818310610b65575b50808210610ac257505050600090565b6000199181830191821161095357818110610b1d575b505081548015610b07570190610aee82826108ad565b81549060018060a01b039060031b1b1916905555600190565b634e487b7160e01b600052603160045260246000fd5b610b37610b2d610b5e93866108ad565b91905492866108ad565b81546001600160a01b03600392831b81811b199092169490921b9490941c1690921b179055565b3880610ad8565b91610b7081856108ad565b905460039190911b1c6001600160a01b0390811690841614610b9b57610b9590610944565b91610aaa565b91610ab2565b60009081526002602052604081208054926001918254915b858110610bc95750505050905090565b8284610bd58385610a23565b5001541015610bec57610be790610944565b610bb9565b945050508201809211610bfd575090565b634e487b7160e01b81526011600452602490fd5b6040516bffffffffffffffffffffffff19606092831b8116602083019081529390921b9091166034820152610c498160488101610633565b5190209056fea264697066735822122042a3c1d2df05b423a72372137cacbb5e93f57739cbbe7ba7adc555d16157044a64736f6c63430008140033",
+  "deployedBytecode": "0x6040608081526004908136101561001557600080fd5b600091823560e01c80631ebaa166146108005780631ebe85ba146105cf57806335157be11461042e57806339270196146103f957806342cde4e8146103da5780635e63ff3f14610398578063638c7e1714610350578063665bbfde146102805780637000823d146102595780639d71488e1461021e578063df18ec8f146101335763eb96cbed146100a557600080fd5b3461012f57602036600319011261012f5761012b9161012091356100d06100cb33610969565b6108db565b80855260026020526100e6828620541515610a3f565b8082518681527ffb7251ba5d43bdf2193d4616dad278fd04102e9fd2291bb9f95510a03f10f8ce60203392a3845260026020528320610a0e565b506001339101610aa3565b5080f35b8280fd5b50503461021a57610170916101473661081c565b81839592955260209460028652610162858520548310610a3f565b835260028552838320610a23565b5090825161017d816109ba565b60018060a01b0394858454168252600180940195855192838389549182815201908199875284872090875b81811061020557505050906101c085849303866109ec565b84848201525116928651968088019488528388015251809352606086019693905b8382106101ee5786880387f35b8451811688529682019693820193908501906101e1565b825486168452928601929189019189016101a8565b5080fd5b50503461021a578160031936011261021a57602090517f8dddb57468cf5338ee155397ad1400a7a564308824f517d20a8a7c516523bb478152f35b503461012f57602036600319011261012f5760209282913581526002845220549051908152f35b50903461012f57602036600319011261012f576102f760019183356102a76100cb33610969565b80865260026020526102bd828720541515610a3f565b8082518781527f2d579b8389bf07e7ce434f3bd88b036a33d28787d19af73a5aa2003a5dcb7d3660203392a3855260026020528420610a0e565b5001805491600160401b83101561033d57508161031c91600161033a940181556108ad565b81546001600160a01b0360039290921b91821b19163390911b179055565b80f35b634e487b7160e01b845260419052602483fd5b50503461021a578160031936011261021a577f8dddb57468cf5338ee155397ad1400a7a564308824f517d20a8a7c516523bb475490516001600160a01b039091168152602090f35b503461012f57602036600319011261012f57359180548310156103d757506103c1602092610863565b905491519160018060a01b039160031b1c168152f35b80fd5b50503461021a578160031936011261021a576020906001549051908152f35b50503461021a578060031936011261021a5760209061042761041961084d565b610421610837565b90610c11565b9051908152f35b5091903461021a576020928360031936011261012f5761044c61084d565b926104578433610c11565b91828252600286528382209384549481518881019067ffffffffffffffff91818110838211176105bc578452858152835194610492866109ba565b3386528a8601918252600160401b90818a1015610584576104ba8a6001968782018155610a23565b6105aa57859060018060a01b03809951166bffffffffffffffffffffffff60a01b82541617815501925191825194851161059757841161058457508a90825484845580851061055a575b5001908652898620865b838110610547575050505050519416907f313df56710bfec73d53fcb8e8d48ff821d5b2e9a113aad1e9bfc7997ef5a0d7f339180a48152f35b8251871682820155918b0191840161050e565b8389528585848b2092830192015b828110610576575050610504565b8a81558e9450879101610568565b634e487b7160e01b885260419052602487fd5b634e487b7160e01b895260418252602489fd5b634e487b7160e01b8952888252602489fd5b634e487b7160e01b875260418652602487fd5b50903461012f578060031936011261012f578135906105ec610837565b926105f96100cb33610969565b81516020908181019061064181610633303386906028926bffffffffffffffffffffffff19809260601b16835260601b1660148201520190565b03601f1981018352826109ec565b5190209260018060a01b039382857f8dddb57468cf5338ee155397ad1400a7a564308824f517d20a8a7c516523bb475416916044845180948193630f5d50b360e11b8352898301528c60248301525afa9081156107f65788916107c5575b501561076d578654851015610716578661033a876106f788886106c182610863565b9190548186169260031b1c16337ff48dd64d794d3623209edddaa975cfeae5b0ef403fbce64d7b377ceb50396c748880a4610863565b90919082549060031b9160018060a01b03809116831b921b1916179055565b5162461bcd60e51b815291820152602d60248201527f4d756c7469706c65205369676e6174757265203a204f776e657220696e64657860448201526c206973206f766572666c6f772160981b606482015260849150fd5b5162461bcd60e51b815291820152602e60248201527f6d756c74695369676e6174757265436c69656e74203a2054686973207478206960448201526d1cc81b9bdd08185c1c9c9bdd995960921b606482015260849150fd5b90508281813d83116107ef575b6107dc81836109ec565b810103126107eb57513861069f565b8780fd5b503d6107d2565b82513d8a823e3d90fd5b50503461021a576020906104276108163661081c565b90610ba1565b6040906003190112610832576004359060243590565b600080fd5b602435906001600160a01b038216820361083257565b600435906001600160a01b038216820361083257565b906000918254811015610899578280527f290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563019190565b634e487b7160e01b83526032600452602483fd5b80548210156108c55760005260206000200190600090565b634e487b7160e01b600052603260045260246000fd5b156108e257565b60405162461bcd60e51b815260206004820152603460248201527f4d756c7469706c65205369676e6174757265203a2063616c6c6572206973206e6044820152736f7420696e20746865206f776e65724c6973742160601b6064820152608490fd5b60001981146109535760010190565b634e487b7160e01b600052601160045260246000fd5b6000549060005b82811061097f57505050600090565b61098881610863565b905460039190911b1c6001600160a01b03908116908316146109b2576109ad90610944565b610970565b505050600190565b6040810190811067ffffffffffffffff8211176109d657604052565b634e487b7160e01b600052604160045260246000fd5b90601f8019910116810190811067ffffffffffffffff8211176109d657604052565b8054156108c557600052602060002090600090565b80548210156108c55760005260206000209060011b0190600090565b15610a4657565b60405162461bcd60e51b815260206004820152602f60248201527f4d756c7469706c65205369676e6174757265203a204d65737361676520696e6460448201526e6578206973206f766572666c6f772160881b6064820152608490fd5b9081546000915b818310610b65575b50808210610ac257505050600090565b6000199181830191821161095357818110610b1d575b505081548015610b07570190610aee82826108ad565b81549060018060a01b039060031b1b1916905555600190565b634e487b7160e01b600052603160045260246000fd5b610b37610b2d610b5e93866108ad565b91905492866108ad565b81546001600160a01b03600392831b81811b199092169490921b9490941c1690921b179055565b3880610ad8565b91610b7081856108ad565b905460039190911b1c6001600160a01b0390811690841614610b9b57610b9590610944565b91610aaa565b91610ab2565b60009081526002602052604081208054926001918254915b858110610bc95750505050905090565b8284610bd58385610a23565b5001541015610bec57610be790610944565b610bb9565b945050508201809211610bfd575090565b634e487b7160e01b81526011600452602490fd5b6040516bffffffffffffffffffffffff19606092831b8116602083019081529390921b9091166034820152610c498160488101610633565b5190209056fea264697066735822122042a3c1d2df05b423a72372137cacbb5e93f57739cbbe7ba7adc555d16157044a64736f6c63430008140033",
+  "devdoc": {
+    "details": "实现多签名治理机制，要求多个签名者同意才能执行重要操作",
+    "events": {
+      "SignApplication(address,bytes32,uint256)": {
+        "details": "签名申请事件",
+        "params": {
+          "from": "签名者地址",
+          "index": "申请索引",
+          "msgHash": "消息哈希"
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "constructor": {
+        "details": "构造函数",
+        "params": {
+          "limitedSignNum": "签名阈值",
+          "owners": "初始签名者地址数组"
+        }
+      },
+      "createApplication(address)": {
+        "details": "创建多签名申请",
+        "params": {
+          "to": "申请目标合约地址"
+        },
+        "returns": {
+          "_0": "uint256 返回申请的索引"
+        }
+      },
+      "getApplicationCount(bytes32)": {
+        "details": "获取某个消息哈希的申请数量",
+        "params": {
+          "msghash": "消息哈希"
+        },
+        "returns": {
+          "_0": "uint256 申请数量"
+        }
+      },
+      "getApplicationHash(address,address)": {
+        "details": "生成申请哈希",
+        "params": {
+          "from": "申请发起者地址",
+          "to": "申请目标地址"
+        },
+        "returns": {
+          "_0": "bytes32 生成的消息哈希"
+        }
+      },
+      "getApplicationInfo(bytes32,uint256)": {
+        "details": "获取申请信息",
+        "params": {
+          "index": "申请索引",
+          "msghash": "消息哈希"
+        },
+        "returns": {
+          "_0": "address 申请者地址",
+          "_1": "address[] 签名者地址数组"
+        }
+      },
+      "getValidSignature(bytes32,uint256)": {
+        "details": "获取有效的签名索引",
+        "params": {
+          "lastIndex": "上次检查的索引",
+          "msghash": "消息哈希"
+        },
+        "returns": {
+          "_0": "uint256 返回达到阈值的申请索引+1，如果没有则返回0"
+        }
+      },
+      "revokeApplication(bytes32)": {
+        "details": "撤销对申请的签名",
+        "params": {
+          "msghash": "申请的消息哈希"
+        }
+      },
+      "signApplication(bytes32)": {
+        "details": "对申请进行签名",
+        "params": {
+          "msghash": "申请的消息哈希"
+        }
+      },
+      "transferOwner(uint256,address)": {
+        "details": "转移签名者所有权",
+        "params": {
+          "index": "要替换的签名者在数组中的索引",
+          "newOwner": "新的签名者地址"
+        }
+      }
+    },
+    "title": "multiSignature - 多签名合约",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "constructor": {
+        "notice": "签名者数量必须大于等于签名阈值"
+      },
+      "createApplication(address)": {
+        "notice": "任何人都可以创建申请，但需要足够的签名才能生效"
+      },
+      "getApplicationHash(address,address)": {
+        "notice": "哈希由发起者和目标地址组成，确保唯一性"
+      },
+      "getValidSignature(bytes32,uint256)": {
+        "notice": "这是多签名验证的核心函数，由客户端合约调用"
+      },
+      "revokeApplication(bytes32)": {
+        "notice": "只有已签名的签名者可以撤销自己的签名 同signApplication，当前只支持对索引0的申请撤销签名 这与signApplication保持一致，确保操作的对称性"
+      },
+      "signApplication(bytes32)": {
+        "notice": "只有签名者可以调用，且会自动添加到签名列表中  === defaultIndex使用说明 === 当前实现中总是使用defaultIndex(0)，表示： 1. 只对第一个申请进行签名（简化实现） 2. 一个msgHash在当前版本中只有一个有效申请 3. 未来可扩展为支持多个申请，用户可选择对哪个申请签名"
+      },
+      "transferOwner(uint256,address)": {
+        "notice": "只有现有签名者且通过多签名验证才能调用"
+      }
+    },
+    "notice": "这是整个系统的核心治理合约，所有重要操作都需要通过多签名验证",
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 8685,
+        "contract": "contracts/multiSignature/multiSignature.sol:multiSignature",
+        "label": "signatureOwners",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_array(t_address)dyn_storage"
+      },
+      {
+        "astId": 8687,
+        "contract": "contracts/multiSignature/multiSignature.sol:multiSignature",
+        "label": "threshold",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 8699,
+        "contract": "contracts/multiSignature/multiSignature.sol:multiSignature",
+        "label": "signatureMap",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_mapping(t_bytes32,t_array(t_struct(signatureInfo)8693_storage)dyn_storage)"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_array(t_address)dyn_storage": {
+        "base": "t_address",
+        "encoding": "dynamic_array",
+        "label": "address[]",
+        "numberOfBytes": "32"
+      },
+      "t_array(t_struct(signatureInfo)8693_storage)dyn_storage": {
+        "base": "t_struct(signatureInfo)8693_storage",
+        "encoding": "dynamic_array",
+        "label": "struct multiSignature.signatureInfo[]",
+        "numberOfBytes": "32"
+      },
+      "t_bytes32": {
+        "encoding": "inplace",
+        "label": "bytes32",
+        "numberOfBytes": "32"
+      },
+      "t_mapping(t_bytes32,t_array(t_struct(signatureInfo)8693_storage)dyn_storage)": {
+        "encoding": "mapping",
+        "key": "t_bytes32",
+        "label": "mapping(bytes32 => struct multiSignature.signatureInfo[])",
+        "numberOfBytes": "32",
+        "value": "t_array(t_struct(signatureInfo)8693_storage)dyn_storage"
+      },
+      "t_struct(signatureInfo)8693_storage": {
+        "encoding": "inplace",
+        "label": "struct multiSignature.signatureInfo",
+        "members": [
+          {
+            "astId": 8689,
+            "contract": "contracts/multiSignature/multiSignature.sol:multiSignature",
+            "label": "applicant",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_address"
+          },
+          {
+            "astId": 8692,
+            "contract": "contracts/multiSignature/multiSignature.sol:multiSignature",
+            "label": "signatures",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_address)dyn_storage"
+          }
+        ],
+        "numberOfBytes": "64"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

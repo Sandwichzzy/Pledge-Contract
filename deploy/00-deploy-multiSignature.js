@@ -10,17 +10,11 @@ module.exports = async ({ getNamedAccounts, deployments, network }) => {
   const { deployer } = await getNamedAccounts();
   const { deploy } = deployments;
 
-  console.log("Deploying multiSignature with deployer:", deployer);
-  console.log("Owners:", owners);
-  console.log("Threshold:", limitedSignNum);
-
   const multiSignature = await deploy("multiSignature", {
     from: deployer,
     args: [owners, limitedSignNum],
     log: true,
   });
-
-  console.log("multiSignature deployed to", multiSignature.address);
 
   if (network.config.chainId === 11155111 && process.env.ETHERSCAN_API_KEY) {
     console.log("Verifying multiSignature");

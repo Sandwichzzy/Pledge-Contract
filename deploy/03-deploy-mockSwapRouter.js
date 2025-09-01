@@ -14,7 +14,6 @@ module.exports = async ({ getNamedAccounts, deployments, network }) => {
       args: [],
       log: true,
     });
-    console.log("MockWETH deployed to", mockWETH.address);
 
     // 部署 UniswapV2Factory
     const uniswapFactory = await deploy("UniswapV2Factory", {
@@ -22,7 +21,6 @@ module.exports = async ({ getNamedAccounts, deployments, network }) => {
       args: [deployer], // feeToSetter 设置为部署者
       log: true,
     });
-    console.log("UniswapV2Factory deployed to", uniswapFactory.address);
 
     // 部署 UniswapV2Router02
     const uniswapRouter = await deploy("UniswapV2Router02", {
@@ -30,7 +28,6 @@ module.exports = async ({ getNamedAccounts, deployments, network }) => {
       args: [uniswapFactory.address, mockWETH.address],
       log: true,
     });
-    console.log("UniswapV2Router02 deployed to", uniswapRouter.address);
 
     // 部署测试用的ERC20代币
 
@@ -41,7 +38,6 @@ module.exports = async ({ getNamedAccounts, deployments, network }) => {
       log: true,
       contract: "MockERC20",
     });
-    console.log("MockUSDT deployed to", mockUSDT.address);
 
     // Mock BTC (8位小数)
     const mockBTC = await deploy("MockBTC", {
@@ -50,7 +46,6 @@ module.exports = async ({ getNamedAccounts, deployments, network }) => {
       log: true,
       contract: "MockERC20",
     });
-    console.log("MockBTC deployed to", mockBTC.address);
 
     // Mock USDC (6位小数)
     const mockUSDC = await deploy("MockUSDC", {
@@ -59,7 +54,6 @@ module.exports = async ({ getNamedAccounts, deployments, network }) => {
       log: true,
       contract: "MockERC20",
     });
-    console.log("MockUSDC deployed to", mockUSDC.address);
 
     return {
       mockWETH: mockWETH.address,

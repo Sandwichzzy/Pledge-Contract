@@ -223,3 +223,9 @@ npx hardhat run deploy/00-deploy-multiSignature.js --network localhost
 - 使用代理模式进行合约升级
 - 通过多签名验证升级操作
 - 保持数据兼容性
+
+multiSignatureAddr=0xc4F817a1541ae1c98c72e016c58c9121e8AB3A24
+spDebtToken =0x4Ec6D33EE55A0cdA224a86FB48013809B5763a27
+JPDebtToken =0x523df39cAe18ea125930DA730628213e4b147CDc
+BscPledgeOracle=0xdb6D3b4CEB2aD839bdBD9A55833bac56212F1c94
+PledgePool=0x31F64Fa2588e70614eD7E7C16d5C492cedc09F72

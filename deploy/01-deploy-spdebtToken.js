@@ -10,8 +10,6 @@ module.exports = async ({ getNamedAccounts, deployments, network }) => {
   const multiSignatureDeployment = await deployments.get("multiSignature");
   const multiSignatureAddress = multiSignatureDeployment.address;
 
-  console.log("Using multiSignature address:", multiSignatureAddress);
-
   // 部署 SP DebtToken 合约 (供应方凭证)
   const spDebtToken = await deploy("spDebtToken", {
     from: deployer,
@@ -19,8 +17,6 @@ module.exports = async ({ getNamedAccounts, deployments, network }) => {
     log: true,
     contract: "DebtToken",
   });
-
-  console.log("SP DebtToken deployed to", spDebtToken.address);
 
   // 验证合约（如果在Sepolia网络上）
   if (network.config.chainId === 11155111 && process.env.ETHERSCAN_API_KEY) {

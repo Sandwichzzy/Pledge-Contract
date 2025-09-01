@@ -14,8 +14,6 @@ module.exports = async ({ getNamedAccounts, deployments, network }) => {
       log: true,
     });
 
-    console.log("MockOracle deployed to", mockOracle.address);
-
     return mockOracle;
   }
 
@@ -24,16 +22,12 @@ module.exports = async ({ getNamedAccounts, deployments, network }) => {
   const multiSignatureDeployment = await deployments.get("multiSignature");
   const multiSignatureAddress = multiSignatureDeployment.address;
 
-  console.log("Using multiSignature address:", multiSignatureAddress);
-
   // 测试/公链：部署 BscPledgeOracle
   const bscPledgeOracle = await deploy("BscPledgeOracle", {
     from: deployer,
     args: [multiSignatureAddress],
     log: true,
   });
-
-  console.log("BscPledgeOracle deployed to", bscPledgeOracle.address);
 
   if (network.config.chainId === 11155111 && process.env.ETHERSCAN_API_KEY) {
     console.log("Verifying BscPledgeOracle");

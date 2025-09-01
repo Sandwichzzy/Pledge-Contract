@@ -1,0 +1,498 @@
+{
+  "address": "0xdb6D3b4CEB2aD839bdBD9A55833bac56212F1c94",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_multiSignature",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "asset",
+          "type": "address"
+        }
+      ],
+      "name": "getAssetsAggregator",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getMultiSignatureAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "asset",
+          "type": "address"
+        }
+      ],
+      "name": "getPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "assets",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "getPrices",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "underlying",
+          "type": "uint256"
+        }
+      ],
+      "name": "getUnderlyingAggregator",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "underlying",
+          "type": "uint256"
+        }
+      ],
+      "name": "getUnderlyingPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "multiSignaturePosition",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "asset",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "aggregator",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_decimals",
+          "type": "uint256"
+        }
+      ],
+      "name": "setAssetAggregator",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "newDecimals",
+          "type": "uint256"
+        }
+      ],
+      "name": "setDecimals",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "asset",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "price",
+          "type": "uint256"
+        }
+      ],
+      "name": "setPrice",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "assets",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "prices",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "setPrices",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "underlying",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "aggregator",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_decimals",
+          "type": "uint256"
+        }
+      ],
+      "name": "setUnderlyingAggregator",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "underlying",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "price",
+          "type": "uint256"
+        }
+      ],
+      "name": "setUnderlyingPrice",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x5651ce4d6df877910bcbeb67d82a07db65d58b62447bfebaab1ef6cc6c0012ad",
+  "receipt": {
+    "to": null,
+    "from": "0x523df39cAe18ea125930DA730628213e4b147CDc",
+    "contractAddress": "0xdb6D3b4CEB2aD839bdBD9A55833bac56212F1c94",
+    "transactionIndex": 103,
+    "gasUsed": "836735",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xbddf20c686e6465bd1df1121f388c7a357b1c119cc04c01eaeb7370d59f7a84f",
+    "transactionHash": "0x5651ce4d6df877910bcbeb67d82a07db65d58b62447bfebaab1ef6cc6c0012ad",
+    "logs": [],
+    "blockNumber": 9109620,
+    "cumulativeGasUsed": "15236545",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    "0xc4F817a1541ae1c98c72e016c58c9121e8AB3A24"
+  ],
+  "numDeployments": 1,
+  "solcInputHash": "998545aae044c945567d8a2b7326d3e0",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_multiSignature\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"asset\",\"type\":\"address\"}],\"name\":\"getAssetsAggregator\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getMultiSignatureAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"asset\",\"type\":\"address\"}],\"name\":\"getPrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"assets\",\"type\":\"uint256[]\"}],\"name\":\"getPrices\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"underlying\",\"type\":\"uint256\"}],\"name\":\"getUnderlyingAggregator\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"underlying\",\"type\":\"uint256\"}],\"name\":\"getUnderlyingPrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"multiSignaturePosition\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"asset\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"aggregator\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_decimals\",\"type\":\"uint256\"}],\"name\":\"setAssetAggregator\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"newDecimals\",\"type\":\"uint256\"}],\"name\":\"setDecimals\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"asset\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"price\",\"type\":\"uint256\"}],\"name\":\"setPrice\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"assets\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"prices\",\"type\":\"uint256[]\"}],\"name\":\"setPrices\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"underlying\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"aggregator\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_decimals\",\"type\":\"uint256\"}],\"name\":\"setUnderlyingAggregator\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"underlying\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"price\",\"type\":\"uint256\"}],\"name\":\"setUnderlyingPrice\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"\\u6df7\\u5408\\u4ef7\\u683c\\u9884\\u8a00\\u673a\\u7cfb\\u7edf\\uff0c\\u652f\\u6301Chainlink\\u805a\\u5408\\u5668\\u548c\\u624b\\u52a8\\u4ef7\\u683c\\u8bbe\\u7f6e\",\"kind\":\"dev\",\"methods\":{\"getAssetsAggregator(address)\":{\"details\":\"\\u67e5\\u8be2\\u8d44\\u4ea7\\u914d\\u7f6e\\u7684Chainlink\\u805a\\u5408\\u5668\\u548c\\u7cbe\\u5ea6\",\"params\":{\"asset\":\"\\u8d44\\u4ea7\\u5408\\u7ea6\\u5730\\u5740\"},\"returns\":{\"_0\":\"address \\u805a\\u5408\\u5668\\u5730\\u5740\",\"_1\":\"uint256 \\u8d44\\u4ea7\\u7cbe\\u5ea6\"}},\"getPrice(address)\":{\"details\":\"\\u5c06\\u8d44\\u4ea7\\u5730\\u5740\\u8f6c\\u6362\\u4e3auint256\\u540e\\u83b7\\u53d6\\u4ef7\\u683c\",\"params\":{\"asset\":\"\\u8d44\\u4ea7\\u5408\\u7ea6\\u5730\\u5740\"},\"returns\":{\"_0\":\"uint256 \\u8d44\\u4ea7\\u4ef7\\u683c\\uff0818\\u4f4d\\u5c0f\\u6570\\u7cbe\\u5ea6\\uff09\"}},\"getPrices(uint256[])\":{\"details\":\"\\u8fd4\\u56de\\u591a\\u4e2a\\u8d44\\u4ea7\\u7684\\u5f53\\u524d\\u4ef7\\u683c\",\"params\":{\"assets\":\"\\u8d44\\u4ea7ID\\u6570\\u7ec4\"},\"returns\":{\"_0\":\"uint256[] \\u5bf9\\u5e94\\u7684\\u4ef7\\u683c\\u6570\\u7ec4\\uff0818\\u4f4d\\u5c0f\\u6570\\u7cbe\\u5ea6\\uff09\"}},\"getUnderlyingAggregator(uint256)\":{\"details\":\"\\u67e5\\u8be2\\u8d44\\u4ea7\\u914d\\u7f6e\\u7684Chainlink\\u805a\\u5408\\u5668\\u548c\\u7cbe\\u5ea6\",\"params\":{\"underlying\":\"\\u8d44\\u4ea7\\u6807\\u8bc6\\u7b26\"},\"returns\":{\"_0\":\"address \\u805a\\u5408\\u5668\\u5730\\u5740\",\"_1\":\"uint256 \\u8d44\\u4ea7\\u7cbe\\u5ea6\"}},\"getUnderlyingPrice(uint256)\":{\"details\":\"\\u5b9e\\u73b0\\u53cc\\u91cd\\u4ef7\\u683c\\u6e90\\u7684\\u4ef7\\u683c\\u83b7\\u53d6\\u903b\\u8f91\",\"params\":{\"underlying\":\"\\u8d44\\u4ea7\\u6807\\u8bc6\\u7b26\\uff08\\u5730\\u5740\\u8f6cuint256\\u6216\\u81ea\\u5b9a\\u4e49ID\\uff09\"},\"returns\":{\"_0\":\"uint256 \\u8d44\\u4ea7\\u4ef7\\u683c\\uff0818\\u4f4d\\u5c0f\\u6570\\u7cbe\\u5ea6\\uff09\"}},\"setAssetAggregator(address,address,uint256)\":{\"details\":\"\\u4e3a\\u8d44\\u4ea7\\u914d\\u7f6eChainlink\\u4ef7\\u683c\\u6e90\",\"params\":{\"_decimals\":\"\\u8d44\\u4ea7\\u7684\\u5c0f\\u6570\\u4f4d\\u6570\",\"aggregator\":\"Chainlink\\u805a\\u5408\\u5668\\u5730\\u5740\",\"asset\":\"\\u8d44\\u4ea7\\u5408\\u7ea6\\u5730\\u5740\"}},\"setDecimals(uint256)\":{\"details\":\"\\u7528\\u4e8e\\u8c03\\u6574Chainlink\\u4ef7\\u683c\\u7684\\u7cbe\\u5ea6\\u8f6c\\u6362\",\"params\":{\"newDecimals\":\"\\u65b0\\u7684\\u7cbe\\u5ea6\\u9664\\u6570  === \\u4f7f\\u7528\\u573a\\u666f === - Chainlink\\u805a\\u5408\\u5668\\u8fd4\\u56de8\\u4f4d\\u5c0f\\u6570\\uff0c\\u8bbe\\u7f6e\\u4e3a1e8\\u8fdb\\u884c\\u6807\\u51c6\\u5316 - \\u7279\\u6b8a\\u60c5\\u51b5\\u4e0b\\u9700\\u8981\\u5168\\u5c40\\u8c03\\u6574\\u4ef7\\u683c\\u7cbe\\u5ea6\"}},\"setPrice(address,uint256)\":{\"details\":\"\\u4e3a\\u8d44\\u4ea7\\u8bbe\\u7f6e\\u5907\\u7528\\u4ef7\\u683c\",\"params\":{\"asset\":\"\\u8d44\\u4ea7\\u5408\\u7ea6\\u5730\\u5740\",\"price\":\"\\u4ef7\\u683c\\u503c\\uff0818\\u4f4d\\u5c0f\\u6570\\u7cbe\\u5ea6\\uff09\"}},\"setPrices(uint256[],uint256[])\":{\"details\":\"\\u624b\\u52a8\\u8bbe\\u7f6e\\u591a\\u4e2a\\u8d44\\u4ea7\\u7684\\u4ef7\\u683c\\uff08\\u5907\\u7528\\u4ef7\\u683c\\u6e90\\uff09\",\"params\":{\"assets\":\"\\u8d44\\u4ea7ID\\u6570\\u7ec4\",\"prices\":\"\\u5bf9\\u5e94\\u7684\\u4ef7\\u683c\\u6570\\u7ec4\\uff0818\\u4f4d\\u5c0f\\u6570\\u7cbe\\u5ea6\\uff09\"}},\"setUnderlyingAggregator(uint256,address,uint256)\":{\"details\":\"\\u4e3a\\u8d44\\u4ea7\\u914d\\u7f6eChainlink\\u4ef7\\u683c\\u6e90\",\"params\":{\"_decimals\":\"\\u8d44\\u4ea7\\u7684\\u5c0f\\u6570\\u4f4d\\u6570\",\"aggregator\":\"Chainlink\\u805a\\u5408\\u5668\\u5730\\u5740\",\"underlying\":\"\\u8d44\\u4ea7\\u6807\\u8bc6\\u7b26\"}},\"setUnderlyingPrice(uint256,uint256)\":{\"details\":\"\\u4e3a\\u8d44\\u4ea7\\u8bbe\\u7f6e\\u5907\\u7528\\u4ef7\\u683c\",\"params\":{\"price\":\"\\u4ef7\\u683c\\u503c\\uff0818\\u4f4d\\u5c0f\\u6570\\u7cbe\\u5ea6\\uff09\",\"underlying\":\"\\u8d44\\u4ea7\\u6807\\u8bc6\\u7b26\"}}},\"stateVariables\":{\"assetsMap\":{\"details\":\"\\u8d44\\u4ea7\\u5230Chainlink\\u805a\\u5408\\u5668\\u7684\\u6620\\u5c04 key: \\u8d44\\u4ea7\\u6807\\u8bc6\\u7b26\\uff08\\u5730\\u5740\\u8f6cuint256\\u6216\\u81ea\\u5b9a\\u4e49ID\\uff09 value: Chainlink\\u805a\\u5408\\u5668\\u63a5\\u53e3\"},\"decimals\":{\"details\":\"\\u5168\\u5c40\\u7cbe\\u5ea6\\u9664\\u6570\\uff0c\\u7528\\u4e8eChainlink\\u4ef7\\u683c\\u8c03\\u6574 \\u9ed8\\u8ba4\\u4e3a1\\uff0c\\u53ef\\u901a\\u8fc7setDecimals\\u8c03\\u6574\"},\"decimalsMap\":{\"details\":\"\\u8d44\\u4ea7\\u7cbe\\u5ea6\\u6620\\u5c04 key: \\u8d44\\u4ea7\\u6807\\u8bc6\\u7b26 value: \\u8be5\\u8d44\\u4ea7\\u7684\\u5c0f\\u6570\\u4f4d\\u6570\\uff08\\u5982USDC=6, WETH=18\\uff09\"},\"pricesMap\":{\"details\":\"\\u624b\\u52a8\\u8bbe\\u7f6e\\u7684\\u4ef7\\u683c\\u6620\\u5c04\\uff08\\u5907\\u7528\\u4ef7\\u683c\\u6e90\\uff09 key: \\u8d44\\u4ea7\\u6807\\u8bc6\\u7b26 value: \\u624b\\u52a8\\u8bbe\\u7f6e\\u7684\\u4ef7\\u683c\\uff0818\\u4f4d\\u5c0f\\u6570\\u7cbe\\u5ea6\\uff09\"}},\"title\":\"BscPledgeOracle - BSC\\u8d28\\u62bc\\u534f\\u8bae\\u4ef7\\u683c\\u9884\\u8a00\\u673a\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"getAssetsAggregator(address)\":{\"notice\":\"\\u83b7\\u53d6\\u8d44\\u4ea7\\u7684\\u805a\\u5408\\u5668\\u4fe1\\u606f\\uff08\\u901a\\u8fc7\\u5730\\u5740\\uff09\"},\"getPrice(address)\":{\"notice\":\"\\u83b7\\u53d6\\u5355\\u4e2a\\u8d44\\u4ea7\\u4ef7\\u683c\\uff08\\u901a\\u8fc7\\u5730\\u5740\\uff09\"},\"getPrices(uint256[])\":{\"notice\":\"\\u6279\\u91cf\\u83b7\\u53d6\\u8d44\\u4ea7\\u4ef7\\u683c\"},\"getUnderlyingAggregator(uint256)\":{\"notice\":\"\\u83b7\\u53d6\\u8d44\\u4ea7\\u7684\\u805a\\u5408\\u5668\\u4fe1\\u606f\\uff08\\u901a\\u8fc7ID\\uff09\"},\"getUnderlyingPrice(uint256)\":{\"notice\":\"\\u83b7\\u53d6\\u5355\\u4e2a\\u8d44\\u4ea7\\u4ef7\\u683c\\uff08\\u6838\\u5fc3\\u51fd\\u6570\\uff09\"},\"setAssetAggregator(address,address,uint256)\":{\"notice\":\"\\u8bbe\\u7f6e\\u8d44\\u4ea7\\u7684Chainlink\\u805a\\u5408\\u5668\\uff08\\u901a\\u8fc7\\u5730\\u5740\\uff09\"},\"setDecimals(uint256)\":{\"notice\":\"\\u8bbe\\u7f6e\\u5168\\u5c40\\u7cbe\\u5ea6\\u53c2\\u6570\"},\"setPrice(address,uint256)\":{\"notice\":\"\\u8bbe\\u7f6e\\u5355\\u4e2a\\u8d44\\u4ea7\\u7684\\u624b\\u52a8\\u4ef7\\u683c\\uff08\\u901a\\u8fc7\\u5730\\u5740\\uff09\"},\"setPrices(uint256[],uint256[])\":{\"notice\":\"\\u6279\\u91cf\\u8bbe\\u7f6e\\u8d44\\u4ea7\\u4ef7\\u683c\"},\"setUnderlyingAggregator(uint256,address,uint256)\":{\"notice\":\"\\u8bbe\\u7f6e\\u8d44\\u4ea7\\u7684Chainlink\\u805a\\u5408\\u5668\\uff08\\u901a\\u8fc7ID\\uff09\"},\"setUnderlyingPrice(uint256,uint256)\":{\"notice\":\"\\u8bbe\\u7f6e\\u5355\\u4e2a\\u8d44\\u4ea7\\u7684\\u624b\\u52a8\\u4ef7\\u683c\\uff08\\u901a\\u8fc7ID\\uff09\"}},\"notice\":\"\\u4e3aPledge\\u7cfb\\u7edf\\u63d0\\u4f9b\\u53ef\\u9760\\u7684\\u4ef7\\u683c\\u6570\\u636e\\uff0c\\u652f\\u6301\\u591a\\u79cd\\u8d44\\u4ea7\\u7684\\u4ef7\\u683c\\u67e5\\u8be2  === \\u6838\\u5fc3\\u8bbe\\u8ba1\\u7279\\u6027 === 1. **\\u53cc\\u91cd\\u4ef7\\u683c\\u6e90**\\uff1aChainlink\\u805a\\u5408\\u5668\\uff08\\u4f18\\u5148\\uff09 + \\u624b\\u52a8\\u8bbe\\u7f6e\\u4ef7\\u683c\\uff08\\u5907\\u7528\\uff09 2. **\\u7cbe\\u5ea6\\u7edf\\u4e00**\\uff1a\\u6240\\u6709\\u4ef7\\u683c\\u7edf\\u4e00\\u8f6c\\u6362\\u4e3a18\\u4f4d\\u5c0f\\u6570\\u7cbe\\u5ea6 3. **\\u591a\\u7b7e\\u540d\\u63a7\\u5236**\\uff1a\\u4ef7\\u683c\\u8bbe\\u7f6e\\u548c\\u805a\\u5408\\u5668\\u914d\\u7f6e\\u9700\\u8981\\u591a\\u7b7e\\u540d\\u9a8c\\u8bc1 4. **\\u7075\\u6d3b\\u914d\\u7f6e**\\uff1a\\u652f\\u6301\\u52a8\\u6001\\u6dfb\\u52a0/\\u4fee\\u6539\\u8d44\\u4ea7\\u7684\\u4ef7\\u683c\\u6e90  === \\u4ef7\\u683c\\u67e5\\u8be2\\u4f18\\u5148\\u7ea7 === 1. \\u5982\\u679c\\u914d\\u7f6e\\u4e86Chainlink\\u805a\\u5408\\u5668 \\u2192 \\u4f7f\\u7528\\u94fe\\u4e0a\\u5b9e\\u65f6\\u4ef7\\u683c 2. \\u5982\\u679c\\u6ca1\\u6709\\u805a\\u5408\\u5668 \\u2192 \\u4f7f\\u7528\\u624b\\u52a8\\u8bbe\\u7f6e\\u7684\\u4ef7\\u683c 3. \\u5982\\u679c\\u90fd\\u6ca1\\u6709 \\u2192 \\u8fd4\\u56de0\\uff08\\u8868\\u793a\\u4ef7\\u683c\\u4e0d\\u53ef\\u7528\\uff09  === \\u7cbe\\u5ea6\\u5904\\u7406\\u903b\\u8f91 === - Chainlink\\u4ef7\\u683c\\u901a\\u5e38\\u662f8\\u4f4d\\u5c0f\\u6570\\uff08\\u5982BTC/USD $50000.12345678\\uff09 - \\u672c\\u7cfb\\u7edf\\u7edf\\u4e00\\u4f7f\\u752818\\u4f4d\\u5c0f\\u6570\\uff08\\u4ee5\\u592a\\u574a\\u6807\\u51c6\\uff09 - \\u81ea\\u52a8\\u8fdb\\u884c\\u7cbe\\u5ea6\\u8f6c\\u6362\\u4ee5\\u786e\\u4fdd\\u8ba1\\u7b97\\u51c6\\u786e\\u6027\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/pledage/BscPledgeOracle.sol\":\"BscPledgeOracle\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[],\"viaIR\":true},\"sources\":{\"@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.0;\\n\\n// solhint-disable-next-line interface-starts-with-i\\ninterface AggregatorV3Interface {\\n  function decimals() external view returns (uint8);\\n\\n  function description() external view returns (string memory);\\n\\n  function version() external view returns (uint256);\\n\\n  function getRoundData(\\n    uint80 _roundId\\n  ) external view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound);\\n\\n  function latestRoundData()\\n    external\\n    view\\n    returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound);\\n}\\n\",\"keccak256\":\"0x257a8d28fa83d3d942547c8e129ef465e4b5f3f31171e7be4739a4c98da6b4f0\",\"license\":\"MIT\"},\"contracts/multiSignature/multiSignatureClient.sol\":{\"content\":\"//SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.0;\\r\\n\\r\\n/**\\r\\n * @title IMultiSignature - \\u591a\\u7b7e\\u540d\\u5408\\u7ea6\\u63a5\\u53e3\\r\\n * @dev \\u5b9a\\u4e49\\u4e86\\u591a\\u7b7e\\u540d\\u5408\\u7ea6\\u9700\\u8981\\u5b9e\\u73b0\\u7684\\u6838\\u5fc3\\u529f\\u80fd\\u63a5\\u53e3\\r\\n */\\r\\ninterface IMultiSignature {\\r\\n    /**\\r\\n     * @dev \\u83b7\\u53d6\\u6709\\u6548\\u7b7e\\u540d\\u7d22\\u5f15\\r\\n     * @param msghash \\u6d88\\u606f\\u54c8\\u5e0c\\r\\n     * @param lastIndex \\u4e0a\\u6b21\\u68c0\\u67e5\\u7684\\u7d22\\u5f15\\r\\n     * @return uint256 \\u8fd4\\u56de\\u6709\\u6548\\u7684\\u7b7e\\u540d\\u7d22\\u5f15\\uff0c\\u5982\\u679c\\u6ca1\\u6709\\u8fbe\\u5230\\u9608\\u503c\\u5219\\u8fd4\\u56de0\\r\\n     */\\r\\n    function getValidSignature(bytes32 msghash, uint256 lastIndex) external view returns (uint256);\\r\\n}\\r\\n\\r\\n/**\\r\\n * @title multiSignatureClient - \\u591a\\u7b7e\\u540d\\u5ba2\\u6237\\u7aef\\u5408\\u7ea6\\r\\n * @dev \\u4e3a\\u5176\\u4ed6\\u5408\\u7ea6\\u63d0\\u4f9b\\u591a\\u7b7e\\u540d\\u9a8c\\u8bc1\\u529f\\u80fd\\u7684\\u57fa\\u7840\\u5408\\u7ea6\\r\\n * @notice \\u4efb\\u4f55\\u9700\\u8981\\u591a\\u7b7e\\u540d\\u4fdd\\u62a4\\u7684\\u5408\\u7ea6\\u90fd\\u5e94\\u8be5\\u7ee7\\u627f\\u6b64\\u5408\\u7ea6\\uff0c\\u5e76\\u4f7f\\u7528validCall\\u4fee\\u9970\\u7b26\\r\\n * \\r\\n * === \\u5de5\\u4f5c\\u539f\\u7406 ===\\r\\n * 1. \\u5ba2\\u6237\\u7aef\\u5408\\u7ea6\\u7ee7\\u627f\\u6b64\\u5408\\u7ea6\\uff0c\\u83b7\\u5f97\\u591a\\u7b7e\\u540d\\u9a8c\\u8bc1\\u80fd\\u529b\\r\\n * 2. \\u91cd\\u8981\\u51fd\\u6570\\u4f7f\\u7528validCall\\u4fee\\u9970\\u7b26\\u8fdb\\u884c\\u4fdd\\u62a4\\r\\n * 3. \\u8c03\\u7528\\u65f6\\u4f1a\\u81ea\\u52a8\\u68c0\\u67e5\\u5bf9\\u5e94\\u7684\\u591a\\u7b7e\\u540d\\u7533\\u8bf7\\u662f\\u5426\\u5df2\\u83b7\\u5f97\\u8db3\\u591f\\u7b7e\\u540d\\r\\n * 4. \\u53ea\\u6709\\u901a\\u8fc7\\u591a\\u7b7e\\u540d\\u9a8c\\u8bc1\\u7684\\u8c03\\u7528\\u624d\\u80fd\\u6267\\u884c\\r\\n */\\r\\ncontract multiSignatureClient {\\r\\n    uint256 public constant multiSignaturePosition = uint256(keccak256(\\\"org.multiSignature.storage\\\"));// \\u591a\\u7b7e\\u540d\\u5408\\u7ea6\\u5730\\u5740\\u7684\\u5b58\\u50a8\\u4f4d\\u7f6e\\r\\n    uint256 private constant defaultIndex = 0;// \\u9ed8\\u8ba4\\u7d22\\u5f15\\r\\n\\r\\n    /**\\r\\n     * @dev \\u6784\\u9020\\u51fd\\u6570\\r\\n     * @param multiSignature \\u591a\\u7b7e\\u540d\\u5408\\u7ea6\\u5730\\u5740\\r\\n     * @notice \\u5c06\\u591a\\u7b7e\\u540d\\u5408\\u7ea6\\u5730\\u5740\\u4fdd\\u5b58\\u5230\\u56fa\\u5b9a\\u7684\\u5b58\\u50a8\\u4f4d\\u7f6e\\r\\n     */\\r\\n    constructor(address multiSignature) {\\r\\n        require(multiSignature != address(0), \\\"multiSignatureClient : Multiple signature contract address is zero!\\\");\\r\\n        saveValue(multiSignaturePosition, uint256(uint160(multiSignature)));\\r\\n    }\\r\\n\\r\\n    //\\u4ece\\u5b58\\u50a8\\u4e2d\\u8bfb\\u53d6\\u591a\\u7b7e\\u540d\\u5408\\u7ea6\\u5730\\u5740\\r\\n    function getMultiSignatureAddress() public view returns (address){\\r\\n        return address(uint160(getValue(multiSignaturePosition)));\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev \\u591a\\u7b7e\\u540d\\u9a8c\\u8bc1\\u4fee\\u9970\\u7b26\\r\\n     * @notice \\u4f7f\\u7528\\u6b64\\u4fee\\u9970\\u7b26\\u7684\\u51fd\\u6570\\u53ea\\u6709\\u5728\\u591a\\u7b7e\\u540d\\u9a8c\\u8bc1\\u901a\\u8fc7\\u540e\\u624d\\u80fd\\u6267\\u884c\\r\\n     * @notice \\u8fd9\\u662f\\u6574\\u4e2a\\u591a\\u7b7e\\u540d\\u7cfb\\u7edf\\u7684\\u6838\\u5fc3\\u9a8c\\u8bc1\\u673a\\u5236\\r\\n     */\\r\\n    modifier validCall(){\\r\\n        checkMultiSignature();\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev \\u68c0\\u67e5\\u591a\\u7b7e\\u540d\\u9a8c\\u8bc1\\r\\n     * @notice \\u6838\\u5fc3\\u9a8c\\u8bc1\\u903b\\u8f91\\uff1a\\r\\n     * 1. \\u751f\\u6210\\u6d88\\u606f\\u54c8\\u5e0c\\uff08\\u8c03\\u7528\\u8005\\u5730\\u5740 + \\u5f53\\u524d\\u5408\\u7ea6\\u5730\\u5740\\uff09\\r\\n     * 2. \\u5411\\u591a\\u7b7e\\u540d\\u5408\\u7ea6\\u67e5\\u8be2\\u8be5\\u54c8\\u5e0c\\u662f\\u5426\\u6709\\u8db3\\u591f\\u7684\\u7b7e\\u540d\\r\\n     * 3. \\u5982\\u679c\\u6ca1\\u6709\\u8db3\\u591f\\u7b7e\\u540d\\uff0c\\u4ea4\\u6613\\u5c06\\u56de\\u6eda\\r\\n     */\\r\\n    function checkMultiSignature() internal view {\\r\\n        uint256 value;\\r\\n        // \\u83b7\\u53d6\\u8c03\\u7528\\u7684\\u4ee5\\u592a\\u5e01\\u503c\\uff08\\u5f53\\u524d\\u672a\\u4f7f\\u7528\\uff0c\\u4e3a\\u672a\\u6765\\u6269\\u5c55\\u9884\\u7559\\uff09\\r\\n        assembly {\\r\\n            value:=callvalue()\\r\\n        }\\r\\n        // \\u751f\\u6210\\u552f\\u4e00\\u7684\\u6d88\\u606f\\u54c8\\u5e0c\\uff1a\\u8c03\\u7528\\u8005\\u5730\\u5740 + \\u76ee\\u6807\\u5408\\u7ea6\\u5730\\u5740\\r\\n        // \\u8fd9\\u786e\\u4fdd\\u4e86\\u6bcf\\u4e2a(\\u8c03\\u7528\\u8005, \\u76ee\\u6807\\u5408\\u7ea6)\\u7ec4\\u5408\\u90fd\\u6709\\u552f\\u4e00\\u7684\\u54c8\\u5e0c\\r\\n        bytes32 msghash = keccak256(abi.encodePacked(msg.sender, address(this)));\\r\\n        // \\u83b7\\u53d6\\u591a\\u7b7e\\u540d\\u5408\\u7ea6\\u5730\\u5740\\r\\n        address multiSign=getMultiSignatureAddress();\\r\\n\\r\\n        // \\u67e5\\u8be2\\u591a\\u7b7e\\u540d\\u5408\\u7ea6\\uff0c\\u68c0\\u67e5\\u662f\\u5426\\u6709\\u8db3\\u591f\\u7684\\u7b7e\\u540d\\r\\n        // getValidSignature\\u7684\\u5b9e\\u73b0\\u903b\\u8f91\\uff08\\u5728multiSignature.sol\\u4e2d\\uff09\\uff1a\\r\\n        // 1. \\u904d\\u5386\\u8be5msgHash\\u5bf9\\u5e94\\u7684\\u6240\\u6709\\u7533\\u8bf7\\r\\n        // 2. \\u68c0\\u67e5\\u6bcf\\u4e2a\\u7533\\u8bf7\\u7684\\u7b7e\\u540d\\u6570\\u91cf\\u662f\\u5426 >= threshold\\r\\n        // 3. \\u5982\\u679c\\u627e\\u5230\\u8fbe\\u5230\\u9608\\u503c\\u7684\\u7533\\u8bf7\\uff0c\\u8fd4\\u56de\\u5176\\u7d22\\u5f15+1\\uff08\\u786e\\u4fdd\\u975e\\u96f6\\uff09\\r\\n        // 4. \\u5982\\u679c\\u6ca1\\u6709\\u627e\\u5230\\uff0c\\u8fd4\\u56de0\\r\\n        uint256 newIndex=IMultiSignature(multiSign).getValidSignature(msghash,defaultIndex);\\r\\n        require(newIndex>defaultIndex,\\\"multiSignatureClient : This tx is not aprroved\\\");\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev \\u4fdd\\u5b58\\u503c\\u5230\\u6307\\u5b9a\\u5b58\\u50a8\\u4f4d\\u7f6e\\r\\n     * @param position \\u5b58\\u50a8\\u4f4d\\u7f6e\\uff08\\u4f7f\\u7528keccak256\\u751f\\u6210\\u7684\\u552f\\u4e00\\u4f4d\\u7f6e\\uff09\\r\\n     * @param value \\u8981\\u4fdd\\u5b58\\u7684\\u503c\\r\\n     * @notice \\u4f7f\\u7528\\u5185\\u8054\\u6c47\\u7f16\\u76f4\\u63a5\\u64cd\\u4f5c\\u5b58\\u50a8\\uff0c\\u63d0\\u9ad8gas\\u6548\\u7387\\r\\n     */\\r\\n    function saveValue(uint256 position, uint256 value) internal {\\r\\n        assembly {\\r\\n            sstore(position, value)\\r\\n        }\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev \\u4ece\\u6307\\u5b9a\\u5b58\\u50a8\\u4f4d\\u7f6e\\u8bfb\\u53d6\\u503c\\r\\n     * @param position \\u5b58\\u50a8\\u4f4d\\u7f6e\\uff08\\u4f7f\\u7528keccak256\\u751f\\u6210\\u7684\\u552f\\u4e00\\u4f4d\\u7f6e\\uff09\\r\\n     * @return value \\u8bfb\\u53d6\\u7684\\u503c\\r\\n     * @notice \\u4f7f\\u7528\\u5185\\u8054\\u6c47\\u7f16\\u76f4\\u63a5\\u64cd\\u4f5c\\u5b58\\u50a8\\uff0c\\u63d0\\u9ad8gas\\u6548\\u7387\\r\\n     */\\r\\n    function getValue(uint256 position) internal view returns (uint256 value) {\\r\\n        assembly {\\r\\n            value := sload(position)\\r\\n        }\\r\\n    }\\r\\n\\r\\n\\r\\n}\",\"keccak256\":\"0x2c55c72f29f3106655ee9ad2b23f08365d6911361961c104d370bc6766b8ff76\",\"license\":\"MIT\"},\"contracts/pledage/BscPledgeOracle.sol\":{\"content\":\"//SPDX-License-Identifier: MIT\\r\\n\\r\\npragma solidity ^0.8.0;\\r\\n\\r\\nimport \\\"../multiSignature/multiSignatureClient.sol\\\";\\r\\nimport \\\"@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol\\\";\\r\\n\\r\\n/**\\r\\n * @title BscPledgeOracle - BSC\\u8d28\\u62bc\\u534f\\u8bae\\u4ef7\\u683c\\u9884\\u8a00\\u673a\\r\\n * @dev \\u6df7\\u5408\\u4ef7\\u683c\\u9884\\u8a00\\u673a\\u7cfb\\u7edf\\uff0c\\u652f\\u6301Chainlink\\u805a\\u5408\\u5668\\u548c\\u624b\\u52a8\\u4ef7\\u683c\\u8bbe\\u7f6e\\r\\n * @notice \\u4e3aPledge\\u7cfb\\u7edf\\u63d0\\u4f9b\\u53ef\\u9760\\u7684\\u4ef7\\u683c\\u6570\\u636e\\uff0c\\u652f\\u6301\\u591a\\u79cd\\u8d44\\u4ea7\\u7684\\u4ef7\\u683c\\u67e5\\u8be2\\r\\n * \\r\\n * === \\u6838\\u5fc3\\u8bbe\\u8ba1\\u7279\\u6027 ===\\r\\n * 1. **\\u53cc\\u91cd\\u4ef7\\u683c\\u6e90**\\uff1aChainlink\\u805a\\u5408\\u5668\\uff08\\u4f18\\u5148\\uff09 + \\u624b\\u52a8\\u8bbe\\u7f6e\\u4ef7\\u683c\\uff08\\u5907\\u7528\\uff09\\r\\n * 2. **\\u7cbe\\u5ea6\\u7edf\\u4e00**\\uff1a\\u6240\\u6709\\u4ef7\\u683c\\u7edf\\u4e00\\u8f6c\\u6362\\u4e3a18\\u4f4d\\u5c0f\\u6570\\u7cbe\\u5ea6\\r\\n * 3. **\\u591a\\u7b7e\\u540d\\u63a7\\u5236**\\uff1a\\u4ef7\\u683c\\u8bbe\\u7f6e\\u548c\\u805a\\u5408\\u5668\\u914d\\u7f6e\\u9700\\u8981\\u591a\\u7b7e\\u540d\\u9a8c\\u8bc1\\r\\n * 4. **\\u7075\\u6d3b\\u914d\\u7f6e**\\uff1a\\u652f\\u6301\\u52a8\\u6001\\u6dfb\\u52a0/\\u4fee\\u6539\\u8d44\\u4ea7\\u7684\\u4ef7\\u683c\\u6e90\\r\\n * \\r\\n * === \\u4ef7\\u683c\\u67e5\\u8be2\\u4f18\\u5148\\u7ea7 ===\\r\\n * 1. \\u5982\\u679c\\u914d\\u7f6e\\u4e86Chainlink\\u805a\\u5408\\u5668 \\u2192 \\u4f7f\\u7528\\u94fe\\u4e0a\\u5b9e\\u65f6\\u4ef7\\u683c\\r\\n * 2. \\u5982\\u679c\\u6ca1\\u6709\\u805a\\u5408\\u5668 \\u2192 \\u4f7f\\u7528\\u624b\\u52a8\\u8bbe\\u7f6e\\u7684\\u4ef7\\u683c\\r\\n * 3. \\u5982\\u679c\\u90fd\\u6ca1\\u6709 \\u2192 \\u8fd4\\u56de0\\uff08\\u8868\\u793a\\u4ef7\\u683c\\u4e0d\\u53ef\\u7528\\uff09\\r\\n * \\r\\n * === \\u7cbe\\u5ea6\\u5904\\u7406\\u903b\\u8f91 ===\\r\\n * - Chainlink\\u4ef7\\u683c\\u901a\\u5e38\\u662f8\\u4f4d\\u5c0f\\u6570\\uff08\\u5982BTC/USD $50000.12345678\\uff09\\r\\n * - \\u672c\\u7cfb\\u7edf\\u7edf\\u4e00\\u4f7f\\u752818\\u4f4d\\u5c0f\\u6570\\uff08\\u4ee5\\u592a\\u574a\\u6807\\u51c6\\uff09\\r\\n * - \\u81ea\\u52a8\\u8fdb\\u884c\\u7cbe\\u5ea6\\u8f6c\\u6362\\u4ee5\\u786e\\u4fdd\\u8ba1\\u7b97\\u51c6\\u786e\\u6027\\r\\n */\\r\\ncontract BscPledgeOracle is multiSignatureClient {\\r\\n\\r\\n    /**\\r\\n     * @dev \\u8d44\\u4ea7\\u5230Chainlink\\u805a\\u5408\\u5668\\u7684\\u6620\\u5c04\\r\\n     * key: \\u8d44\\u4ea7\\u6807\\u8bc6\\u7b26\\uff08\\u5730\\u5740\\u8f6cuint256\\u6216\\u81ea\\u5b9a\\u4e49ID\\uff09\\r\\n     * value: Chainlink\\u805a\\u5408\\u5668\\u63a5\\u53e3\\r\\n     */\\r\\n    mapping(uint256 => AggregatorV3Interface) internal assetsMap;\\r\\n\\r\\n    /**\\r\\n     * @dev \\u8d44\\u4ea7\\u7cbe\\u5ea6\\u6620\\u5c04\\r\\n     * key: \\u8d44\\u4ea7\\u6807\\u8bc6\\u7b26\\r\\n     * value: \\u8be5\\u8d44\\u4ea7\\u7684\\u5c0f\\u6570\\u4f4d\\u6570\\uff08\\u5982USDC=6, WETH=18\\uff09\\r\\n     */\\r\\n    mapping(uint256 => uint256) internal decimalsMap;\\r\\n\\r\\n    /**\\r\\n     * @dev \\u624b\\u52a8\\u8bbe\\u7f6e\\u7684\\u4ef7\\u683c\\u6620\\u5c04\\uff08\\u5907\\u7528\\u4ef7\\u683c\\u6e90\\uff09\\r\\n     * key: \\u8d44\\u4ea7\\u6807\\u8bc6\\u7b26\\r\\n     * value: \\u624b\\u52a8\\u8bbe\\u7f6e\\u7684\\u4ef7\\u683c\\uff0818\\u4f4d\\u5c0f\\u6570\\u7cbe\\u5ea6\\uff09\\r\\n     */\\r\\n    mapping(uint256 => uint256) internal pricesMap;\\r\\n\\r\\n    /**\\r\\n     * @dev \\u5168\\u5c40\\u7cbe\\u5ea6\\u9664\\u6570\\uff0c\\u7528\\u4e8eChainlink\\u4ef7\\u683c\\u8c03\\u6574\\r\\n     * \\u9ed8\\u8ba4\\u4e3a1\\uff0c\\u53ef\\u901a\\u8fc7setDecimals\\u8c03\\u6574\\r\\n     */\\r\\n    uint256 internal decimals = 1;\\r\\n\\r\\n    constructor(address _multiSignature) multiSignatureClient(_multiSignature) {\\r\\n         // === BSC\\u6d4b\\u8bd5\\u7f51\\u805a\\u5408\\u5668\\u5730\\u5740\\u793a\\u4f8b ===\\r\\n        // \\u8fd9\\u4e9b\\u5730\\u5740\\u5728\\u5b9e\\u9645\\u90e8\\u7f72\\u65f6\\u53ef\\u4ee5\\u542f\\u7528\\uff0c\\u914d\\u7f6e\\u5e38\\u7528\\u8d44\\u4ea7\\u7684Chainlink\\u805a\\u5408\\u5668\\r\\n        \\r\\n        // BNB/USD\\u805a\\u5408\\u5668\\r\\n        assetsMap[uint256(uint160(0x0000000000000000000000000000000000000000))] = AggregatorV3Interface(0x2514895c72f50D8bd4B4F9b1110F0D6bD2c97526);\\r\\n        \\r\\n        // DAI/USD\\u805a\\u5408\\u5668  \\r\\n        assetsMap[uint256(uint160(0xf2bDB4ba16b7862A1bf0BE03CD5eE25147d7F096))] = AggregatorV3Interface(0xE4eE17114774713d2De0eC0f035d4F7665fc025D);\\r\\n        \\r\\n        // BTC/USD\\u805a\\u5408\\u5668\\r\\n        assetsMap[uint256(uint160(0xF592aa48875a5FDE73Ba64B527477849C73787ad))] = AggregatorV3Interface(0x5741306c21795FdCBb9b265Ea0255F499DFe515C);\\r\\n        \\r\\n        // BUSD/USD\\u805a\\u5408\\u5668\\r\\n        assetsMap[uint256(uint160(0xDc6dF65b2fA0322394a8af628Ad25Be7D7F413c2))] = AggregatorV3Interface(0x9331b55D9830EF609A2aBCfAc0FBCE050A52fdEa);\\r\\n\\r\\n        // === \\u5bf9\\u5e94\\u7684\\u8d44\\u4ea7\\u7cbe\\u5ea6\\u914d\\u7f6e ===\\r\\n        decimalsMap[uint256(uint160(0x0000000000000000000000000000000000000000))] = 18; // BNB\\r\\n        decimalsMap[uint256(uint160(0xf2bDB4ba16b7862A1bf0BE03CD5eE25147d7F096))] = 18; // DAI\\r\\n        decimalsMap[uint256(uint160(0xF592aa48875a5FDE73Ba64B527477849C73787ad))] = 18; // BTC\\r\\n        decimalsMap[uint256(uint160(0xDc6dF65b2fA0322394a8af628Ad25Be7D7F413c2))] = 18; // BUSD\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @notice \\u8bbe\\u7f6e\\u5168\\u5c40\\u7cbe\\u5ea6\\u53c2\\u6570\\r\\n     * @dev \\u7528\\u4e8e\\u8c03\\u6574Chainlink\\u4ef7\\u683c\\u7684\\u7cbe\\u5ea6\\u8f6c\\u6362\\r\\n     * @param newDecimals \\u65b0\\u7684\\u7cbe\\u5ea6\\u9664\\u6570\\r\\n     * \\r\\n     * === \\u4f7f\\u7528\\u573a\\u666f ===\\r\\n     * - Chainlink\\u805a\\u5408\\u5668\\u8fd4\\u56de8\\u4f4d\\u5c0f\\u6570\\uff0c\\u8bbe\\u7f6e\\u4e3a1e8\\u8fdb\\u884c\\u6807\\u51c6\\u5316\\r\\n     * - \\u7279\\u6b8a\\u60c5\\u51b5\\u4e0b\\u9700\\u8981\\u5168\\u5c40\\u8c03\\u6574\\u4ef7\\u683c\\u7cbe\\u5ea6\\r\\n     */\\r\\n    function setDecimals(uint256 newDecimals) public validCall{\\r\\n        decimals=newDecimals;\\r\\n    }\\r\\n    /**\\r\\n     * @notice \\u6279\\u91cf\\u8bbe\\u7f6e\\u8d44\\u4ea7\\u4ef7\\u683c\\r\\n     * @dev \\u624b\\u52a8\\u8bbe\\u7f6e\\u591a\\u4e2a\\u8d44\\u4ea7\\u7684\\u4ef7\\u683c\\uff08\\u5907\\u7528\\u4ef7\\u683c\\u6e90\\uff09\\r\\n     * @param assets \\u8d44\\u4ea7ID\\u6570\\u7ec4\\r\\n     * @param prices \\u5bf9\\u5e94\\u7684\\u4ef7\\u683c\\u6570\\u7ec4\\uff0818\\u4f4d\\u5c0f\\u6570\\u7cbe\\u5ea6\\uff09\\r\\n     */\\r\\n    function setPrices(uint256[] memory assets, uint256[] memory prices) external validCall{\\r\\n        require(assets.length==prices.length,\\\"input arrays length are not equal\\\");\\r\\n        uint256 len=assets.length;\\r\\n        for (uint256 i=0;i<len;i++){\\r\\n            pricesMap[assets[i]]=prices[i];\\r\\n        }\\r\\n    }\\r\\n\\r\\n    // === \\u4ef7\\u683c\\u83b7\\u53d6\\u6d41\\u7a0b ===\\r\\n    /**\\r\\n     * @notice \\u6279\\u91cf\\u83b7\\u53d6\\u8d44\\u4ea7\\u4ef7\\u683c\\r\\n     * @dev \\u8fd4\\u56de\\u591a\\u4e2a\\u8d44\\u4ea7\\u7684\\u5f53\\u524d\\u4ef7\\u683c\\r\\n     * @param assets \\u8d44\\u4ea7ID\\u6570\\u7ec4\\r\\n     * @return uint256[] \\u5bf9\\u5e94\\u7684\\u4ef7\\u683c\\u6570\\u7ec4\\uff0818\\u4f4d\\u5c0f\\u6570\\u7cbe\\u5ea6\\uff09\\r\\n     */\\r\\n    function getPrices(uint256[] memory assets) external view returns (uint256[] memory){\\r\\n        uint256 len=assets.length;\\r\\n        uint256[] memory prices=new uint256[](len);\\r\\n        for (uint256 i=0;i<len;i++){\\r\\n            prices[i]=getUnderlyingPrice(assets[i]);\\r\\n        }\\r\\n        return prices;\\r\\n    }\\r\\n    /**\\r\\n     * @notice \\u83b7\\u53d6\\u5355\\u4e2a\\u8d44\\u4ea7\\u4ef7\\u683c\\uff08\\u901a\\u8fc7\\u5730\\u5740\\uff09\\r\\n     * @dev \\u5c06\\u8d44\\u4ea7\\u5730\\u5740\\u8f6c\\u6362\\u4e3auint256\\u540e\\u83b7\\u53d6\\u4ef7\\u683c\\r\\n     * @param asset \\u8d44\\u4ea7\\u5408\\u7ea6\\u5730\\u5740\\r\\n     * @return uint256 \\u8d44\\u4ea7\\u4ef7\\u683c\\uff0818\\u4f4d\\u5c0f\\u6570\\u7cbe\\u5ea6\\uff09\\r\\n     */\\r\\n    function getPrice(address asset) public view returns (uint256){\\r\\n        return getUnderlyingPrice(uint256(uint160(asset)));\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @notice \\u83b7\\u53d6\\u5355\\u4e2a\\u8d44\\u4ea7\\u4ef7\\u683c\\uff08\\u6838\\u5fc3\\u51fd\\u6570\\uff09\\r\\n     * @dev \\u5b9e\\u73b0\\u53cc\\u91cd\\u4ef7\\u683c\\u6e90\\u7684\\u4ef7\\u683c\\u83b7\\u53d6\\u903b\\u8f91\\r\\n     * @param underlying \\u8d44\\u4ea7\\u6807\\u8bc6\\u7b26\\uff08\\u5730\\u5740\\u8f6cuint256\\u6216\\u81ea\\u5b9a\\u4e49ID\\uff09\\r\\n     * @return uint256 \\u8d44\\u4ea7\\u4ef7\\u683c\\uff0818\\u4f4d\\u5c0f\\u6570\\u7cbe\\u5ea6\\uff09\\r\\n     */\\r\\n    function getUnderlyingPrice(uint256 underlying) public view returns (uint256){\\r\\n        //\\u83b7\\u53d6\\u914d\\u7f6e\\u7684chainlink\\u805a\\u5408\\u5668\\r\\n        AggregatorV3Interface assetsPrice=assetsMap[underlying];\\r\\n        //\\u4f18\\u5148\\u4f7f\\u7528chainlink\\u805a\\u5408\\u5668\\u4ef7\\u683c\\r\\n        if (address(assetsPrice)!=address(0)){\\r\\n            // \\u8c03\\u7528Chainlink\\u805a\\u5408\\u5668\\u83b7\\u53d6\\u6700\\u65b0\\u4ef7\\u683c\\u6570\\u636e\\r\\n            (,int256 price,,,) = assetsPrice.latestRoundData();\\r\\n            // \\u6839\\u636e\\u8d44\\u4ea7\\u7cbe\\u5ea6\\u8fdb\\u884c\\u8f6c\\u6362\\r\\n            uint256 tokenDecimals=decimalsMap[underlying];\\r\\n            if (tokenDecimals<18){\\r\\n                // \\u4f8b\\u5982\\uff1aUSDC(6\\u4f4d) \\u2192 18\\u4f4d\\r\\n                // price: $1.000000 (8\\u4f4d\\u5c0f\\u6570) \\u2192 \\u9700\\u8981\\u8865\\u8db3\\u523018\\u4f4d\\r\\n                return uint256(price)/decimals*(10**(18-tokenDecimals));\\r\\n            }else if (tokenDecimals>18){\\r\\n                // \\u7406\\u8bba\\u60c5\\u51b5\\uff1a\\u5982\\u679c\\u4ee3\\u5e01\\u7cbe\\u5ea6\\u8d85\\u8fc718\\u4f4d \\u2192 \\u9700\\u8981\\u964d\\u4f4e\\u7cbe\\u5ea6\\r\\n                return uint256(price)/decimals/(10**(tokenDecimals-18));\\r\\n            }else{\\r\\n                // \\u5982\\u679c\\u7cbe\\u5ea6\\u6b63\\u597d\\u662f18\\u4f4d \\u2192 \\u76f4\\u63a5\\u9664\\u4ee5\\u7cbe\\u5ea6\\r\\n                return uint256(price)/decimals;\\r\\n            }\\r\\n        }else{\\r\\n            // \\u5982\\u679c\\u6ca1\\u6709\\u805a\\u5408\\u5668 \\u2192 \\u8fd4\\u56de\\u624b\\u52a8\\u8bbe\\u7f6e\\u7684\\u4ef7\\u683c\\r\\n            return pricesMap[underlying];\\r\\n        }\\r\\n    }\\r\\n\\r\\n        /**\\r\\n     * @notice \\u8bbe\\u7f6e\\u5355\\u4e2a\\u8d44\\u4ea7\\u7684\\u624b\\u52a8\\u4ef7\\u683c\\uff08\\u901a\\u8fc7\\u5730\\u5740\\uff09\\r\\n     * @dev \\u4e3a\\u8d44\\u4ea7\\u8bbe\\u7f6e\\u5907\\u7528\\u4ef7\\u683c\\r\\n     * @param asset \\u8d44\\u4ea7\\u5408\\u7ea6\\u5730\\u5740\\r\\n     * @param price \\u4ef7\\u683c\\u503c\\uff0818\\u4f4d\\u5c0f\\u6570\\u7cbe\\u5ea6\\uff09\\r\\n     */\\r\\n    function setPrice(address asset,uint256 price) public validCall {\\r\\n        pricesMap[uint256(uint160(asset))] = price;\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @notice \\u8bbe\\u7f6e\\u5355\\u4e2a\\u8d44\\u4ea7\\u7684\\u624b\\u52a8\\u4ef7\\u683c\\uff08\\u901a\\u8fc7ID\\uff09\\r\\n     * @dev \\u4e3a\\u8d44\\u4ea7\\u8bbe\\u7f6e\\u5907\\u7528\\u4ef7\\u683c\\r\\n     * @param underlying \\u8d44\\u4ea7\\u6807\\u8bc6\\u7b26\\r\\n     * @param price \\u4ef7\\u683c\\u503c\\uff0818\\u4f4d\\u5c0f\\u6570\\u7cbe\\u5ea6\\uff09\\r\\n     */\\r\\n    function setUnderlyingPrice(uint256 underlying,uint256 price) public validCall {\\r\\n        require(underlying>0 , \\\"underlying cannot be zero\\\");\\r\\n        pricesMap[underlying] = price;\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @notice \\u8bbe\\u7f6e\\u8d44\\u4ea7\\u7684Chainlink\\u805a\\u5408\\u5668\\uff08\\u901a\\u8fc7\\u5730\\u5740\\uff09\\r\\n     * @dev \\u4e3a\\u8d44\\u4ea7\\u914d\\u7f6eChainlink\\u4ef7\\u683c\\u6e90\\r\\n     * @param asset \\u8d44\\u4ea7\\u5408\\u7ea6\\u5730\\u5740\\r\\n     * @param aggregator Chainlink\\u805a\\u5408\\u5668\\u5730\\u5740\\r\\n     * @param _decimals \\u8d44\\u4ea7\\u7684\\u5c0f\\u6570\\u4f4d\\u6570\\r\\n     */\\r\\n    function setAssetAggregator(address asset,address aggregator,uint256 _decimals) public validCall{\\r\\n        assetsMap[uint256(uint160(asset))]=AggregatorV3Interface(aggregator);\\r\\n        decimalsMap[uint256(uint160(asset))]=_decimals;\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @notice \\u8bbe\\u7f6e\\u8d44\\u4ea7\\u7684Chainlink\\u805a\\u5408\\u5668\\uff08\\u901a\\u8fc7ID\\uff09\\r\\n     * @dev \\u4e3a\\u8d44\\u4ea7\\u914d\\u7f6eChainlink\\u4ef7\\u683c\\u6e90\\r\\n     * @param underlying \\u8d44\\u4ea7\\u6807\\u8bc6\\u7b26\\r\\n     * @param aggregator Chainlink\\u805a\\u5408\\u5668\\u5730\\u5740\\r\\n     * @param _decimals \\u8d44\\u4ea7\\u7684\\u5c0f\\u6570\\u4f4d\\u6570\\r\\n     */\\r\\n    function setUnderlyingAggregator(uint256 underlying,address aggregator,uint256 _decimals) public validCall {\\r\\n        require(underlying>0 , \\\"underlying cannot be zero\\\");\\r\\n        assetsMap[underlying] = AggregatorV3Interface(aggregator);\\r\\n        decimalsMap[underlying] = _decimals;\\r\\n    }\\r\\n    /**\\r\\n     * @notice \\u83b7\\u53d6\\u8d44\\u4ea7\\u7684\\u805a\\u5408\\u5668\\u4fe1\\u606f\\uff08\\u901a\\u8fc7\\u5730\\u5740\\uff09\\r\\n     * @dev \\u67e5\\u8be2\\u8d44\\u4ea7\\u914d\\u7f6e\\u7684Chainlink\\u805a\\u5408\\u5668\\u548c\\u7cbe\\u5ea6\\r\\n     * @param asset \\u8d44\\u4ea7\\u5408\\u7ea6\\u5730\\u5740\\r\\n     * @return address \\u805a\\u5408\\u5668\\u5730\\u5740\\r\\n     * @return uint256 \\u8d44\\u4ea7\\u7cbe\\u5ea6\\r\\n     */\\r\\n    function getAssetsAggregator(address asset) public view returns (address,uint256) {\\r\\n        return (address(assetsMap[uint256(uint160(asset))]),decimalsMap[uint256(uint160(asset))]);\\r\\n    }\\r\\n\\r\\n     /**\\r\\n       * @notice \\u83b7\\u53d6\\u8d44\\u4ea7\\u7684\\u805a\\u5408\\u5668\\u4fe1\\u606f\\uff08\\u901a\\u8fc7ID\\uff09\\r\\n       * @dev \\u67e5\\u8be2\\u8d44\\u4ea7\\u914d\\u7f6e\\u7684Chainlink\\u805a\\u5408\\u5668\\u548c\\u7cbe\\u5ea6\\r\\n       * @param underlying \\u8d44\\u4ea7\\u6807\\u8bc6\\u7b26\\r\\n       * @return address \\u805a\\u5408\\u5668\\u5730\\u5740\\r\\n       * @return uint256 \\u8d44\\u4ea7\\u7cbe\\u5ea6\\r\\n       */\\r\\n    function getUnderlyingAggregator(uint256 underlying) public view returns (address,uint256) {\\r\\n        return (address(assetsMap[underlying]),decimalsMap[underlying]);\\r\\n    }\\r\\n}\",\"keccak256\":\"0x29a75a3e3a0131e33639d89696ed31b7c52fb1459b88b6a810e6cf07d52f7178\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x6080346101ff57601f610c1a38819003918201601f191683019291906001600160401b038411838510176102045781602092849260409687528339810103126101ff57516001600160a01b038116908190036101ff578015610189577f8dddb57468cf5338ee155397ad1400a7a564308824f517d20a8a7c516523bb4755600160035560128160008080528060205281812060018060a01b031990732514895c72f50d8bd4b4f9b1110f0d6bd2c975268282541617905573f2bdb4ba16b7862a1bf0be03cd5ee25147d7f09680835283832073e4ee17114774713d2de0ec0f035d4f7665fc025d8382541617905573f592aa48875a5fde73ba64b527477849c73787ad90818452848420735741306c21795fdcbb9b265ea0255f499dfe515c8482541617905573dc6df65b2fa0322394a8af628ad25be7d7f413c292838552739331b55d9830ef609a2abcfac0fbce050a52fdea8686209182541617905583805260016020528585852055835284848420558252838383205581522055516109ff908161021b8239f35b815162461bcd60e51b815260206004820152604360248201527f6d756c74695369676e6174757265436c69656e74203a204d756c7469706c652060448201527f7369676e617475726520636f6e74726163742061646472657373206973207a65606482015262726f2160e81b608482015260a490fd5b600080fd5b634e487b7160e01b600052604160045260246000fdfe6040608081526004908136101561001557600080fd5b6000803560e01c8062e4768b1461052a57806309cb3a4e1461044457806341976e0914610415578063434b33ac146103ae578063638c7e171461036657806375e443aa1461032457806383532667146102ed5780638c8885c8146102cb57806397c2f255146102655780639d71488e14610226578063b889a989146101c7578063d05eaae0146100d65763da663257146100ae57600080fd5b346100d35760203660031901126100d357506100cc6020923561080f565b9051908152f35b80fd5b509190346101c357806003193601126101c35767ffffffffffffffff9082358281116101bf5761010990369085016105e7565b916024359081116101bf5761012190369085016105e7565b9261012a610645565b82518451036101735750815192845b848110610144578580f35b8061015261016e92846107a0565b5161015d82876107a0565b51885260026020528488205561077b565b610139565b6020608492519162461bcd60e51b8352820152602160248201527f696e70757420617272617973206c656e67746820617265206e6f7420657175616044820152601b60fa1b6064820152fd5b8480fd5b8280fd5b50346100d35760203660031901126100d357610222826001600160a01b03806101ee610566565b168452836020528184205416926001602052205492519283928360209093929193604081019460018060a01b031681520152565b0390f35b509034610261578160031936011261026157602090517f8dddb57468cf5338ee155397ad1400a7a564308824f517d20a8a7c516523bb478152f35b5080fd5b50903461026157606036600319011261026157610280610566565b610288610581565b90610291610645565b60018060a01b0380911684528360205282842091166bffffffffffffffffffffffff60a01b82541617905560016020526044359082205580f35b508234610261576020366003190112610261576102e6610645565b3560035580f35b5091346101c357816003193601126101c35735610308610645565b61031381151561097d565b825260026020526024359082205580f35b5082346102615760203660031901126102615735815260208181528282205460018252918390205492516001600160a01b039092168252810191909152604090f35b5090346102615781600319360112610261577f8dddb57468cf5338ee155397ad1400a7a564308824f517d20a8a7c516523bb475490516001600160a01b039091168152602090f35b5091346101c35760603660031901126101c357356103ca610581565b906103d3610645565b6103de81151561097d565b8352826020528183209060018060a01b03166bffffffffffffffffffffffff60a01b82541617905560016020526044359082205580f35b509034610261576020366003190112610261576020906100cc6001600160a01b0361043e610566565b1661080f565b508290346100d3576020918260031936011261026157803567ffffffffffffffff81116101c35784929161047a913691016105e7565b908151610486816105cf565b9061049385519283610597565b80825261049f816105cf565b8287019490601f1901368637835b8281106104f25750505083519485948186019282875251809352850193925b8281106104db57505050500390f35b8351855286955093810193928101926001016104cc565b8061050f61050961051f93859b9897999a9b6107a0565b5161080f565b61051982896107a0565b5261077b565b9695949293966104ad565b509034610261578060031936011261026157610544610566565b61054c610645565b6001600160a01b0316825260026020528120602435905580f35b600435906001600160a01b038216820361057c57565b600080fd5b602435906001600160a01b038216820361057c57565b90601f8019910116810190811067ffffffffffffffff8211176105b957604052565b634e487b7160e01b600052604160045260246000fd5b67ffffffffffffffff81116105b95760051b60200190565b81601f8201121561057c578035916105fe836105cf565b9261060c6040519485610597565b808452602092838086019260051b82010192831161057c578301905b828210610636575050505090565b81358152908301908301610628565b604051602090818101903360601b82523060601b603482015260288152606081019181831067ffffffffffffffff8411176105b957826044818693816040528551902060018060a01b037f8dddb57468cf5338ee155397ad1400a7a564308824f517d20a8a7c516523bb47541690630f5d50b360e11b83526064870152600060848701525afa90811561076f578390600092610743575b50509050156106e85750565b6084906040519062461bcd60e51b82526004820152602e60248201527f6d756c74695369676e6174757265436c69656e74203a2054686973207478206960448201526d1cc81b9bdd08185c1c9c9bdd995960921b6064820152fd5b813d8311610768575b6107568186610597565b810103126100d35750518082386106dc565b503d61074c565b6040513d6000823e3d90fd5b600019811461078a5760010190565b634e487b7160e01b600052601160045260246000fd5b80518210156107b45760209160051b010190565b634e487b7160e01b600052603260045260246000fd5b519069ffffffffffffffffffff8216820361057c57565b81156107eb570490565b634e487b7160e01b600052601260045260246000fd5b604d811161078a57600a0a90565b6000818152602081905260408120546001600160a01b031691821561096e5760a060049360405194858092633fabe5a360e21b82525afa928315610963578293610915575b508152600160205260408120549160128310156108c957600354610877916107e1565b91601203601281116108b55761088c90610801565b918281029281840414901517156108a1575090565b634e487b7160e01b81526011600452602490fd5b634e487b7160e01b82526011600452602482fd5b601283929311600014610906576003546108e2916107e1565b9160111982019182116108a15750906108fd61090392610801565b906107e1565b90565b600354610903935091506107e1565b90925060a0813d821161095b575b8161093060a09383610597565b8101031261026157610941816107ca565b506109536080602083015192016107ca565b509138610854565b3d9150610923565b6040513d84823e3d90fd5b50604091506002602052205490565b1561098457565b60405162461bcd60e51b815260206004820152601960248201527f756e6465726c79696e672063616e6e6f74206265207a65726f000000000000006044820152606490fdfea2646970667358221220fa418f63a7f3c05e035cdd54b7d46138ba8dff002fa6c7366da73b7d820b1d2964736f6c63430008140033",
+  "deployedBytecode": "0x6040608081526004908136101561001557600080fd5b6000803560e01c8062e4768b1461052a57806309cb3a4e1461044457806341976e0914610415578063434b33ac146103ae578063638c7e171461036657806375e443aa1461032457806383532667146102ed5780638c8885c8146102cb57806397c2f255146102655780639d71488e14610226578063b889a989146101c7578063d05eaae0146100d65763da663257146100ae57600080fd5b346100d35760203660031901126100d357506100cc6020923561080f565b9051908152f35b80fd5b509190346101c357806003193601126101c35767ffffffffffffffff9082358281116101bf5761010990369085016105e7565b916024359081116101bf5761012190369085016105e7565b9261012a610645565b82518451036101735750815192845b848110610144578580f35b8061015261016e92846107a0565b5161015d82876107a0565b51885260026020528488205561077b565b610139565b6020608492519162461bcd60e51b8352820152602160248201527f696e70757420617272617973206c656e67746820617265206e6f7420657175616044820152601b60fa1b6064820152fd5b8480fd5b8280fd5b50346100d35760203660031901126100d357610222826001600160a01b03806101ee610566565b168452836020528184205416926001602052205492519283928360209093929193604081019460018060a01b031681520152565b0390f35b509034610261578160031936011261026157602090517f8dddb57468cf5338ee155397ad1400a7a564308824f517d20a8a7c516523bb478152f35b5080fd5b50903461026157606036600319011261026157610280610566565b610288610581565b90610291610645565b60018060a01b0380911684528360205282842091166bffffffffffffffffffffffff60a01b82541617905560016020526044359082205580f35b508234610261576020366003190112610261576102e6610645565b3560035580f35b5091346101c357816003193601126101c35735610308610645565b61031381151561097d565b825260026020526024359082205580f35b5082346102615760203660031901126102615735815260208181528282205460018252918390205492516001600160a01b039092168252810191909152604090f35b5090346102615781600319360112610261577f8dddb57468cf5338ee155397ad1400a7a564308824f517d20a8a7c516523bb475490516001600160a01b039091168152602090f35b5091346101c35760603660031901126101c357356103ca610581565b906103d3610645565b6103de81151561097d565b8352826020528183209060018060a01b03166bffffffffffffffffffffffff60a01b82541617905560016020526044359082205580f35b509034610261576020366003190112610261576020906100cc6001600160a01b0361043e610566565b1661080f565b508290346100d3576020918260031936011261026157803567ffffffffffffffff81116101c35784929161047a913691016105e7565b908151610486816105cf565b9061049385519283610597565b80825261049f816105cf565b8287019490601f1901368637835b8281106104f25750505083519485948186019282875251809352850193925b8281106104db57505050500390f35b8351855286955093810193928101926001016104cc565b8061050f61050961051f93859b9897999a9b6107a0565b5161080f565b61051982896107a0565b5261077b565b9695949293966104ad565b509034610261578060031936011261026157610544610566565b61054c610645565b6001600160a01b0316825260026020528120602435905580f35b600435906001600160a01b038216820361057c57565b600080fd5b602435906001600160a01b038216820361057c57565b90601f8019910116810190811067ffffffffffffffff8211176105b957604052565b634e487b7160e01b600052604160045260246000fd5b67ffffffffffffffff81116105b95760051b60200190565b81601f8201121561057c578035916105fe836105cf565b9261060c6040519485610597565b808452602092838086019260051b82010192831161057c578301905b828210610636575050505090565b81358152908301908301610628565b604051602090818101903360601b82523060601b603482015260288152606081019181831067ffffffffffffffff8411176105b957826044818693816040528551902060018060a01b037f8dddb57468cf5338ee155397ad1400a7a564308824f517d20a8a7c516523bb47541690630f5d50b360e11b83526064870152600060848701525afa90811561076f578390600092610743575b50509050156106e85750565b6084906040519062461bcd60e51b82526004820152602e60248201527f6d756c74695369676e6174757265436c69656e74203a2054686973207478206960448201526d1cc81b9bdd08185c1c9c9bdd995960921b6064820152fd5b813d8311610768575b6107568186610597565b810103126100d35750518082386106dc565b503d61074c565b6040513d6000823e3d90fd5b600019811461078a5760010190565b634e487b7160e01b600052601160045260246000fd5b80518210156107b45760209160051b010190565b634e487b7160e01b600052603260045260246000fd5b519069ffffffffffffffffffff8216820361057c57565b81156107eb570490565b634e487b7160e01b600052601260045260246000fd5b604d811161078a57600a0a90565b6000818152602081905260408120546001600160a01b031691821561096e5760a060049360405194858092633fabe5a360e21b82525afa928315610963578293610915575b508152600160205260408120549160128310156108c957600354610877916107e1565b91601203601281116108b55761088c90610801565b918281029281840414901517156108a1575090565b634e487b7160e01b81526011600452602490fd5b634e487b7160e01b82526011600452602482fd5b601283929311600014610906576003546108e2916107e1565b9160111982019182116108a15750906108fd61090392610801565b906107e1565b90565b600354610903935091506107e1565b90925060a0813d821161095b575b8161093060a09383610597565b8101031261026157610941816107ca565b506109536080602083015192016107ca565b509138610854565b3d9150610923565b6040513d84823e3d90fd5b50604091506002602052205490565b1561098457565b60405162461bcd60e51b815260206004820152601960248201527f756e6465726c79696e672063616e6e6f74206265207a65726f000000000000006044820152606490fdfea2646970667358221220fa418f63a7f3c05e035cdd54b7d46138ba8dff002fa6c7366da73b7d820b1d2964736f6c63430008140033",
+  "devdoc": {
+    "details": "混合价格预言机系统，支持Chainlink聚合器和手动价格设置",
+    "kind": "dev",
+    "methods": {
+      "getAssetsAggregator(address)": {
+        "details": "查询资产配置的Chainlink聚合器和精度",
+        "params": {
+          "asset": "资产合约地址"
+        },
+        "returns": {
+          "_0": "address 聚合器地址",
+          "_1": "uint256 资产精度"
+        }
+      },
+      "getPrice(address)": {
+        "details": "将资产地址转换为uint256后获取价格",
+        "params": {
+          "asset": "资产合约地址"
+        },
+        "returns": {
+          "_0": "uint256 资产价格（18位小数精度）"
+        }
+      },
+      "getPrices(uint256[])": {
+        "details": "返回多个资产的当前价格",
+        "params": {
+          "assets": "资产ID数组"
+        },
+        "returns": {
+          "_0": "uint256[] 对应的价格数组（18位小数精度）"
+        }
+      },
+      "getUnderlyingAggregator(uint256)": {
+        "details": "查询资产配置的Chainlink聚合器和精度",
+        "params": {
+          "underlying": "资产标识符"
+        },
+        "returns": {
+          "_0": "address 聚合器地址",
+          "_1": "uint256 资产精度"
+        }
+      },
+      "getUnderlyingPrice(uint256)": {
+        "details": "实现双重价格源的价格获取逻辑",
+        "params": {
+          "underlying": "资产标识符（地址转uint256或自定义ID）"
+        },
+        "returns": {
+          "_0": "uint256 资产价格（18位小数精度）"
+        }
+      },
+      "setAssetAggregator(address,address,uint256)": {
+        "details": "为资产配置Chainlink价格源",
+        "params": {
+          "_decimals": "资产的小数位数",
+          "aggregator": "Chainlink聚合器地址",
+          "asset": "资产合约地址"
+        }
+      },
+      "setDecimals(uint256)": {
+        "details": "用于调整Chainlink价格的精度转换",
+        "params": {
+          "newDecimals": "新的精度除数  === 使用场景 === - Chainlink聚合器返回8位小数，设置为1e8进行标准化 - 特殊情况下需要全局调整价格精度"
+        }
+      },
+      "setPrice(address,uint256)": {
+        "details": "为资产设置备用价格",
+        "params": {
+          "asset": "资产合约地址",
+          "price": "价格值（18位小数精度）"
+        }
+      },
+      "setPrices(uint256[],uint256[])": {
+        "details": "手动设置多个资产的价格（备用价格源）",
+        "params": {
+          "assets": "资产ID数组",
+          "prices": "对应的价格数组（18位小数精度）"
+        }
+      },
+      "setUnderlyingAggregator(uint256,address,uint256)": {
+        "details": "为资产配置Chainlink价格源",
+        "params": {
+          "_decimals": "资产的小数位数",
+          "aggregator": "Chainlink聚合器地址",
+          "underlying": "资产标识符"
+        }
+      },
+      "setUnderlyingPrice(uint256,uint256)": {
+        "details": "为资产设置备用价格",
+        "params": {
+          "price": "价格值（18位小数精度）",
+          "underlying": "资产标识符"
+        }
+      }
+    },
+    "stateVariables": {
+      "assetsMap": {
+        "details": "资产到Chainlink聚合器的映射 key: 资产标识符（地址转uint256或自定义ID） value: Chainlink聚合器接口"
+      },
+      "decimals": {
+        "details": "全局精度除数，用于Chainlink价格调整 默认为1，可通过setDecimals调整"
+      },
+      "decimalsMap": {
+        "details": "资产精度映射 key: 资产标识符 value: 该资产的小数位数（如USDC=6, WETH=18）"
+      },
+      "pricesMap": {
+        "details": "手动设置的价格映射（备用价格源） key: 资产标识符 value: 手动设置的价格（18位小数精度）"
+      }
+    },
+    "title": "BscPledgeOracle - BSC质押协议价格预言机",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "getAssetsAggregator(address)": {
+        "notice": "获取资产的聚合器信息（通过地址）"
+      },
+      "getPrice(address)": {
+        "notice": "获取单个资产价格（通过地址）"
+      },
+      "getPrices(uint256[])": {
+        "notice": "批量获取资产价格"
+      },
+      "getUnderlyingAggregator(uint256)": {
+        "notice": "获取资产的聚合器信息（通过ID）"
+      },
+      "getUnderlyingPrice(uint256)": {
+        "notice": "获取单个资产价格（核心函数）"
+      },
+      "setAssetAggregator(address,address,uint256)": {
+        "notice": "设置资产的Chainlink聚合器（通过地址）"
+      },
+      "setDecimals(uint256)": {
+        "notice": "设置全局精度参数"
+      },
+      "setPrice(address,uint256)": {
+        "notice": "设置单个资产的手动价格（通过地址）"
+      },
+      "setPrices(uint256[],uint256[])": {
+        "notice": "批量设置资产价格"
+      },
+      "setUnderlyingAggregator(uint256,address,uint256)": {
+        "notice": "设置资产的Chainlink聚合器（通过ID）"
+      },
+      "setUnderlyingPrice(uint256,uint256)": {
+        "notice": "设置单个资产的手动价格（通过ID）"
+      }
+    },
+    "notice": "为Pledge系统提供可靠的价格数据，支持多种资产的价格查询  === 核心设计特性 === 1. **双重价格源**：Chainlink聚合器（优先） + 手动设置价格（备用） 2. **精度统一**：所有价格统一转换为18位小数精度 3. **多签名控制**：价格设置和聚合器配置需要多签名验证 4. **灵活配置**：支持动态添加/修改资产的价格源  === 价格查询优先级 === 1. 如果配置了Chainlink聚合器 → 使用链上实时价格 2. 如果没有聚合器 → 使用手动设置的价格 3. 如果都没有 → 返回0（表示价格不可用）  === 精度处理逻辑 === - Chainlink价格通常是8位小数（如BTC/USD $50000.12345678） - 本系统统一使用18位小数（以太坊标准） - 自动进行精度转换以确保计算准确性",
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 7358,
+        "contract": "contracts/pledage/BscPledgeOracle.sol:BscPledgeOracle",
+        "label": "assetsMap",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_mapping(t_uint256,t_contract(AggregatorV3Interface)45)"
+      },
+      {
+        "astId": 7363,
+        "contract": "contracts/pledage/BscPledgeOracle.sol:BscPledgeOracle",
+        "label": "decimalsMap",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_mapping(t_uint256,t_uint256)"
+      },
+      {
+        "astId": 7368,
+        "contract": "contracts/pledage/BscPledgeOracle.sol:BscPledgeOracle",
+        "label": "pricesMap",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_mapping(t_uint256,t_uint256)"
+      },
+      {
+        "astId": 7372,
+        "contract": "contracts/pledage/BscPledgeOracle.sol:BscPledgeOracle",
+        "label": "decimals",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_uint256"
+      }
+    ],
+    "types": {
+      "t_contract(AggregatorV3Interface)45": {
+        "encoding": "inplace",
+        "label": "contract AggregatorV3Interface",
+        "numberOfBytes": "20"
+      },
+      "t_mapping(t_uint256,t_contract(AggregatorV3Interface)45)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => contract AggregatorV3Interface)",
+        "numberOfBytes": "32",
+        "value": "t_contract(AggregatorV3Interface)45"
+      },
+      "t_mapping(t_uint256,t_uint256)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => uint256)",
+        "numberOfBytes": "32",
+        "value": "t_uint256"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}
